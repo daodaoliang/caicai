@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/skin/angryBird.jpg</file>
+        <file>img/skin/angryBirdSmall.jpg</file>
+        <file>img/skin/blackPoint.jpg</file>
+        <file>img/skin/blackPointSmall.jpg</file>
+        <file>img/skin/blueSky.jpg</file>
+        <file>img/skin/blueSkySmall.jpg</file>
+        <file>img/skin/classic.jpg</file>
+        <file>img/skin/classicSmall.jpg</file>
+        <file>img/skin/greenWorld.jpg</file>
+        <file>img/skin/greenWorldSmall.jpg</file>
+        <file>img/skin/oldWood.jpg</file>
+        <file>img/skin/oldWoodSmall.jpg</file>
+        <file>img/skin/pinkLove.jpg</file>
+        <file>img/skin/pinkLoveSmall.jpg</file>
+        <file>img/skin/redThunder.jpg</file>
+        <file>img/skin/redThunderSmall.jpg</file>
+        <file>img/skin/sixYears.jpg</file>
+        <file>img/skin/sixYearsSmall.jpg</file>
+        <file>img/sysButton/sys_button_close.png</file>
+        <file>img/sysButton/sys_button_max.png</file>
+        <file>img/sysButton/sys_button_min.png</file>
+        <file>img/sysButton/title_bar_menu.png</file>
+        <file>img/sysButton/SkinButton.png</file>
+        <file>img/logo.png</file>
+        <file>img/toolWidget/gongNeng.png</file>
+        <file>img/toolWidget/jiaSu.png</file>
+        <file>img/toolWidget/louDong.png</file>
+        <file>img/toolWidget/menZhen.png</file>
+        <file>img/toolWidget/muMa.png</file>
+        <file>img/toolWidget/qingLi.png</file>
+        <file>img/toolWidget/ruanJian.png</file>
+        <file>img/toolWidget/tiJian.png</file>
+        <file>img/toolWidget/xiTong.png</file>
+    </qresource>
+</RCC>
