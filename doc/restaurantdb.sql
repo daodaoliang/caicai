@@ -20,10 +20,10 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `consume`;
 CREATE TABLE `consume` (
-  `consumeid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'é£Ÿææ¶ˆè€—å¯¹åº”è¡¨ID',
-  `dishesid` int(11) NOT NULL COMMENT 'èœå“ID',
-  `materialid` int(11) NOT NULL COMMENT 'é£ŸæID',
-  `consumecount` int(11) NOT NULL COMMENT 'æ¶ˆè€—æ•°é‡',
+  `consumeid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Ê³²ÄÏûºÄ¶ÔÓ¦±íID',
+  `dishesid` int(11) NOT NULL COMMENT '²ËÆ·ID',
+  `materialid` int(11) NOT NULL COMMENT 'Ê³²ÄID',
+  `consumecount` int(11) NOT NULL COMMENT 'ÏûºÄÊıÁ¿',
   PRIMARY KEY (`consumeid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -36,11 +36,11 @@ CREATE TABLE `consume` (
 -- ----------------------------
 DROP TABLE IF EXISTS `diningtable`;
 CREATE TABLE `diningtable` (
-  `id` char(4) NOT NULL COMMENT 'é¤æ¡Œè¡¨ID,å¯¹åº”ä¸ºå°å·ï¼Œ4ä½',
-  `tablename` varchar(20) NOT NULL COMMENT 'é¤æ¡Œè¡¨åç§°',
-  `state` int(11) NOT NULL DEFAULT '0' COMMENT 'é¤æ¡ŒçŠ¶æ€ï¼Œæš‚æ—¶è§„å®š0-ä¸ºç©ºé—²ï¼Œ1-å¿™ç¢Œï¼Œå…¶ä»–å¤‡ç”¨',
-  `guestnumber` int(11) NOT NULL DEFAULT '1' COMMENT 'å½“å‰å®¢äººæ•°é‡',
-  `waiterid` varchar(10) DEFAULT NULL COMMENT 'å¼€æ¡Œçš„æœåŠ¡å‘˜ç¼–å·',
+  `id` char(4) NOT NULL COMMENT '²Í×À±íID,¶ÔÓ¦ÎªÌ¨ºÅ£¬4Î»',
+  `tablename` varchar(20) NOT NULL COMMENT '²Í×À±íÃû³Æ',
+  `state` int(11) NOT NULL DEFAULT '0' COMMENT '²Í×À×´Ì¬£¬ÔİÊ±¹æ¶¨0-Îª¿ÕÏĞ£¬1-Ã¦Âµ£¬ÆäËû±¸ÓÃ',
+  `guestnumber` int(11) NOT NULL DEFAULT '1' COMMENT 'µ±Ç°¿ÍÈËÊıÁ¿',
+  `waiterid` varchar(10) DEFAULT NULL COMMENT '¿ª×ÀµÄ·şÎñÔ±±àºÅ',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -53,9 +53,9 @@ CREATE TABLE `diningtable` (
 -- ----------------------------
 DROP TABLE IF EXISTS `dishes`;
 CREATE TABLE `dishes` (
-  `dishesid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'èœå“ID',
-  `dishesname` varchar(30) NOT NULL COMMENT 'èœå“åç§°',
-  `price` decimal(10,0) NOT NULL COMMENT 'èœå“ä»·æ ¼',
+  `dishesid` int(11) NOT NULL AUTO_INCREMENT COMMENT '²ËÆ·ID',
+  `dishesname` varchar(30) NOT NULL COMMENT '²ËÆ·Ãû³Æ',
+  `price` decimal(10,0) NOT NULL COMMENT '²ËÆ·¼Û¸ñ',
   PRIMARY KEY (`dishesid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -68,11 +68,11 @@ CREATE TABLE `dishes` (
 -- ----------------------------
 DROP TABLE IF EXISTS `material`;
 CREATE TABLE `material` (
-  `materialid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'é£Ÿæid',
-  `materialname` varchar(30) NOT NULL COMMENT 'é£Ÿæåç§°',
-  `materialtypeid` int(11) NOT NULL COMMENT 'é£Ÿæç±»å‹id',
-  `count` int(11) NOT NULL COMMENT 'é£Ÿæä¿æœ‰é‡',
-  `measurename` varchar(20) DEFAULT NULL COMMENT 'é£Ÿæåº¦é‡å•ä½åç§°',
+  `materialid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Ê³²Äid',
+  `materialname` varchar(30) NOT NULL COMMENT 'Ê³²ÄÃû³Æ',
+  `materialtypeid` int(11) NOT NULL COMMENT 'Ê³²ÄÀàĞÍid',
+  `count` int(11) NOT NULL COMMENT 'Ê³²Ä±£ÓĞÁ¿',
+  `measurename` varchar(20) DEFAULT NULL COMMENT 'Ê³²Ä¶ÈÁ¿µ¥Î»Ãû³Æ',
   PRIMARY KEY (`materialid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -85,8 +85,8 @@ CREATE TABLE `material` (
 -- ----------------------------
 DROP TABLE IF EXISTS `materialtype`;
 CREATE TABLE `materialtype` (
-  `materialtypeid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'é£Ÿæç±»å‹ID',
-  `materialtype` varchar(20) NOT NULL COMMENT 'é£Ÿæç±»å‹åç§°',
+  `materialtypeid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Ê³²ÄÀàĞÍID',
+  `materialtype` varchar(20) NOT NULL COMMENT 'Ê³²ÄÀàĞÍÃû³Æ',
   PRIMARY KEY (`materialtypeid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -99,15 +99,15 @@ CREATE TABLE `materialtype` (
 -- ----------------------------
 DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member` (
-  `memberid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ä¼šå‘˜ID',
-  `cardid` varchar(20) NOT NULL COMMENT 'å¡ç‰‡ç¼–å·',
-  `name` varchar(20) NOT NULL COMMENT 'ä¼šå‘˜å§“å',
-  `phone` varchar(20) NOT NULL COMMENT 'ä¼šå‘˜ç”µè¯',
-  `idcard` varchar(20) NOT NULL COMMENT 'ä¼šå‘˜èº«ä»½è¯å·',
-  `starttime` datetime NOT NULL COMMENT 'å¼€å¡æ—¶é—´',
-  `expiretime` datetime DEFAULT NULL COMMENT 'è¿‡æœŸæ—¶é—´',
-  `membertypeid` int(11) NOT NULL COMMENT 'ä¼šå‘˜ç±»å‹ID',
-  `shopid` varchar(10) NOT NULL COMMENT 'åˆ†åº—ID',
+  `memberid` int(11) NOT NULL AUTO_INCREMENT COMMENT '»áÔ±ID',
+  `cardid` varchar(20) NOT NULL COMMENT '¿¨Æ¬±àºÅ',
+  `name` varchar(20) NOT NULL COMMENT '»áÔ±ĞÕÃû',
+  `phone` varchar(20) NOT NULL COMMENT '»áÔ±µç»°',
+  `idcard` varchar(20) NOT NULL COMMENT '»áÔ±Éí·İÖ¤ºÅ',
+  `starttime` datetime NOT NULL COMMENT '¿ª¿¨Ê±¼ä',
+  `expiretime` datetime DEFAULT NULL COMMENT '¹ıÆÚÊ±¼ä',
+  `membertypeid` int(11) NOT NULL COMMENT '»áÔ±ÀàĞÍID',
+  `shopid` varchar(10) NOT NULL COMMENT '·ÖµêID',
   PRIMARY KEY (`memberid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -134,14 +134,14 @@ CREATE TABLE `membertype` (
 -- ----------------------------
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
-  `orderid` varchar(20) NOT NULL COMMENT 'è®¢å•ID',
-  `orderstate` int(11) NOT NULL DEFAULT '0' COMMENT 'è®¢å•çŠ¶æ€ï¼Œ0ä¸ºæœªç»“ï¼Œ1ä¸ºå·²ç»“',
-  `begintime` datetime NOT NULL COMMENT 'è®¢å•å¼€å§‹æ—¶é—´',
-  `endtime` datetime DEFAULT NULL COMMENT 'è®¢å•ç»“æŸæ—¶é—´',
-  `accounts` decimal(10,0) DEFAULT NULL COMMENT 'åº”æ”¶é‡‘é¢',
-  `paid` decimal(10,0) DEFAULT NULL COMMENT 'å®æ”¶é‡‘é¢',
-  `tableid` char(4) NOT NULL COMMENT 'é¤æ¡Œç¼–å·',
-  `memberid` varchar(20) DEFAULT NULL COMMENT 'ä¼šå‘˜ç¼–å·',
+  `orderid` varchar(20) NOT NULL COMMENT '¶©µ¥ID',
+  `orderstate` int(11) NOT NULL DEFAULT '0' COMMENT '¶©µ¥×´Ì¬£¬0ÎªÎ´½á£¬1ÎªÒÑ½á',
+  `begintime` datetime NOT NULL COMMENT '¶©µ¥¿ªÊ¼Ê±¼ä',
+  `endtime` datetime DEFAULT NULL COMMENT '¶©µ¥½áÊøÊ±¼ä',
+  `accounts` decimal(10,0) DEFAULT NULL COMMENT 'Ó¦ÊÕ½ğ¶î',
+  `paid` decimal(10,0) DEFAULT NULL COMMENT 'ÊµÊÕ½ğ¶î',
+  `tableid` char(4) NOT NULL COMMENT '²Í×À±àºÅ',
+  `memberid` varchar(20) DEFAULT NULL COMMENT '»áÔ±±àºÅ',
   PRIMARY KEY (`orderid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -154,12 +154,12 @@ CREATE TABLE `order` (
 -- ----------------------------
 DROP TABLE IF EXISTS `orderdetail`;
 CREATE TABLE `orderdetail` (
-  `detailid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'è®¢å•è¯¦æƒ…ID',
-  `orderid` varchar(20) NOT NULL COMMENT 'å¯¹åº”è®¢å•ç¼–å·',
-  `dishesid` int(11) NOT NULL COMMENT 'æ‰€ç‚¹èœå“id',
-  `dishescount` int(11) NOT NULL DEFAULT '1' COMMENT 'æ‰€ç‚¹èœå“æ•°é‡',
-  `dishestype` int(11) NOT NULL DEFAULT '0' COMMENT 'ç”¨äºæ ‡ç¤ºç‚¹èœæˆ–è€…é€€èœ0-ç‚¹èœï¼Œ1-åˆ’èœï¼Œ2-é€€èœ',
-  `handletime` datetime NOT NULL COMMENT 'è®¢å•è¯¦ç»†çš„æ“ä½œæ—¶é—´',
+  `detailid` int(11) NOT NULL AUTO_INCREMENT COMMENT '¶©µ¥ÏêÇéID',
+  `orderid` varchar(20) NOT NULL COMMENT '¶ÔÓ¦¶©µ¥±àºÅ',
+  `dishesid` int(11) NOT NULL COMMENT 'Ëùµã²ËÆ·id',
+  `dishescount` int(11) NOT NULL DEFAULT '1' COMMENT 'Ëùµã²ËÆ·ÊıÁ¿',
+  `dishestype` int(11) NOT NULL DEFAULT '0' COMMENT 'ÓÃÓÚ±êÊ¾µã²Ë»òÕßÍË²Ë0-µã²Ë£¬1-»®²Ë£¬2-ÍË²Ë',
+  `handletime` datetime NOT NULL COMMENT '¶©µ¥ÏêÏ¸µÄ²Ù×÷Ê±¼ä',
   PRIMARY KEY (`detailid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -172,11 +172,11 @@ CREATE TABLE `orderdetail` (
 -- ----------------------------
 DROP TABLE IF EXISTS `shop`;
 CREATE TABLE `shop` (
-  `shopid` varchar(20) NOT NULL COMMENT 'åˆ†åº—ID',
-  `shopname` varchar(20) NOT NULL COMMENT 'åˆ†åº—åç§°',
-  `shopaddress` varchar(100) NOT NULL COMMENT 'åˆ†åº—åœ°å€',
-  `telphonenumber` varchar(20) DEFAULT NULL COMMENT 'åº§æœºç¼–å·',
-  `cellphonenumber` varchar(20) DEFAULT NULL COMMENT 'æ‰‹æœºç¼–å·',
+  `shopid` varchar(20) NOT NULL COMMENT '·ÖµêID',
+  `shopname` varchar(20) NOT NULL COMMENT '·ÖµêÃû³Æ',
+  `shopaddress` varchar(100) NOT NULL COMMENT '·ÖµêµØÖ·',
+  `telphonenumber` varchar(20) DEFAULT NULL COMMENT '×ù»ú±àºÅ',
+  `cellphonenumber` varchar(20) DEFAULT NULL COMMENT 'ÊÖ»ú±àºÅ',
   PRIMARY KEY (`shopid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -189,14 +189,14 @@ CREATE TABLE `shop` (
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ç”¨æˆ·id',
-  `username` varchar(20) NOT NULL COMMENT 'ç”¨æˆ·åç§°',
-  `password` varchar(100) NOT NULL COMMENT 'å¯†ç ',
-  `registertime` datetime NOT NULL COMMENT 'æ³¨å†Œæ—¶é—´',
+  `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ÓÃ»§id',
+  `username` varchar(20) NOT NULL COMMENT 'ÓÃ»§Ãû³Æ',
+  `password` varchar(100) NOT NULL COMMENT 'ÃÜÂë',
+  `registertime` datetime NOT NULL COMMENT '×¢²áÊ±¼ä',
   `	
-function` binary(100) NOT NULL COMMENT 'æƒé™ä»£ç ',
-  `lastlogintime` datetime NOT NULL COMMENT 'ä¸Šæ¬¡ç™»å½•æ—¶é—´',
-  `expiretime` datetime DEFAULT NULL COMMENT 'è¿‡æœŸæ—¶é—´',
+function` binary(100) NOT NULL COMMENT 'È¨ÏŞ´úÂë',
+  `lastlogintime` datetime NOT NULL COMMENT 'ÉÏ´ÎµÇÂ¼Ê±¼ä',
+  `expiretime` datetime DEFAULT NULL COMMENT '¹ıÆÚÊ±¼ä',
   PRIMARY KEY (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
