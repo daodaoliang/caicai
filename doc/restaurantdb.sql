@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50524
 File Encoding         : 65001
 
-Date: 2013-07-02 00:55:56
+Date: 2013-07-04 00:20:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -95,6 +95,41 @@ CREATE TABLE `materialtype` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `member`
+-- ----------------------------
+DROP TABLE IF EXISTS `member`;
+CREATE TABLE `member` (
+  `memberid` int(11) NOT NULL AUTO_INCREMENT COMMENT '会员ID',
+  `cardid` varchar(20) NOT NULL COMMENT '卡片编号',
+  `name` varchar(20) NOT NULL COMMENT '会员姓名',
+  `phone` varchar(20) NOT NULL COMMENT '会员电话',
+  `idcard` varchar(20) NOT NULL COMMENT '会员身份证号',
+  `starttime` datetime NOT NULL COMMENT '开卡时间',
+  `expiretime` datetime DEFAULT NULL COMMENT '过期时间',
+  `membertypeid` int(11) NOT NULL COMMENT '会员类型ID',
+  `shopid` varchar(10) NOT NULL COMMENT '分店ID',
+  PRIMARY KEY (`memberid`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+
+-- ----------------------------
+-- Records of member
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `membertype`
+-- ----------------------------
+DROP TABLE IF EXISTS `membertype`;
+CREATE TABLE `membertype` (
+  `membertypeid` int(11) NOT NULL,
+  `typename` varchar(20) NOT NULL,
+  PRIMARY KEY (`membertypeid`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+
+-- ----------------------------
+-- Records of membertype
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `order`
 -- ----------------------------
 DROP TABLE IF EXISTS `order`;
@@ -130,4 +165,41 @@ CREATE TABLE `orderdetail` (
 
 -- ----------------------------
 -- Records of orderdetail
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `shop`
+-- ----------------------------
+DROP TABLE IF EXISTS `shop`;
+CREATE TABLE `shop` (
+  `shopid` varchar(20) NOT NULL COMMENT '分店ID',
+  `shopname` varchar(20) NOT NULL COMMENT '分店名称',
+  `shopaddress` varchar(100) NOT NULL COMMENT '分店地址',
+  `telphonenumber` varchar(20) DEFAULT NULL COMMENT '座机编号',
+  `cellphonenumber` varchar(20) DEFAULT NULL COMMENT '手机编号',
+  PRIMARY KEY (`shopid`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+
+-- ----------------------------
+-- Records of shop
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `user`
+-- ----------------------------
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `username` varchar(20) NOT NULL COMMENT '用户名称',
+  `password` varchar(100) NOT NULL COMMENT '密码',
+  `registertime` datetime NOT NULL COMMENT '注册时间',
+  `	
+function` binary(100) NOT NULL COMMENT '权限代码',
+  `lastlogintime` datetime NOT NULL COMMENT '上次登录时间',
+  `expiretime` datetime DEFAULT NULL COMMENT '过期时间',
+  PRIMARY KEY (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+
+-- ----------------------------
+-- Records of user
 -- ----------------------------
