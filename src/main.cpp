@@ -30,6 +30,5 @@ int main(int argc, char *argv[])
     testWidget.show();
     //处理消息
     WindowsEventHandler handler;
-    getSqlManager()->Init();
     return a.exec();
 }
