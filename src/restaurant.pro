@@ -22,11 +22,10 @@ SOURCES += main.cpp\
     skinwidget.cpp \
     printerwidget.cpp \
     printerprocesser.cpp \
-
     configerfileprocesser.cpp \
     vipmanager.cpp \
     sqlmanager.cpp \
-    carereadermanager.cpp \
+    cardreadermanager.cpp \
     functionwidget.cpp \
     dinnerwidget.cpp \
     windowseventhandler.cpp \
@@ -44,11 +43,10 @@ HEADERS  += mainwidget.h \
     functionwidget.h \
     printerwidget.h \
     printerprocesser.h \
-
     configerfileprocesser.h \
     vipmanager.h \
     sqlmanager.h \
-    carereadermanager.h \
+    cardreadermanager.h \
     function.h \
     dinnerwidget.h \
     windowseventhandler.h \

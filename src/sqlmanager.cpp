@@ -82,6 +82,7 @@ bool SqlManager::UpdateVipInfo(QString name, QString phone, QString idCard, QDat
 bool SqlManager::ExecQuery(QSqlQuery &query,QString sql)
 {
     query.prepare(sql);
+
     if(query.exec())
     {
         return true;
