@@ -1,11 +1,13 @@
 #include "functionwidget.h"
 #include "ui_functionwidget.h"
 #include <QDebug>
+#include "dinnerwidget.h"
 FunctionWidget::FunctionWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FunctionWidget)
 {
     ui->setupUi(this);
+    ui->stackedWidget->addWidget(new DinnerWidget);
 }
 
 FunctionWidget::~FunctionWidget()
@@ -21,4 +23,9 @@ void FunctionWidget::changePage(int index)
     }
 
     ui->stackedWidget->setCurrentIndex(index);
+}
+
+bool FunctionWidget::winEvent(MSG *message, long *result)
+{
+
 }

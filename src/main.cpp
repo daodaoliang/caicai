@@ -7,6 +7,7 @@
 #include "printerwidget.h"
 #include "sqlmanager.h"
 #include "cardreadermanager.h"
+#include "windowseventhandler.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -23,5 +24,12 @@ int main(int argc, char *argv[])
     //    PrinterWidget testWidget;
     //    testWidget.EnterWidget(&testWidget);
     //    testWidget.show();
+
+    PrinterWidget testWidget;
+    testWidget.EnterWidget(&testWidget);
+    testWidget.show();
+    //处理消息
+    WindowsEventHandler handler;
+    getSqlManager()->Init();
     return a.exec();
 }

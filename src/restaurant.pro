@@ -20,13 +20,17 @@ SOURCES += main.cpp\
     statuswidget.cpp \
     contentwidget.cpp \
     skinwidget.cpp \
-    functionwidget.cpp \
     printerwidget.cpp \
     printerprocesser.cpp \
+
     configerfileprocesser.cpp \
     vipmanager.cpp \
     sqlmanager.cpp \
-    cardreadermanager.cpp
+    carereadermanager.cpp \
+    functionwidget.cpp \
+    dinnerwidget.cpp \
+    windowseventhandler.cpp \
+    icommandhandler.cpp
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -40,14 +44,20 @@ HEADERS  += mainwidget.h \
     functionwidget.h \
     printerwidget.h \
     printerprocesser.h \
+
     configerfileprocesser.h \
     vipmanager.h \
     sqlmanager.h \
-    cardreadermanager.h
+    carereadermanager.h \
+    function.h \
+    dinnerwidget.h \
+    windowseventhandler.h \
+    icommandhandler.h
 
 RESOURCES += \
     src.qrc
 
 FORMS += \
     functionwidget.ui \
-    printerwidget.ui
+    printerwidget.ui \
+    dinnerwidget.ui

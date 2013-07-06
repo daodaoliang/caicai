@@ -23,33 +23,8 @@
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>-1</number>
      </property>
-     <widget class="QWidget" name="page">
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 56, 152);</string>
-      </property>
-     </widget>
-     <widget class="QWidget" name="page_2">
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(151, 255, 82);</string>
-      </property>
-     </widget>
-     <widget class="QWidget" name="page_3">
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 102, 55);</string>
-      </property>
-     </widget>
-     <widget class="QWidget" name="page_4">
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(164, 205, 255);</string>
-      </property>
-     </widget>
-     <widget class="QWidget" name="page_5">
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(8, 255, 173);</string>
-      </property>
-     </widget>
     </widget>
    </item>
   </layout>
