@@ -20,7 +20,20 @@ bool CardReaderManager::LoadLibraty()
         return false;
     }
     qDebug()<<"CardReader Lib Load Success";
+    //³õÊ¼»¯²âÊÔ
+    m_rf_init = (rf_init)m_CardReaderLib.resolve("rf_init");
+    if(m_rf_init == NULL)
+    {
+        qDebug()<<"error";
+    }
+    qDebug()<<"init:"<<m_rf_init(2,115200);
+    //²âÊÔ°æ±¾ºÅ
     m_getLib_ver = (lib_ver)m_CardReaderLib.resolve("lib_ver");
-
+    unsigned char buff[18];
+    if(m_getLib_ver(buff) == 0)
+    {
+        qDebug()<<"version"<<buff;
+    }
+    qDebug()<<m_getLib_ver(buff);
     return true;
 }

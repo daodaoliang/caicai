@@ -10,6 +10,11 @@ SqlManager::SqlManager(QObject *parent) :
     m_Password = "";
     m_UserName = "root";
 }
+
+SqlManager::~SqlManager()
+{
+    delete m_Query;
+}
 SqlManager* getSqlManager()
 {
     static SqlManager sqlManager;
@@ -17,7 +22,7 @@ SqlManager* getSqlManager()
 }
 bool SqlManager::Init()
 {
-    m_DB = QSqlDatabase::addDatabase("QMYSQL");
+    m_DB = QSqlDatabase::addDatabase("QMYSQL","restaurantdb");
     m_DB.setHostName(m_HostName);
     m_DB.setDatabaseName(m_DBName);
     m_DB.setUserName(m_UserName);
