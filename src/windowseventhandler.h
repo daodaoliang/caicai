@@ -24,7 +24,8 @@ protected:
 private:
     bool getRequest(QString *cmd, QStringList *cmdDetail, int index);
     void addCommand(ICommandHandler *command);
-    void handleCommand(const QString &cmd, const QStringList &cmdDetail);
+    void handleCommand(const QString &cmd, const QStringList &cmdDetail, int index);
+    void createCommand();
 private:
     void startWx();
     QProcess *m_wx;

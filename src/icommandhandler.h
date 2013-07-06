@@ -13,7 +13,8 @@ signals:
     
 public:
     virtual QString handlerName() = 0;
-    virtual void handleCommand(const QStringList &cmdDetail) = 0;
+    virtual void handleCommand(const QStringList &cmdDetail, int index) = 0;
+    void reply(const QStringList &replyList, int index);
 };
 
 //登录
@@ -28,7 +29,7 @@ public:
         return "DL";
     }
 
-    void handleCommand(const QStringList &cmdDetail);
+    void handleCommand(const QStringList &cmdDetail, int index);
 };
 
 //开机
@@ -42,7 +43,7 @@ public:
     {
         return "KJ";
     }
-    void handleCommand(const QStringList &cmdDetail);
+    void handleCommand(const QStringList &cmdDetail, int index);
 };
 
 //开台
@@ -56,7 +57,7 @@ public:
     {
         return "KT";
     }
-    void handleCommand(const QStringList &cmdDetail);
+    void handleCommand(const QStringList &cmdDetail, int index);
 };
 
 //换台
@@ -70,7 +71,7 @@ public:
     {
         return "HT";
     }
-    void handleCommand(const QStringList &cmdDetail);
+    void handleCommand(const QStringList &cmdDetail, int index);
 };
 
 //点菜
@@ -84,7 +85,7 @@ public:
     {
         return "DC";
     }
-    void handleCommand(const QStringList &cmdDetail);
+    void handleCommand(const QStringList &cmdDetail, int index);
 };
 
 //收到短信息
@@ -98,7 +99,7 @@ public:
     {
         return "DX";
     }
-    void handleCommand(const QStringList &cmdDetail);
+    void handleCommand(const QStringList &cmdDetail, int index);
 };
 
 class BackDishHandler : public ICommandHandler
@@ -111,7 +112,7 @@ public:
     {
         return "TC";
     }
-    void handleCommand(const QStringList &cmdDetail);
+    void handleCommand(const QStringList &cmdDetail, int index);
 };
 
 #endif // ICOMMANDHANDLER_H

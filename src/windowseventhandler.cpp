@@ -8,18 +8,13 @@ WindowsEventHandler::WindowsEventHandler(QWidget *parent) :
     QWidget(parent), m_wx(NULL), m_wxHandle(0)
 {
     startWx();
+    createCommand();
 }
 
 WindowsEventHandler::~WindowsEventHandler()
 {
     m_wx->close();
-    addCommand(new LoginHandler());
-    addCommand(new OpenMachineHandler());
-    addCommand(new OpenTableHandler);
-    addCommand(new ChangeTableHandler);
-    addCommand(new OrderHandler);
-    addCommand(new MessageHandler);
-    addCommand(new BackDishHandler);
+
 }
 
 void WindowsEventHandler::startWx()
@@ -47,7 +42,8 @@ bool WindowsEventHandler::winEvent(MSG *message, long *result)
                 QStringList cmdDetail;
                 if(getRequest(&cmd, &cmdDetail, command))
                 {
-
+                    handleCommand(cmd, cmdDetail, command);
+                    SendMessage((HWND)m_wxHandle, MESSAGETYPE, 0, message->lParam);
                 }
             }
         }
@@ -76,7 +72,7 @@ bool WindowsEventHandler::getRequest(QString *cmd, QStringList *cmdDetail, int i
             {
                 return false;
             }
-            *cmd = cmdDetail->at(0);
+            *cmd = cmdDetail->at(0).left(4).trimmed();
             return true;
         }
     }
@@ -87,11 +83,22 @@ void WindowsEventHandler::addCommand(ICommandHandler *command)
     m_commandMap[command->handlerName()] = command;
 }
 
-void WindowsEventHandler::handleCommand(const QString &cmd, const QStringList &cmdDetail)
+void WindowsEventHandler::handleCommand(const QString &cmd, const QStringList &cmdDetail, int index)
 {
     ICommandHandler *handler = m_commandMap.value(cmd, NULL);
     if(handler != NULL)
     {
-        handler->handleCommand(cmdDetail);
+        handler->handleCommand(cmdDetail, index);
     }
+}
+
+void WindowsEventHandler::createCommand()
+{
+    addCommand(new LoginHandler());
+    addCommand(new OpenMachineHandler());
+    addCommand(new OpenTableHandler);
+    addCommand(new ChangeTableHandler);
+    addCommand(new OrderHandler);
+    addCommand(new MessageHandler);
+    addCommand(new BackDishHandler);
 }
