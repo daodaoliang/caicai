@@ -20,6 +20,9 @@ SOURCES += main.cpp\
     statuswidget.cpp \
     contentwidget.cpp \
     skinwidget.cpp \
+    vipmanager.cpp \
+    sqlmanager.cpp \
+    carereadermanager.cpp \
     functionwidget.cpp \
     dinnerwidget.cpp \
     windowseventhandler.cpp
@@ -34,6 +37,9 @@ HEADERS  += mainwidget.h \
     contentwidget.h \
     skinwidget.h \
     functionwidget.h \
+    vipmanager.h \
+    sqlmanager.h \
+    carereadermanager.h \
     function.h \
     dinnerwidget.h \
     windowseventhandler.h

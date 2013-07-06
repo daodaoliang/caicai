@@ -1,9 +1,10 @@
-#include <QtGui/QApplication>
+﻿#include <QtGui/QApplication>
 #include "mainwidget.h"
 #include <QTextCodec>
 #include <QSqlDatabase>
 #include <QDebug>
 #include "titlewidget.h"
+#include "sqlmanager.h"
 #include "windowseventhandler.h"
 int main(int argc, char *argv[])
 {
@@ -24,6 +25,7 @@ int main(int argc, char *argv[])
     w.show();
 
     //处理消息
-    new WindowsEventHandler;
+    WindowsEventHandler handler;
+    getSqlManager()->Init();
     return a.exec();
 }
