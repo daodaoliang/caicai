@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     statuswidget.cpp \
     contentwidget.cpp \
     skinwidget.cpp \
-    functionwidget.cpp
+    functionwidget.cpp \
+    dinnerwidget.cpp \
+    windowseventhandler.cpp
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -31,10 +33,14 @@ HEADERS  += mainwidget.h \
     statuswidget.h \
     contentwidget.h \
     skinwidget.h \
-    functionwidget.h
+    functionwidget.h \
+    function.h \
+    dinnerwidget.h \
+    windowseventhandler.h
 
 RESOURCES += \
     src.qrc
 
 FORMS += \
-    functionwidget.ui
+    functionwidget.ui \
+    dinnerwidget.ui

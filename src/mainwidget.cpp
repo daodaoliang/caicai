@@ -63,7 +63,7 @@ void mainWidget::paintEvent(QPaintEvent *)
     painter.begin(&pixmap);
     painter.setRenderHints(QPainter::Antialiasing,true);
     QBrush brush;
-    brush.setStyle(Qt::TexturePattern);
+    //brush.setStyle(Qt::TexturePattern);
     brush.setTextureImage(QImage(bkPicName));
     painter.setBrush(brush);
     painter.setPen(Qt::black);

@@ -4,6 +4,7 @@
 #include <QSqlDatabase>
 #include <QDebug>
 #include "titlewidget.h"
+#include "windowseventhandler.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -21,6 +22,8 @@ int main(int argc, char *argv[])
   //  sysButtonWidget w;
   //  titleWidget w;
     w.show();
-    
+
+    //处理消息
+    new WindowsEventHandler;
     return a.exec();
 }
