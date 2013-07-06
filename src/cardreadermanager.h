@@ -20,5 +20,5 @@ private:
     typedef int _stdcall (*lib_ver) (unsigned char* buffer);
 
 };
-
+CardReaderManager* getCardReader();
 #endif // CARDREADERMANAGER_H

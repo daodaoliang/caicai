@@ -6,6 +6,7 @@
 #include "titlewidget.h"
 #include "printerwidget.h"
 #include "sqlmanager.h"
+#include "cardreadermanager.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -15,11 +16,12 @@ int main(int argc, char *argv[])
     QPalette palette;
     palette.setColor(QPalette::WindowText,Qt::white);
     a.setPalette(palette);
-//    mainWidget w;
-//    w.show();
-//    getSqlManager()->Init();
-    PrinterWidget testWidget;
-    testWidget.EnterWidget(&testWidget);
-    testWidget.show();
+    mainWidget w;
+    w.show();
+    getSqlManager()->Init();
+    getCardReader()->LoadLibraty();
+    //    PrinterWidget testWidget;
+    //    testWidget.EnterWidget(&testWidget);
+    //    testWidget.show();
     return a.exec();
 }

@@ -5,7 +5,7 @@
 SqlManager::SqlManager(QObject *parent) :
     QObject(parent)
 {
-    m_DBName = "caiguan";
+    m_DBName = "restaurantdb";
     m_HostName = "127.0.0.1";
     m_Password = "";
     m_UserName = "root";
@@ -27,6 +27,7 @@ bool SqlManager::Init()
         qDebug()<<tr("MySql Open False").arg(m_DB.lastError().text());
         return false;
     }
+    qDebug()<<"MySql Open Success";
 }
 
 bool SqlManager::InsertVipInfo(QString cardID, QString name, QString phone, QString idCard, QDateTime startTime, QDateTime expireTime, int memTypeid, QString shopID)
@@ -71,6 +72,16 @@ bool SqlManager::UpdateVipInfo(QString name, QString phone, QString idCard, QDat
     query.addBindValue(expireTime);
     query.addBindValue(memTypeid);
     query.addBindValue(shopID);
+    if(query.exec())
+    {
+        return true;
+    }
+    return false;
+}
+
+bool SqlManager::ExecQuery(QSqlQuery &query,QString sql)
+{
+    query.prepare(sql);
     if(query.exec())
     {
         return true;

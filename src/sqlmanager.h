@@ -13,6 +13,7 @@ public:
     bool InsertVipInfo(QString cardID,QString name,QString phone,QString idCard,QDateTime startTime,QDateTime expireTime,int memTypeid,QString shopID);
     bool DelVipInfo(QString cardID);
     bool UpdateVipInfo(QString name,QString phone,QString idCard,QDateTime expireTime,int memTypeid,QString shopID);
+    bool ExecQuery(QSqlQuery &query, QString sql);
 signals:
     
 public slots:
