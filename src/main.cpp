@@ -4,6 +4,7 @@
 #include <QSqlDatabase>
 #include <QDebug>
 #include "titlewidget.h"
+#include "printerwidget.h"
 #include "sqlmanager.h"
 #include "windowseventhandler.h"
 int main(int argc, char *argv[])
@@ -12,18 +13,15 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF8"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF8"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF8"));
-    qDebug() << QSqlDatabase::drivers();
     QPalette palette;
     palette.setColor(QPalette::WindowText,Qt::white);
     a.setPalette(palette);
-
-  //  a.setFont(QFont());
     mainWidget w;
-
-  //  sysButtonWidget w;
-  //  titleWidget w;
     w.show();
-
+    getSqlManager()->Init();
+    PrinterWidget testWidget;
+    testWidget.EnterWidget(&testWidget);
+    testWidget.show();
     //处理消息
     WindowsEventHandler handler;
     getSqlManager()->Init();

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+QT       += core gui sql network
 
 TARGET = restaurant
 TEMPLATE = app
@@ -20,12 +20,16 @@ SOURCES += main.cpp\
     statuswidget.cpp \
     contentwidget.cpp \
     skinwidget.cpp \
+    printerwidget.cpp \
+    printerprocesser.cpp \
+    configerfileprocesser.cpp \
     vipmanager.cpp \
     sqlmanager.cpp \
     carereadermanager.cpp \
     functionwidget.cpp \
     dinnerwidget.cpp \
-    windowseventhandler.cpp
+    windowseventhandler.cpp \
+    icommandhandler.cpp
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -37,16 +41,21 @@ HEADERS  += mainwidget.h \
     contentwidget.h \
     skinwidget.h \
     functionwidget.h \
+    printerwidget.h \
+    printerprocesser.h \
+    configerfileprocesser.h \
     vipmanager.h \
     sqlmanager.h \
     carereadermanager.h \
     function.h \
     dinnerwidget.h \
-    windowseventhandler.h
+    windowseventhandler.h \
+    icommandhandler.h
 
 RESOURCES += \
     src.qrc
 
 FORMS += \
     functionwidget.ui \
+    printerwidget.ui \
     dinnerwidget.ui
