@@ -23,7 +23,7 @@ SOURCES += main.cpp\
     functionwidget.cpp \
     printerwidget.cpp \
     printerprocesser.cpp \
-    configerfileprocesser.cpp
+    configerfileprocesser.cpp \
     vipmanager.cpp \
     sqlmanager.cpp \
     cardreadermanager.cpp
@@ -40,7 +40,7 @@ HEADERS  += mainwidget.h \
     functionwidget.h \
     printerwidget.h \
     printerprocesser.h \
-    configerfileprocesser.h
+    configerfileprocesser.h \
     vipmanager.h \
     sqlmanager.h \
     cardreadermanager.h
