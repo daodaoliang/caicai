@@ -14,12 +14,13 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("GBK"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("GBK"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("GBK"));
+    getSqlManager()->Init();
+
     QPalette palette;
     palette.setColor(QPalette::WindowText,Qt::white);
     a.setPalette(palette);
     mainWidget w;
     w.show();
-    getSqlManager()->Init();
     getCardReader()->LoadLibraty();
     //    PrinterWidget testWidget;
     //    testWidget.EnterWidget(&testWidget);
