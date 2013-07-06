@@ -27,6 +27,7 @@ bool SqlManager::Init()
         qDebug()<<tr("MySql Open False").arg(m_DB.lastError().text());
         return false;
     }
+    m_Query = new QSqlQuery(m_DB);
     qDebug()<<"MySql Open Success";
 }
 
@@ -79,13 +80,12 @@ bool SqlManager::UpdateVipInfo(QString name, QString phone, QString idCard, QDat
     return false;
 }
 
-bool SqlManager::ExecQuery(QSqlQuery &query,QString sql)
+QSqlQuery *SqlManager::ExecQuery(QString sql)
 {
-    query.prepare(sql);
-
-    if(query.exec())
+    m_Query->clear();
+    if(m_Query->exec(sql))
     {
-        return true;
+        return m_Query;
     }
-    return false;
+    return NULL;
 }

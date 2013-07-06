@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QSqlDatabase>
 #include <QDateTime>
+#include <QSqlQuery>
 class SqlManager : public QObject
 {
     Q_OBJECT
@@ -13,12 +14,13 @@ public:
     bool InsertVipInfo(QString cardID,QString name,QString phone,QString idCard,QDateTime startTime,QDateTime expireTime,int memTypeid,QString shopID);
     bool DelVipInfo(QString cardID);
     bool UpdateVipInfo(QString name,QString phone,QString idCard,QDateTime expireTime,int memTypeid,QString shopID);
-    bool ExecQuery(QSqlQuery &query, QString sql);
+    QSqlQuery* ExecQuery(QString sql);
 signals:
     
 public slots:
 private:
     QSqlDatabase m_DB;
+    QSqlQuery* m_Query;
     QString m_DBName;
     QString m_HostName;
     QString m_UserName;

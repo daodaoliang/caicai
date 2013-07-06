@@ -4,6 +4,7 @@ CardReaderManager::CardReaderManager(QObject *parent) :
     QObject(parent)
 {
     m_LibName = "./mwrf32.dll";
+    m_getLib_ver = NULL;
 }
 CardReaderManager* getCardReader()
 {
@@ -19,5 +20,7 @@ bool CardReaderManager::LoadLibraty()
         return false;
     }
     qDebug()<<"CardReader Lib Load Success";
+    m_getLib_ver = (lib_ver)m_CardReaderLib.resolve("lib_ver");
+
     return true;
 }
