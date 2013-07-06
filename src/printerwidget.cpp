@@ -4,6 +4,7 @@
 #include <QMouseEvent>
 #include "configerfileprocesser.h"
 #include "printerprocesser.h"
+#include <QDateTime>
 PrinterWidget::PrinterWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PrinterWidget)
@@ -71,7 +72,20 @@ void PrinterWidget::mouseMoveEvent(QMouseEvent *event)
 
 void PrinterWidget::on_pushButton_clicked()
 {
-    QString tempdata=ui->textEdit->toPlainText().toAscii().toHex()  ;
+    structCai temp;
+    temp.caiName=tr("西红柿炒鸡蛋");
+    temp.count=tr("2份");
+    temp.price=tr("12元");
+    temp.spMsg=tr("多放糖,多放糖,多放糖,多放糖,多放糖,多放糖");
+    structDinner tempdata;
+    tempdata.sCoName=tr("宇宙测试公司");
+    tempdata.sPartName=tr("宇宙测试公司");
+    tempdata.sZhuo=tr("324桌");
+    tempdata.time=QDateTime::currentDateTime().toString("yyyy/MM/DD--hh:mm:ss");
+    tempdata.listCaicai.append(temp);
+    tempdata.listCaicai.append(temp);
+    tempdata.listCaicai.append(temp);
+    tempdata.listCaicai.append(temp);
     if(getPrinterInstance()->slotWriteMsg(tempdata))
     {
         ui->textEdit->append(tr("打印成功"));

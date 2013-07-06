@@ -62,9 +62,47 @@ bool PrinterProcesser::slotWriteMsg(const QString &data)
 {
     if(!pSocketInstance->isWritable())
         return false;
-    QString tempdata(data);
-    tempdata.append(0x0a);
-    return pSocketInstance->write(tempdata.toLocal8Bit().toHex())>0;
+    QByteArray command;
+    command.append(data);
+    command.append(0x0a);
+    return pSocketInstance->write(command.data())>0;
+}
+
+bool PrinterProcesser::slotWriteMsg(const structDinner &data)
+{
+    if(!pSocketInstance->isWritable())
+        return false;
+    QByteArray command;
+    command.append(tr("-----------公司名称-------------"));
+    command.append(0x0a);
+    command.append(data.sCoName);
+    command.append(0x0a);
+    command.append(tr("-----------分店名称-------------"));
+    command.append(0x0a);
+    command.append(data.sPartName);
+    command.append(0x0a);
+    command.append(tr("-------------桌号-------------"));
+    command.append(0x0a);
+    command.append(data.sZhuo);
+    command.append(0x0a);
+    command.append(tr("-------------菜单--------------"));
+    command.append(0x0a);
+    for(int i=0;i!=data.listCaicai.count();++i)
+    {
+        command.append(data.listCaicai.at(i).caiName);
+        command.append("    ");
+        command.append(data.listCaicai.at(i).count);
+        command.append("    ");
+        command.append(data.listCaicai.at(i).price);
+        command.append(0x0a);
+        command.append(data.listCaicai.at(i).spMsg);
+        command.append(0x0a);
+    }
+    command.append(tr("------------下单时间------------"));
+    command.append(0x0a);
+    command.append(data.time);
+    command.append(0x0a);
+    return pSocketInstance->write(command.data())>0;
 }
 
 void PrinterProcesser::slotReOpenDev()
