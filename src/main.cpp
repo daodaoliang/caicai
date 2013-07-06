@@ -11,9 +11,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF8"));
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF8"));
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF8"));
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("GBK"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("GBK"));
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("GBK"));
     QPalette palette;
     palette.setColor(QPalette::WindowText,Qt::white);
     a.setPalette(palette);
@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     PrinterWidget testWidget;
     testWidget.EnterWidget(&testWidget);
     testWidget.show();
-    //澶勭悊娑堟伅
+    //处理消息
     WindowsEventHandler handler;
     return a.exec();
 }

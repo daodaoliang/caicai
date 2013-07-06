@@ -1,4 +1,4 @@
-﻿#ifndef STATUSWIDGET_H
+#ifndef STATUSWIDGET_H
 #define STATUSWIDGET_H
 
 #include <QWidget>

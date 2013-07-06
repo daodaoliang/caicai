@@ -20,7 +20,7 @@ public slots:
 signals:
     void signalStateChanged(QString state);
 private:
-    //socket  å®žä¾‹
+    //socket  ÊµÀý
     QTcpSocket *pSocketInstance;
     QTimer m_timer;
     bool flag;

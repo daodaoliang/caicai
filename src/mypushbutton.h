@@ -1,4 +1,4 @@
-Ôªø#ifndef MYPUSHBUTTON_H
+#ifndef MYPUSHBUTTON_H
 #define MYPUSHBUTTON_H
 
 #include <QPushButton>
@@ -28,5 +28,5 @@ protected:
 #endif // MYPUSHBUTTON_H
 
 /*
-  Êç¢ËÇ§ÊåâÈíÆ
+  ªª∑Ù∞¥≈•
 */
