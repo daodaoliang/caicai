@@ -2,7 +2,7 @@
 #define FUNCTIONWIDGET_H
 
 #include <QWidget>
-
+#include <windows.h>
 namespace Ui {
 class FunctionWidget;
 }
@@ -15,6 +15,8 @@ public:
     explicit FunctionWidget(QWidget *parent = 0);
     ~FunctionWidget();
     void changePage(int index);
+protected:
+    bool winEvent(MSG *message, long *result);
 private:
     Ui::FunctionWidget *ui;
 };

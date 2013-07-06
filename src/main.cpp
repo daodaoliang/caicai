@@ -6,6 +6,8 @@
 #include "titlewidget.h"
 #include "printerwidget.h"
 #include "sqlmanager.h"
+#include "cardreadermanager.h"
+#include "windowseventhandler.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -15,11 +17,18 @@ int main(int argc, char *argv[])
     QPalette palette;
     palette.setColor(QPalette::WindowText,Qt::white);
     a.setPalette(palette);
-//    mainWidget w;
-//    w.show();
-//    getSqlManager()->Init();
+    mainWidget w;
+    w.show();
+    getSqlManager()->Init();
+    getCardReader()->LoadLibraty();
+    //    PrinterWidget testWidget;
+    //    testWidget.EnterWidget(&testWidget);
+    //    testWidget.show();
+
     PrinterWidget testWidget;
     testWidget.EnterWidget(&testWidget);
     testWidget.show();
+    //处理消息
+    WindowsEventHandler handler;
     return a.exec();
 }

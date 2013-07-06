@@ -1,10 +1,11 @@
 #include "sqlmanager.h"
 #include <QDebug>
 #include <QSqlQuery>
+#include <QSqlError>
 SqlManager::SqlManager(QObject *parent) :
     QObject(parent)
 {
-    m_DBName = "localhost";
+    m_DBName = "restaurantdb";
     m_HostName = "127.0.0.1";
     m_Password = "";
     m_UserName = "root";
@@ -16,16 +17,18 @@ SqlManager* getSqlManager()
 }
 bool SqlManager::Init()
 {
-    m_DB.addDatabase("QMYSQL");
+    m_DB = QSqlDatabase::addDatabase("QMYSQL");
     m_DB.setHostName(m_HostName);
     m_DB.setDatabaseName(m_DBName);
     m_DB.setUserName(m_UserName);
     m_DB.setPassword(m_Password);
     if(!m_DB.open())
     {
-        qDebug()<<tr("MySql Open False");
+        qDebug()<<tr("MySql Open False").arg(m_DB.lastError().text());
         return false;
     }
+    m_Query = new QSqlQuery(m_DB);
+    qDebug()<<"MySql Open Success";
 }
 
 bool SqlManager::InsertVipInfo(QString cardID, QString name, QString phone, QString idCard, QDateTime startTime, QDateTime expireTime, int memTypeid, QString shopID)
@@ -75,4 +78,14 @@ bool SqlManager::UpdateVipInfo(QString name, QString phone, QString idCard, QDat
         return true;
     }
     return false;
+}
+
+QSqlQuery *SqlManager::ExecQuery(QString sql)
+{
+    m_Query->clear();
+    if(m_Query->exec(sql))
+    {
+        return m_Query;
+    }
+    return NULL;
 }
