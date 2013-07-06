@@ -29,6 +29,7 @@ mainWidget::mainWidget(QWidget *parent)
     toolW->setFocus();
     contentWidget *contentW=new contentWidget;
     statusWidget *statusW=new statusWidget;
+    toolW->connectToWidget(contentW);
 
     QVBoxLayout *mainLayout=new QVBoxLayout;
     mainLayout->setSpacing(0);

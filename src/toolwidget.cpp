@@ -1,7 +1,7 @@
 ﻿#include "toolwidget.h"
 #include <QLabel>
 #include <QHBoxLayout>
-
+#include <QVariant>
 toolWidget::toolWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -33,5 +33,9 @@ toolWidget::toolWidget(QWidget *parent) :
 
 void toolWidget::connectToWidget(QObject *receiver)
 {
-    //connect(receiver, SIGNAL(), )
+    for(int i = 0; i < m_buttonList.count(); i++)
+    {
+        m_buttonList[i]->setProperty("index", i);
+        connect(m_buttonList[i], SIGNAL(myToolClicked()), receiver, SLOT(changePage()));
+    }
 }
