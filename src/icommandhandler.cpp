@@ -1,7 +1,7 @@
 #include "icommandhandler.h"
 
 ICommandHandler::ICommandHandler() :
-    QObject(cmd)
+    QObject()
 {
 }
 
