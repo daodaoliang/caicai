@@ -1,4 +1,4 @@
-#ifndef SKINWIDGET_H
+ï»¿#ifndef SKINWIDGET_H
 #define SKINWIDGET_H
 
 #include <QWidget>
@@ -26,5 +26,5 @@ private:
 #endif // SKINWIDGET_H
 
 /*
-Æ¤·ô´°¿Ú
+çš®è‚¤çª—å£
 */

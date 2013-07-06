@@ -1,4 +1,4 @@
-#ifndef MAINWIDGET_H
+ï»¿#ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
 #include <QtGui/QWidget>
@@ -14,8 +14,8 @@ public:
 protected:
     void paintEvent(QPaintEvent *);
 private:
-    QString bkPicName;//Ö÷´°¿Ú±³¾°Í¼Æ¬µÄÃû³Æ
-    QPoint normalTopLeft;//Õı³£ÏÔÊ¾µÄ´°¿Ú×óÉÏ½Ç×ø±ê
+    QString bkPicName;//ä¸»çª—å£èƒŒæ™¯å›¾ç‰‡çš„åç§°
+    QPoint normalTopLeft;//æ­£å¸¸æ˜¾ç¤ºçš„çª—å£å·¦ä¸Šè§’åæ ‡
 private slots:
     void showMax();
     void showMin();

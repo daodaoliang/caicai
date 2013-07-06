@@ -1,14 +1,14 @@
-#include "statuswidget.h"
+ï»¿#include "statuswidget.h"
 #include <QLabel>
 #include <QHBoxLayout>
 
 statusWidget::statusWidget(QWidget *parent) :
     QWidget(parent)
 {
-    QLabel *labelVersion=new QLabel(tr("Ö÷³ÌÐò°æ±¾:8.7.0.2001"));
-    QLabel *labelHorse=new QLabel(tr("±¸ÓÃÄ¾Âí¿â:20121-8-24"));
-    QLabel *labelUpdate=new QLabel(tr("¼ì²é¸üÐÂ"));
-    QLabel *labelConn360=new QLabel(tr("Î´Á¬½ÓÖÁ360ÔÆ°²È«ÖÐÐÄ"));
+    QLabel *labelVersion=new QLabel(tr("ä¸»ç¨‹åºç‰ˆæœ¬:8.7.0.2001"));
+    QLabel *labelHorse=new QLabel(tr("å¤‡ç”¨æœ¨é©¬åº“:20121-8-24"));
+    QLabel *labelUpdate=new QLabel(tr("æ£€æŸ¥æ›´æ–°"));
+    QLabel *labelConn360=new QLabel(tr("æœªè¿žæŽ¥è‡³360äº‘å®‰å…¨ä¸­å¿ƒ"));
 
     QHBoxLayout *mainLayout=new QHBoxLayout;
     mainLayout->setMargin(0);

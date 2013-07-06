@@ -1,7 +1,7 @@
 #include "contentwidget.h"
 #include <QPalette>
 #include <QHBoxLayout>
-#include "functionwidget.h"
+#include <QVariant>
 contentWidget::contentWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -10,6 +10,12 @@ contentWidget::contentWidget(QWidget *parent) :
     setPalette(palette);
     setAutoFillBackground(true);
     QHBoxLayout *hLayout = new QHBoxLayout();
-    hLayout->addWidget(new FunctionWidget);
+    m_function = new FunctionWidget();
+    hLayout->addWidget(m_function);
     setLayout(hLayout);
+}
+
+void contentWidget::changePage()
+{
+    m_function->changePage(sender()->property("index").toInt());
 }

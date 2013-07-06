@@ -1,4 +1,4 @@
-#ifndef STATUSWIDGET_H
+ï»¿#ifndef STATUSWIDGET_H
 #define STATUSWIDGET_H
 
 #include <QWidget>
@@ -18,5 +18,4 @@ public slots:
 #endif // STATUSWIDGET_H
 
 /*
-  ×´Ì¬À¸
 */

@@ -2,6 +2,7 @@
 #define TOOLWIDGET_H
 
 #include <QWidget>
+#include "toolbutton.h"
 
 class toolWidget : public QWidget
 {
@@ -12,7 +13,10 @@ public:
 signals:
     
 public slots:
-    
+public:
+    void connectToWidget(QObject *receiver);
+private:
+    QList<toolButton *> m_buttonList;
 };
 
 #endif // TOOLWIDGET_H

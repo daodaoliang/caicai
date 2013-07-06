@@ -1,4 +1,4 @@
-#ifndef TOOLBUTTON_H
+﻿#ifndef TOOLBUTTON_H
 #define TOOLBUTTON_H
 
 #include <QWidget>
@@ -28,5 +28,5 @@ protected:
 #endif // TOOLBUTTON_H
 
 /*
-  ������� ľ����ɱ ©���޸� ϵͳ�޸���
+  电脑体检 木马查杀 漏洞修复 系统修复等
 */

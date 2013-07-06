@@ -7,7 +7,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QTextCodec::setCodecForTr(QTextCodec::codecForLocale());
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF8"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF8"));
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF8"));
     qDebug() << QSqlDatabase::drivers();
     QPalette palette;
     palette.setColor(QPalette::WindowText,Qt::white);

@@ -1,20 +1,16 @@
-#include "toolwidget.h"
-#include "toolbutton.h"
+ï»¿#include "toolwidget.h"
 #include <QLabel>
 #include <QHBoxLayout>
 
 toolWidget::toolWidget(QWidget *parent) :
     QWidget(parent)
 {
-    toolButton *tbTiJian=new toolButton(":/img/toolWidget/tiJian.png",tr("µçÄÔÌå¼ì"));
-    toolButton *tbMuMa=new toolButton(":/img/toolWidget/muMa.png",tr("Ä¾Âí²éÉ±"));
-    toolButton *tbLouDong=new toolButton(":/img/toolWidget/louDong.png",tr("Â©¶´ÐÞ¸´"));
-    toolButton *tbXiTong=new toolButton(":/img/toolWidget/xiTong.png",tr("ÏµÍ³ÐÞ¸´"));
-    toolButton *tbQingLi=new toolButton(":/img/toolWidget/qingLi.png",tr("µçÄÔÇåÀí"));
-    toolButton *tbJiaSu=new toolButton(":/img/toolWidget/jiaSu.png",tr("ÓÅ»¯¼ÓËÙ"));
-    toolButton *tbMenZhen=new toolButton(":/img/toolWidget/menZhen.png",tr("µçÄÔÃÅÕï"));
-    toolButton *tbRuanJian=new toolButton(":/img/toolWidget/ruanJian.png",tr("Èí¼þ¹Ü¼Ò"));
-    toolButton *tbGongNeng=new toolButton(":/img/toolWidget/gongNeng.png",tr("¹¦ÄÜ´óÈ«"));
+    m_buttonList.append(new toolButton(":/img/toolWidget/tiJian.png",tr("ç‚¹èœç®¡ç†")));
+    m_buttonList.append(new toolButton(":/img/toolWidget/muMa.png",tr("æœ¨é©¬æŸ¥æ€")));
+    m_buttonList.append(new toolButton(":/img/toolWidget/louDong.png",tr("æ¼æ´žä¿®å¤")));
+    m_buttonList.append(new toolButton(":/img/toolWidget/xiTong.png",tr("ç³»ç»Ÿä¿®å¤")));
+    m_buttonList.append(new toolButton(":/img/toolWidget/qingLi.png",tr("ç”µè„‘æ¸…ç†")));
+
 
     QLabel *logoLabel=new QLabel;
     QPixmap pixmap(":/img/logo.png");
@@ -24,18 +20,18 @@ toolWidget::toolWidget(QWidget *parent) :
 
     QHBoxLayout *mainLayout=new QHBoxLayout;
     mainLayout->setContentsMargins(5,0,5,0);
-    mainLayout->addWidget(tbTiJian);
-    mainLayout->addWidget(tbMuMa);
-    mainLayout->addWidget(tbLouDong);
-    mainLayout->addWidget(tbXiTong);
-    mainLayout->addWidget(tbQingLi);
-    mainLayout->addWidget(tbJiaSu);
-    mainLayout->addWidget(tbMenZhen);
-    mainLayout->addWidget(tbRuanJian);
-    mainLayout->addWidget(tbGongNeng);
+    foreach(toolButton *button, m_buttonList)
+    {
+        mainLayout->addWidget(button);
+    }
     mainLayout->addStretch();
     mainLayout->addWidget(logoLabel);
     setLayout(mainLayout);
 
     setFixedHeight(80);
+}
+
+void toolWidget::connectToWidget(QObject *receiver)
+{
+    //connect(receiver, SIGNAL(), )
 }

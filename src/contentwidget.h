@@ -2,6 +2,7 @@
 #define CONTENTWIDGET_H
 
 #include <QWidget>
+#include "functionwidget.h"
 
 class contentWidget : public QWidget
 {
@@ -12,6 +13,10 @@ public:
 signals:
     
 public slots:
+    void changePage();
+public:
+private:
+    FunctionWidget *m_function;
     
 };
 

@@ -14,7 +14,7 @@ class FunctionWidget : public QWidget
 public:
     explicit FunctionWidget(QWidget *parent = 0);
     ~FunctionWidget();
-    
+    void changePage(int index);
 private:
     Ui::FunctionWidget *ui;
 };

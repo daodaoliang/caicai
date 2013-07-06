@@ -12,3 +12,13 @@ FunctionWidget::~FunctionWidget()
 {
     delete ui;
 }
+
+void FunctionWidget::changePage(int index)
+{
+    if(index >= ui->stackedWidget->count())
+    {
+        return;
+    }
+
+    ui->stackedWidget->setCurrentIndex(index);
+}
