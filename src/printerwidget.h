@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPoint>
+#include "printerprocesser.h"
 namespace Ui {
 class PrinterWidget;
 }
@@ -25,6 +26,9 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
     //鼠标移动事件
     void mouseMoveEvent(QMouseEvent *event);
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::PrinterWidget *ui;
 };

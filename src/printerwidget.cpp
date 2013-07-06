@@ -3,6 +3,7 @@
 #include <QPropertyAnimation>
 #include <QMouseEvent>
 #include "configerfileprocesser.h"
+#include "printerprocesser.h"
 PrinterWidget::PrinterWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PrinterWidget)
@@ -16,6 +17,7 @@ PrinterWidget::PrinterWidget(QWidget *parent) :
      this->setPalette(palette);
      this->setAutoFillBackground(true);
      getConfigerFileInstance()->createInstance();
+     getPrinterInstance()->creatPrinterInstance();
 }
 
 PrinterWidget::~PrinterWidget()
@@ -65,4 +67,17 @@ void PrinterWidget::mouseMoveEvent(QMouseEvent *event)
         this->move(move_pos - move_point);
     }
     event->ignore();
+}
+
+void PrinterWidget::on_pushButton_clicked()
+{
+    QString tempdata=ui->textEdit->toPlainText();
+    if(getPrinterInstance()->slotWriteMsg(tempdata))
+    {
+        ui->textEdit->append(tr("打印成功"));
+    }
+    else
+    {
+        ui->textEdit->append(tr("打印失败"));
+    }
 }
