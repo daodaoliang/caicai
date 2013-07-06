@@ -23,7 +23,7 @@ SOURCES += main.cpp\
     functionwidget.cpp \
     vipmanager.cpp \
     sqlmanager.cpp \
-    carereadermanager.cpp
+    cardreadermanager.cpp
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -37,7 +37,7 @@ HEADERS  += mainwidget.h \
     functionwidget.h \
     vipmanager.h \
     sqlmanager.h \
-    carereadermanager.h
+    cardreadermanager.h
 
 RESOURCES += \
     src.qrc

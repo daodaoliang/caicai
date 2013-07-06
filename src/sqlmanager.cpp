@@ -1,10 +1,11 @@
 #include "sqlmanager.h"
 #include <QDebug>
 #include <QSqlQuery>
+#include <QSqlError>
 SqlManager::SqlManager(QObject *parent) :
     QObject(parent)
 {
-    m_DBName = "localhost";
+    m_DBName = "caiguan";
     m_HostName = "127.0.0.1";
     m_Password = "";
     m_UserName = "root";
@@ -16,14 +17,14 @@ SqlManager* getSqlManager()
 }
 bool SqlManager::Init()
 {
-    m_DB.addDatabase("QMYSQL");
+    m_DB = QSqlDatabase::addDatabase("QMYSQL");
     m_DB.setHostName(m_HostName);
     m_DB.setDatabaseName(m_DBName);
     m_DB.setUserName(m_UserName);
     m_DB.setPassword(m_Password);
     if(!m_DB.open())
     {
-        qDebug()<<tr("MySql Open False");
+        qDebug()<<tr("MySql Open False").arg(m_DB.lastError().text());
         return false;
     }
 }
