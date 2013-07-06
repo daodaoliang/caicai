@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     contentwidget.cpp \
     skinwidget.cpp \
     functionwidget.cpp \
-    vipmanager.cpp
+    vipmanager.cpp \
+    sqlmanager.cpp \
+    carereadermanager.cpp
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -33,7 +35,9 @@ HEADERS  += mainwidget.h \
     contentwidget.h \
     skinwidget.h \
     functionwidget.h \
-    vipmanager.h
+    vipmanager.h \
+    sqlmanager.h \
+    carereadermanager.h
 
 RESOURCES += \
     src.qrc
