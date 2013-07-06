@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 
 TARGET = restaurant
 TEMPLATE = app
@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     toolwidget.cpp \
     statuswidget.cpp \
     contentwidget.cpp \
-    skinwidget.cpp
+    skinwidget.cpp \
+    functionwidget.cpp
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -29,7 +30,11 @@ HEADERS  += mainwidget.h \
     toolwidget.h \
     statuswidget.h \
     contentwidget.h \
-    skinwidget.h
+    skinwidget.h \
+    functionwidget.h
 
 RESOURCES += \
     src.qrc
+
+FORMS += \
+    functionwidget.ui
