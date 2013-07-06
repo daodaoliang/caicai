@@ -1,6 +1,6 @@
 #include "functionwidget.h"
 #include "ui_functionwidget.h"
-
+#include <QDebug>
 FunctionWidget::FunctionWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FunctionWidget)
