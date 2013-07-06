@@ -71,7 +71,7 @@ void PrinterWidget::mouseMoveEvent(QMouseEvent *event)
 
 void PrinterWidget::on_pushButton_clicked()
 {
-    QString tempdata=ui->textEdit->toPlainText();
+    QString tempdata=ui->textEdit->toPlainText().toAscii().toHex()  ;
     if(getPrinterInstance()->slotWriteMsg(tempdata))
     {
         ui->textEdit->append(tr("打印成功"));
