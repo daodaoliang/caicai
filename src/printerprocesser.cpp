@@ -4,7 +4,7 @@
 PrinterProcesser::PrinterProcesser(QObject *parent) :
     QObject(parent)
 {
-    //åˆ›å»ºå®žä¾‹
+    //´´½¨ÊµÀý
     pSocketInstance=new QTcpSocket(this);
     m_timer.start(10000);
     connect(&m_timer,SIGNAL(timeout()),this,SLOT(slotReOpenDev()));
@@ -13,7 +13,7 @@ PrinterProcesser::PrinterProcesser(QObject *parent) :
 
 void PrinterProcesser::creatPrinterInstance()
 {
-    //è®¾ç½®å±žæ€§
+    //ÉèÖÃÊôÐÔ
     pSocketInstance->setObjectName(tr("daodaoliang"));
     pSocketInstance->abort();
     pSocketInstance->connectToHost(getConfigerFileInstance()->printerIp(),getConfigerFileInstance()->writerPort().toUInt(),QIODevice::ReadWrite);
@@ -34,22 +34,22 @@ void PrinterProcesser::slotStateChanged(QAbstractSocket::SocketState data)
     switch (data)
     {
     case QAbstractSocket::UnconnectedState:
-        emit signalStateChanged(tr("æœªè¿žæŽ¥"));
+        emit signalStateChanged(tr("Î´Á¬½Ó"));
         flag=false;
         break;
     case QAbstractSocket::HostLookupState:
-        emit signalStateChanged(tr("æ­£åœ¨æŸ¥è¯¢ã€‚ã€‚ã€‚"));
+        emit signalStateChanged(tr("ÕýÔÚ²éÑ¯¡£¡£¡£"));
         break;
     case QAbstractSocket::ConnectingState:
-        emit signalStateChanged(tr("æ­£åœ¨è¿žæŽ¥ã€‚ã€‚ã€‚"));
+        emit signalStateChanged(tr("ÕýÔÚÁ¬½Ó¡£¡£¡£"));
         break;
     case QAbstractSocket::BoundState:
-        emit signalStateChanged(tr("æœªçŸ¥"));
+        emit signalStateChanged(tr("Î´Öª"));
         break;
     case QAbstractSocket::ListeningState:
         break;
     case QAbstractSocket::ClosingState:
-        emit signalStateChanged(tr("æ­£åœ¨å…³é—­ã€‚ã€‚ã€‚"));
+        emit signalStateChanged(tr("ÕýÔÚ¹Ø±Õ¡£¡£¡£"));
         flag=false;
         break;
     default:

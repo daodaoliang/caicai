@@ -1,15 +1,15 @@
-ï»¿#include "toolwidget.h"
+#include "toolwidget.h"
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVariant>
 toolWidget::toolWidget(QWidget *parent) :
     QWidget(parent)
 {
-    m_buttonList.append(new toolButton(":/img/toolWidget/tiJian.png",tr("ç‚¹èœç®¡ç†")));
-    m_buttonList.append(new toolButton(":/img/toolWidget/muMa.png",tr("ä¼šå‘˜ç®¡ç†")));
-    m_buttonList.append(new toolButton(":/img/toolWidget/louDong.png",tr("æ¼æ´ä¿®å¤")));
-    m_buttonList.append(new toolButton(":/img/toolWidget/xiTong.png",tr("ç³»ç»Ÿä¿®å¤")));
-    m_buttonList.append(new toolButton(":/img/toolWidget/qingLi.png",tr("ç”µè„‘æ¸…ç†")));
+    m_buttonList.append(new toolButton(":/img/toolWidget/tiJian.png",tr("µã²Ë¹ÜÀí")));
+    m_buttonList.append(new toolButton(":/img/toolWidget/muMa.png",tr("»áÔ±¹ÜÀí")));
+    m_buttonList.append(new toolButton(":/img/toolWidget/louDong.png",tr("Â©¶´ĞŞ¸´")));
+    m_buttonList.append(new toolButton(":/img/toolWidget/xiTong.png",tr("ÏµÍ³ĞŞ¸´")));
+    m_buttonList.append(new toolButton(":/img/toolWidget/qingLi.png",tr("µçÄÔÇåÀí")));
 
 
     QLabel *logoLabel=new QLabel;

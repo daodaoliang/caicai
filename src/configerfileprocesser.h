@@ -9,13 +9,13 @@ class ConfigerFileProcesser : public QObject
 public:
     explicit ConfigerFileProcesser(QObject *parent = 0);
 private:
-    /********************é…ç½®é¡¹å®šä¹‰********************/
-    //æ‰“å°æœºæ ‡ç­¾ï¼ˆPrinterï¼‰
-    //æ‰“å°æœºï¼©ï¼°
+    /********************ÅäÖÃÏî¶¨Òå********************/
+    //´òÓ¡»ú±êÇ©£¨Printer£©
+    //´òÓ¡»ú£É£Ğ
     QString m_printerIp;
-    //æ‰“å°æœºè¯»å†™ç«¯å£
+    //´òÓ¡»ú¶ÁĞ´¶Ë¿Ú
     QString m_writerPort;
-    //æ‰“å°è·å–çŠ¶æ€ç«¯å£
+    //´òÓ¡»ñÈ¡×´Ì¬¶Ë¿Ú
     QString m_statePort;
 public:
     bool createInstance();

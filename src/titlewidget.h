@@ -1,4 +1,4 @@
-ï»¿#ifndef TITLEWIDGET_H
+#ifndef TITLEWIDGET_H
 #define TITLEWIDGET_H
 
 #include <QWidget>
@@ -16,7 +16,7 @@ signals:
     void showMin();
     void showMax();
 
-    void showSkin();//ç‚¹å‡»æ¢è‚¤æŒ‰é’®
+    void showSkin();//µã»÷»»·ô°´Å¥
 
 public slots:
 
@@ -27,7 +27,7 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *);
 
 private:
-    QPoint pressedPoint;//é¼ æ ‡æŒ‰ä¸‹å»çš„ç‚¹
+    QPoint pressedPoint;//Êó±ê°´ÏÂÈ¥µÄµã
     bool isMove;
 
     myPushButton *btnSkin;

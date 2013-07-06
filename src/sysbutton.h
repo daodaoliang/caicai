@@ -1,4 +1,4 @@
-ï»¿#ifndef SYSBUTTON_H
+#ifndef SYSBUTTON_H
 #define SYSBUTTON_H
 
 #include <QPushButton>
@@ -14,7 +14,7 @@ signals:
 public slots:
     
 private:
-    //æšä¸¾æŒ‰é’®çš„å‡ ç§çŠ¶æ€
+    //Ã¶¾Ù°´Å¥µÄ¼¸ÖÖ×´Ì¬
     enum buttonStatus{NORMAL,ENTER,PRESS,NOSTATUS};
     buttonStatus status;
     QPixmap pixmap;
@@ -24,14 +24,14 @@ private:
 
 protected:
     void paintEvent(QPaintEvent *);
-    void enterEvent(QEvent *);//é¼ æ ‡è¿›å…¥
-    void mousePressEvent(QMouseEvent *e);//æŒ‰ä¸‹é¼ æ ‡
-    void mouseReleaseEvent(QMouseEvent *e);//é‡Šæ”¾é¼ æ ‡
-    void leaveEvent(QEvent *);//é¼ æ ‡ç¦»å¼€
+    void enterEvent(QEvent *);//Êó±ê½øÈë
+    void mousePressEvent(QMouseEvent *e);//°´ÏÂÊó±ê
+    void mouseReleaseEvent(QMouseEvent *e);//ÊÍ·ÅÊó±ê
+    void leaveEvent(QEvent *);//Êó±êÀë¿ª
 };
 
 #endif // SYSBUTTON_H
 
 /*
-  æœ€å¤§åŒ– æœ€å°åŒ– å…³é—­æŒ‰é’®
+  ×î´ó»¯ ×îĞ¡»¯ ¹Ø±Õ°´Å¥
 */
