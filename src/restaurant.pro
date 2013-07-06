@@ -22,6 +22,7 @@ SOURCES += main.cpp\
     skinwidget.cpp \
     printerwidget.cpp \
     printerprocesser.cpp \
+
     configerfileprocesser.cpp \
     vipmanager.cpp \
     sqlmanager.cpp \
@@ -43,6 +44,7 @@ HEADERS  += mainwidget.h \
     functionwidget.h \
     printerwidget.h \
     printerprocesser.h \
+
     configerfileprocesser.h \
     vipmanager.h \
     sqlmanager.h \

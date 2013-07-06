@@ -1,4 +1,4 @@
-﻿#include <QtGui/QApplication>
+#include <QtGui/QApplication>
 #include "mainwidget.h"
 #include <QTextCodec>
 #include <QSqlDatabase>
@@ -6,6 +6,7 @@
 #include "titlewidget.h"
 #include "printerwidget.h"
 #include "sqlmanager.h"
+#include "cardreadermanager.h"
 #include "windowseventhandler.h"
 int main(int argc, char *argv[])
 {
@@ -19,6 +20,11 @@ int main(int argc, char *argv[])
     mainWidget w;
     w.show();
     getSqlManager()->Init();
+    getCardReader()->LoadLibraty();
+    //    PrinterWidget testWidget;
+    //    testWidget.EnterWidget(&testWidget);
+    //    testWidget.show();
+
     PrinterWidget testWidget;
     testWidget.EnterWidget(&testWidget);
     testWidget.show();
