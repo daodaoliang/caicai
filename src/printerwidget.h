@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPoint>
+#include "printerprocesser.h"
 namespace Ui {
 class PrinterWidget;
 }
@@ -14,17 +15,20 @@ class PrinterWidget : public QWidget
 public:
     explicit PrinterWidget(QWidget *parent = 0);
     ~PrinterWidget();
-    //å…¥åœºäº‹ä»¶
+    //Èë³¡ÊÂ¼ş
     void EnterWidget(QWidget *data);
 protected:
-    QPoint move_point; //ç§»åŠ¨çš„è·ç¦»
-    bool mouse_press; //é¼ æ ‡æŒ‰ä¸‹
-    //é¼ æ ‡æŒ‰ä¸‹äº‹ä»¶
+    QPoint move_point; //ÒÆ¶¯µÄ¾àÀë
+    bool mouse_press; //Êó±ê°´ÏÂ
+    //Êó±ê°´ÏÂÊÂ¼ş
     void mousePressEvent(QMouseEvent *event);
-    //é¼ æ ‡é‡Šæ”¾äº‹ä»¶
+    //Êó±êÊÍ·ÅÊÂ¼ş
     void mouseReleaseEvent(QMouseEvent *event);
-    //é¼ æ ‡ç§»åŠ¨äº‹ä»¶
+    //Êó±êÒÆ¶¯ÊÂ¼ş
     void mouseMoveEvent(QMouseEvent *event);
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::PrinterWidget *ui;
 };

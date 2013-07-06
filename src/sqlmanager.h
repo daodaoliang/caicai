@@ -16,6 +16,11 @@ public:
     bool DelVipInfo(QString cardID);
     bool UpdateVipInfo(QString name,QString phone,QString idCard,QDateTime expireTime,int memTypeid,QString shopID);
     QSqlQuery* ExecQuery(QString sql);
+    QSqlDatabase *getdb()
+    {
+        return &m_DB;
+    }
+
 signals:
     
 public slots:

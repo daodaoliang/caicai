@@ -3,19 +3,22 @@
 #include <QPropertyAnimation>
 #include <QMouseEvent>
 #include "configerfileprocesser.h"
+#include "printerprocesser.h"
+#include <QDateTime>
 PrinterWidget::PrinterWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PrinterWidget)
 {
     ui->setupUi(this);
-    //Â±ûÊÄß2
-    //ËÆæÁΩÆËÉåÊôØËâ≤ÈÄèÊòé
+    // Ù–‘2
+    //…Ë÷√±≥æ∞…´Õ∏√˜
      QPalette palette;
      QColor color(190, 230, 250);
      palette.setBrush(this->backgroundRole(), color);
      this->setPalette(palette);
      this->setAutoFillBackground(true);
      getConfigerFileInstance()->createInstance();
+     getPrinterInstance()->creatPrinterInstance();
 }
 
 PrinterWidget::~PrinterWidget()
@@ -25,7 +28,7 @@ PrinterWidget::~PrinterWidget()
 
 void PrinterWidget::EnterWidget(QWidget *data)
 {
-    //Â±ûÊÄß
+    // Ù–‘
     this->setWindowFlags(Qt::WindowStaysOnTopHint|Qt::FramelessWindowHint);
     QPropertyAnimation *animation = new QPropertyAnimation(data, "windowOpacity");
     animation->setDuration(3000);
@@ -39,7 +42,7 @@ void PrinterWidget::mousePressEvent(QMouseEvent *event)
     if(event->button() == Qt::LeftButton)
     {
         mouse_press = true;
-        //Á™óÂè£‰ΩçÁΩÆ
+        //¥∞ø⁄Œª÷√
         move_point = event->globalPos() - this->pos();
     }
     event->ignore();
@@ -49,20 +52,46 @@ void PrinterWidget::mousePressEvent(QMouseEvent *event)
 
 void PrinterWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-    //ËÆæÁΩÆÈº†Ê†á‰∏∫Êú™Ë¢´Êåâ‰∏ã
+    //…Ë÷√ Û±ÍŒ™Œ¥±ª∞¥œ¬
     mouse_press = false;
     event->ignore();
 }
 
 void PrinterWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    //Ëã•Èº†Ê†áÂ∑¶ÈîÆË¢´Êåâ‰∏ã
+    //»Ù Û±Í◊Ûº¸±ª∞¥œ¬
     if(mouse_press)
     {
-        //Ëé∑Âèñ‰ΩçÁΩÆ
+        //ªÒ»°Œª÷√
         QPoint move_pos = event->globalPos();
-        //ÁßªÂä®‰∏ªÁ™ó‰Ωì‰ΩçÁΩÆ
+        //“∆∂Ø÷˜¥∞ÃÂŒª÷√
         this->move(move_pos - move_point);
     }
     event->ignore();
+}
+
+void PrinterWidget::on_pushButton_clicked()
+{
+    structCai temp;
+    temp.caiName=tr("Œ˜∫Ï ¡≥¥º¶µ∞");
+    temp.count=tr("2∑›");
+    temp.price=tr("12‘™");
+    temp.spMsg=tr("∂‡∑≈Ã«,∂‡∑≈Ã«,∂‡∑≈Ã«,∂‡∑≈Ã«,∂‡∑≈Ã«,∂‡∑≈Ã«");
+    structDinner tempdata;
+    tempdata.sCoName=tr("”Ó÷Ê≤‚ ‘π´Àæ");
+    tempdata.sPartName=tr("”Ó÷Ê≤‚ ‘π´Àæ");
+    tempdata.sZhuo=tr("324◊¿");
+    tempdata.time=QDateTime::currentDateTime().toString("yyyy/MM/DD--hh:mm:ss");
+    tempdata.listCaicai.append(temp);
+    tempdata.listCaicai.append(temp);
+    tempdata.listCaicai.append(temp);
+    tempdata.listCaicai.append(temp);
+    if(getPrinterInstance()->slotWriteMsg(tempdata))
+    {
+        ui->textEdit->append(tr("¥Ú”°≥…π¶"));
+    }
+    else
+    {
+        ui->textEdit->append(tr("¥Ú”° ß∞‹"));
+    }
 }

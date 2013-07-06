@@ -33,5 +33,7 @@
         <file>img/toolWidget/ruanJian.png</file>
         <file>img/toolWidget/tiJian.png</file>
         <file>img/toolWidget/xiTong.png</file>
+        <file>img/table.jpg</file>
+        <file>img/s_32.png</file>
     </qresource>
 </RCC>

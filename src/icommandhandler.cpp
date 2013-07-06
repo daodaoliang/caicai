@@ -38,7 +38,8 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
         QString user = cmdDetail[1].mid(10, 4).trimmed();
         QString password = cmdDetail[1].mid(15, 10).trimmed();
         password = QCryptographicHash::hash(tr("%1%2").arg(user).arg(password).toLocal8Bit(), QCryptographicHash::Md5).toHex().data();
-        QString sql = tr("select nickname from user where username = '%1' and password = '%2'");
+        QString sql = tr("select nickname from user where username = '%1' and password = '%2'").arg(user).arg(password);
+        qDebug() << sql;
         QSqlQuery *query = getSqlManager()->ExecQuery(sql);
         if(query != NULL)
         {
@@ -50,7 +51,7 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
             }
         }
     }
-    replyList.append("0");
+    replyList.append("0 —È÷§ ß∞‹");
     reply(replyList, index);
 }
 
@@ -64,7 +65,6 @@ void OpenMachineHandler::handleCommand(const QStringList &cmdDetail, int index)
 
 void OpenTableHandler::handleCommand(const QStringList &cmdDetail, int index)
 {
-    qDebug() << cmdDetail;
 
 }
 

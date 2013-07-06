@@ -6,13 +6,13 @@
 
 /*!
  \brief
- gb2312ç¼–ç è½¬utf8ç¼–ç 
+ gb2312±àÂë×ªutf8±àÂë
  \param string
- gb2312ç¼–ç å­—ç¬¦ä¸²
+ gb2312±àÂë×Ö·û´®
  \param size
- å­—ç¬¦ä¸²é•¿åº¦ï¼Œå½“ç¡®å®šå­—ç¬¦ä¸²æ˜¯ä»¥â€˜\0â€™ç»“å°¾æ—¶ï¼Œå¯ä¸å¡«å†™
+ ×Ö·û´®³¤¶È£¬µ±È·¶¨×Ö·û´®ÊÇÒÔ¡®\0¡¯½áÎ²Ê±£¬¿É²»ÌîĞ´
  \return QString
- utf8ç¼–ç å­—ç¬¦ä¸²
+ utf8±àÂë×Ö·û´®
 */
 inline QString gb2312toUtf8(const char *string, int size = -1)
 {
@@ -27,11 +27,11 @@ inline QString gb2312toUtf8(const char *string, int size = -1)
 }
 /*!
  \brief
- gb2312ç¼–ç è½¬utf8ç¼–ç çš„é‡è½½æ–¹æ³•
+ gb2312±àÂë×ªutf8±àÂëµÄÖØÔØ·½·¨
  \param string
- gb2312ç¼–ç å­—ç¬¦ä¸²
+ gb2312±àÂë×Ö·û´®
  \return QString
- utf8ç¼–ç å­—ç¬¦ä¸²
+ utf8±àÂë×Ö·û´®
 */
 inline QString gb2312toUtf8(const QByteArray &string)
 {
@@ -40,13 +40,13 @@ inline QString gb2312toUtf8(const QByteArray &string)
 
 /*!
  \brief
- utf8ç¼–ç è½¬gb2312ç¼–ç 
+ utf8±àÂë×ªgb2312±àÂë
  \param string
- utf8ç¼–ç å­—ç¬¦ä¸²
+ utf8±àÂë×Ö·û´®
  \param size
- utf8ç¼–ç å­—ç¬¦ä¸²é•¿åº¦
+ utf8±àÂë×Ö·û´®³¤¶È
  \return QString
- gb2312ç¼–ç å­—ç¬¦ä¸²
+ gb2312±àÂë×Ö·û´®
 */
 inline QByteArray utf8toGb2312(const char *string, int size = -1)
 {
@@ -64,11 +64,11 @@ inline QByteArray utf8toGb2312(const char *string, int size = -1)
 
 /*!
  \brief
- utf8ç¼–ç è½¬gb2312ç¼–ç çš„ä¸€ä¸ªé‡è½½å‡½æ•°
+ utf8±àÂë×ªgb2312±àÂëµÄÒ»¸öÖØÔØº¯Êı
  \param string
- utf8ç¼–ç å­—ç¬¦ä¸²
+ utf8±àÂë×Ö·û´®
  \return QString
- gb2312ç¼–ç å­—ç¬¦ä¸²
+ gb2312±àÂë×Ö·û´®
 */
 inline QByteArray utf8toGb2312(const QString &string)
 {

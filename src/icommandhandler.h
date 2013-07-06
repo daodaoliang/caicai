@@ -17,7 +17,7 @@ public:
     void reply(const QStringList &replyList, int index);
 };
 
-//ç™»å½•
+//µÇÂ¼
 class LoginHandler : public ICommandHandler
 {
     Q_OBJECT
@@ -32,7 +32,7 @@ public:
     void handleCommand(const QStringList &cmdDetail, int index);
 };
 
-//å¼€æœº
+//¿ª»ú
 class OpenMachineHandler : public ICommandHandler
 {
     Q_OBJECT
@@ -46,7 +46,7 @@ public:
     void handleCommand(const QStringList &cmdDetail, int index);
 };
 
-//å¼€å°
+//¿ªÌ¨
 class OpenTableHandler : public ICommandHandler
 {
     Q_OBJECT
@@ -60,7 +60,7 @@ public:
     void handleCommand(const QStringList &cmdDetail, int index);
 };
 
-//æ¢å°
+//»»Ì¨
 class ChangeTableHandler : public ICommandHandler
 {
     Q_OBJECT
@@ -74,7 +74,7 @@ public:
     void handleCommand(const QStringList &cmdDetail, int index);
 };
 
-//ç‚¹èœ
+//µã²Ë
 class OrderHandler : public ICommandHandler
 {
     Q_OBJECT
@@ -88,7 +88,7 @@ public:
     void handleCommand(const QStringList &cmdDetail, int index);
 };
 
-//æ”¶åˆ°çŸ­ä¿¡æ¯
+//ÊÕµ½¶ÌĞÅÏ¢
 class MessageHandler : public ICommandHandler
 {
     Q_OBJECT

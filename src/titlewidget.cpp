@@ -1,4 +1,4 @@
-ï»¿#include "titlewidget.h"
+#include "titlewidget.h"
 #include "sysbutton.h"
 #include "mypushbutton.h"
 #include <QLabel>
@@ -10,16 +10,16 @@
 titleWidget::titleWidget(QWidget *parent) :
     QWidget(parent)
 {
-    QLabel *versionText=new QLabel(tr("360å®‰å…¨å«å£« 8.7"));
+    QLabel *versionText=new QLabel(tr("360°²È«ÎÀÊ¿ 8.7"));
 
-    btnSkin=new myPushButton("SkinButton.png",tr("æ¢è‚¤"));
+    btnSkin=new myPushButton("SkinButton.png",tr("»»·ô"));
     connect(btnSkin,SIGNAL(clicked()),this,SIGNAL(showSkin()));
-    btnMenuBar=new sysButton("title_bar_menu.png",tr("ä¸»èœå•"));
-    btnMin=new sysButton("sys_button_min.png",tr("æœ€å°åŒ–"));
+    btnMenuBar=new sysButton("title_bar_menu.png",tr("Ö÷²Ëµ¥"));
+    btnMin=new sysButton("sys_button_min.png",tr("×îÐ¡»¯"));
     connect(btnMin,SIGNAL(clicked()),this,SIGNAL(showMin()));
-    btnMax=new sysButton("sys_button_max.png",tr("æœ€å¤§åŒ–"));
+    btnMax=new sysButton("sys_button_max.png",tr("×î´ó»¯"));
     connect(btnMax,SIGNAL(clicked()),this,SIGNAL(showMax()));
-    btnClose=new sysButton("sys_button_close.png",tr("å…³é—­"));
+    btnClose=new sysButton("sys_button_close.png",tr("¹Ø±Õ"));
     connect(btnClose,SIGNAL(clicked()),qApp,SLOT(quit()));
 
     QHBoxLayout *mainLayout=new QHBoxLayout;
@@ -42,7 +42,7 @@ titleWidget::titleWidget(QWidget *parent) :
 
 void titleWidget::mousePressEvent(QMouseEvent *e)
 {
-    //å¦‚æžœç‚¹åœ¨æŒ‰é’®åŒºåŸŸ  ä¸ä¼šç§»åŠ¨ ç«‹å³è¿”å›ž
+    //Èç¹ûµãÔÚ°´Å¥ÇøÓò  ²»»áÒÆ¶¯ Á¢¼´·µ»Ø
     if(e->x()+170>=this->width())
         return;
     pressedPoint=e->pos();

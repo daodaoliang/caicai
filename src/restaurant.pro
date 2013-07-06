@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     functionwidget.cpp \
     dinnerwidget.cpp \
     windowseventhandler.cpp \
-    icommandhandler.cpp
+    icommandhandler.cpp \
+    tabledelegate.cpp
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -50,7 +51,8 @@ HEADERS  += mainwidget.h \
     function.h \
     dinnerwidget.h \
     windowseventhandler.h \
-    icommandhandler.h
+    icommandhandler.h \
+    tabledelegate.h
 
 RESOURCES += \
     src.qrc

@@ -28,8 +28,8 @@ bool ConfigerFileProcesser::createInstance()
 
     QString tempGroup=tr("Printer");
     setPrinterIp(tempSetting.value(tempGroup+"/printerIp",tr("192.168.123.100")).toString());
-    setPrinterIp(tempSetting.value(tempGroup+"/writerPort",tr("9100")).toString());
-    setPrinterIp(tempSetting.value(tempGroup+"/statePort",tr("4000")).toString());
+    setWriterPort(tempSetting.value(tempGroup+"/writerPort",tr("9100")).toString());
+    setStatePort(tempSetting.value(tempGroup+"/statePort",tr("4000")).toString());
 }
 
 QString ConfigerFileProcesser::printerIp()

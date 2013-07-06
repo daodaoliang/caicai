@@ -11,15 +11,16 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF8"));
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF8"));
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF8"));
+    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("GBK"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("GBK"));
+    QTextCodec::setCodecForTr(QTextCodec::codecForName("GBK"));
+    getSqlManager()->Init();
+
     QPalette palette;
     palette.setColor(QPalette::WindowText,Qt::white);
     a.setPalette(palette);
     mainWidget w;
     w.show();
-    getSqlManager()->Init();
     getCardReader()->LoadLibraty();
     //    PrinterWidget testWidget;
     //    testWidget.EnterWidget(&testWidget);
@@ -28,7 +29,7 @@ int main(int argc, char *argv[])
     PrinterWidget testWidget;
     testWidget.EnterWidget(&testWidget);
     testWidget.show();
-    //澶勭悊娑堟伅
+    //处理消息
     WindowsEventHandler handler;
     return a.exec();
 }
