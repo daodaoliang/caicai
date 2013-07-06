@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     statuswidget.cpp \
     contentwidget.cpp \
     skinwidget.cpp \
-    functionwidget.cpp
+    functionwidget.cpp \
+    vipmanager.cpp
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwidget.h \
     statuswidget.h \
     contentwidget.h \
     skinwidget.h \
-    functionwidget.h
+    functionwidget.h \
+    vipmanager.h
 
 RESOURCES += \
     src.qrc
