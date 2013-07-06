@@ -19,6 +19,8 @@ private:
 private:
     typedef int _stdcall (*lib_ver) (unsigned char* buffer);
     lib_ver m_getLib_ver;
+    typedef  int _stdcall (*rf_init) (int port,long baud);
+    rf_init m_rf_init;
 };
 CardReaderManager* getCardReader();
 #endif // CARDREADERMANAGER_H

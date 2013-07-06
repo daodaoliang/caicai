@@ -10,6 +10,7 @@ class SqlManager : public QObject
     Q_OBJECT
 public:
     explicit SqlManager(QObject *parent = 0);
+    ~SqlManager();
     bool Init();
     bool InsertVipInfo(QString cardID,QString name,QString phone,QString idCard,QDateTime startTime,QDateTime expireTime,int memTypeid,QString shopID);
     bool DelVipInfo(QString cardID);
