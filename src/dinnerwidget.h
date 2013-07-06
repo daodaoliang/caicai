@@ -2,6 +2,7 @@
 #define DINNERWIDGET_H
 
 #include <QWidget>
+#include <QSqlQueryModel>
 
 namespace Ui {
 class DinnerWidget;
@@ -18,6 +19,7 @@ private:
     void startWx();
 private:
     Ui::DinnerWidget *ui;
+    QSqlQueryModel *m_model;
 };
 
 #endif // DINNERWIDGET_H
