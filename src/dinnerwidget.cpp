@@ -11,7 +11,6 @@ DinnerWidget::DinnerWidget(QWidget *parent) :
     startWx();
     m_model = new QSqlQueryModel(this);
     m_model->setQuery("select * from diningtable", *getSqlManager()->getdb());
-
     ui->listView->setModel(m_model);
     ui->listView->setItemDelegate(new TableDelegate);
 }

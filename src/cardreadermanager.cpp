@@ -4,7 +4,7 @@ CardReaderManager::CardReaderManager(QObject *parent) :
     QObject(parent)
 {
     m_LibName = "./mwrf32.dll";
-    m_DeviceID = -1;
+    m_DeviceID = 0;
     m_Lib_ver = NULL;
     m_rf_init = NULL;
     m_rf_beep = NULL;
@@ -138,6 +138,10 @@ bool CardReaderManager::Reset(unsigned int Msec)
     {
         qDebug()<<"m_rf_reset 0"<<m_DeviceID<<":"<<ret;
         return false;
+    }
+    else
+    {
+        qDebug() << "reset success";
     }
     return true;
 }
