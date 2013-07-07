@@ -30,34 +30,34 @@ public slots:
 private:
     QLibrary m_CardReaderLib;
     QString m_LibName;
-    HANDLE m_DeviceID;
+    int m_DeviceID;
     long m_Snr;
 private:
-    typedef int __stdcall (*lib_ver) (unsigned char* buffer);
+    typedef qint16 __stdcall (*lib_ver) (unsigned char* buffer);
     lib_ver m_Lib_ver;
-    typedef HANDLE __stdcall (*rf_init) (qint16 port,long baud);
+    typedef qint16 __stdcall (*rf_init) (qint16 port,long baud);
     rf_init m_rf_init;
-    typedef int __stdcall (*rf_beep) (HANDLE icdev,unsigned int mesc);
+    typedef qint16 __stdcall (*rf_beep) (qint16 icdev,unsigned int mesc);
     rf_beep m_rf_beep;
-    typedef int __stdcall (*rf_display) (HANDLE icdev,unsigned char pt_model,short digit);
+    typedef qint16 __stdcall (*rf_display) (qint16 icdev,unsigned char pt_model,short digit);
     rf_display m_rf_display;
-    typedef int __stdcall (*rf_get_status) (HANDLE icdev,unsigned char *Status);
+    typedef qint16 __stdcall (*rf_get_status) (qint16 icdev,unsigned char *Status);
     rf_get_status m_rf_get_status;
-    typedef int __stdcall (*rf_request) (HANDLE icdev,unsigned char Mode,unsigned int *TagType);
+    typedef qint16 __stdcall (*rf_request) (qint16 icdev,unsigned char Mode,unsigned int *TagType);
     rf_request m_rf_request;
-    typedef int __stdcall (*rf_anticoll) (HANDLE icdev,unsigned char Bcnt,unsigned long *Snr);
+    typedef qint16 __stdcall (*rf_anticoll) (qint16 icdev,unsigned char Bcnt,unsigned long *Snr);
     rf_anticoll m_rf_anticoll;
-    typedef int __stdcall (*rf_select)(HANDLE icdev,unsigned long Snr,unsigned char *Size);
+    typedef qint16 __stdcall (*rf_select)(qint16 icdev,unsigned long Snr,unsigned char *Size);
     rf_select m_rf_select;
-    typedef int __stdcall (*rf_load_key) (HANDLE icdev,unsigned char Mode,unsigned char SecNr,unsigned char *NKey);
+    typedef qint16 __stdcall (*rf_load_key) (qint16 icdev,unsigned char Mode,unsigned char SecNr,unsigned char *NKey);
     rf_load_key m_rf_load_key;
-    typedef int __stdcall (*rf_authentication) (HANDLE icdev,unsigned char Mode,unsigned char _SecNr);
+    typedef qint16 __stdcall (*rf_authentication) (qint16 icdev,unsigned char Mode,unsigned char SecNr);
     rf_authentication m_rf_authentication;
-    typedef qint16 __stdcall (*rf_reset) (HANDLE icdev,quint16 Msec);
+    typedef qint16 __stdcall (*rf_reset) (qint16 icdev,quint16 Msec);
     rf_reset m_rf_reset;
-    typedef int __stdcall (*rf_exit) (qint16 icdev);
+    typedef qint16 __stdcall (*rf_exit) (qint16 icdev);
     rf_exit m_rf_exit;
-    typedef int __stdcall (*rf_read) (HANDLE icdev,unsigned char Adr,unsigned char *Data);
+    typedef qint16 __stdcall (*rf_read) (qint16 icdev,unsigned char Adr,unsigned char *Data);
     rf_read m_rf_read;
 
 };

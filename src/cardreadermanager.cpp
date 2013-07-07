@@ -82,7 +82,7 @@ bool CardReaderManager::DevBeep(unsigned int mesc)
     {
         return false;
     }
-    int ret;
+    qint16 ret;
     qDebug()<<ret;
     ret = m_rf_beep(m_DeviceID,mesc);
     if(ret != 0)
@@ -159,6 +159,7 @@ bool CardReaderManager::RequestCard(unsigned char model,unsigned int* type)
         qDebug()<<"request 0"<<ret;
         return false;
     }
+    qDebug()<<"request ret"<<ret;
     return true;
 }
 
@@ -174,6 +175,7 @@ bool CardReaderManager::AnticollCard(unsigned char Bcnt, unsigned long *Snr)
         qDebug()<<"AnticollCard"<<ret;
         return false;
     }
+    qDebug()<<"AnticollCard ret"<<ret;
     return true;
 }
 
@@ -189,6 +191,7 @@ bool CardReaderManager::SelectCard(unsigned long Snr, unsigned char *Size)
         qDebug()<<"SelectCard"<<ret;
         return false;
     }
+    qDebug()<<"selectcard ret"<<ret;
     return true;
 }
 
@@ -204,6 +207,7 @@ bool CardReaderManager::LoadKey(unsigned char KeyMode, unsigned char SecNr, unsi
         qDebug()<<"LoadKey"<<ret;
         return false;
     }
+    qDebug()<<"loadkey ret"<<ret;
     return true;
 }
 
@@ -213,11 +217,13 @@ bool CardReaderManager::AuthenticationCard(unsigned char Mode, unsigned char Sec
     {
         return false;
     }
-    int ret = m_rf_authentication(m_DeviceID,Mode,SecNr);
-    if( ret!= 0)
+    qint16 ret = m_rf_authentication(m_DeviceID,Mode,SecNr);
+    if(ret!= 0)
     {
+        qDebug()<<"AuthenticationCard ret"<<ret;
         return false;
     }
+    qDebug()<<"AuthenticationCard ret"<<ret;
     return true;
 }
 
@@ -230,29 +236,36 @@ bool CardReaderManager::ReadCard(unsigned char Adr, unsigned char *Data)
     int ret = m_rf_read(m_DeviceID,Adr,Data);
     if( ret!= 0)
     {
+        qDebug()<<"ReadCard 0"<<ret;
         return false;
     }
+    qDebug()<<tr("ReadCard ret%1").arg(ret);
+
     return true;
 }
 
 bool CardReaderManager::ReadCard()
 {
-    unsigned char IDLE = 0x00;
     unsigned int type = 0x0004;
     unsigned long snr;
     unsigned char size;
     unsigned char key[12];
-    QString kkey = "000000000000";
+    memset(key,0,12);
+    char kkey[12] = {'f','f','f','f','f','f','f','f','f','f','f','f'};
+    //char kkey[12] = {'1','f','f','f','f','f','f','f','f','f','f','0'};
     unsigned char data[16];
-    memcpy(key,kkey.toLocal8Bit().data(),12);
+    memcpy(key,kkey,12);
     Reset(10);
     RequestCard(0,&type);
     AnticollCard(0,&snr);
     SelectCard(snr,&size);
     LoadKey(0,1,key);
-    AuthenticationCard(0,1);
-    ReadCard(7,data);
-    qDebug()<<snr<<":"<<size<<"data:"<<data;
+    AuthenticationCard(0,2);
+    ReadCard(9,data);
+    char ndata[16];
+    memset(ndata,0,16);
+    memcpy(ndata,data,16);
+    qDebug()<<snr<<":"<<size<<"data:"<<QString::fromLocal8Bit(ndata,16);
 }
 
 bool CardReaderManager::Write()
