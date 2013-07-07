@@ -8,6 +8,7 @@
 #include "sqlmanager.h"
 #include "cardreadermanager.h"
 #include "windowseventhandler.h"
+#include "vipwidget.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -22,13 +23,18 @@ int main(int argc, char *argv[])
     mainWidget w;
     w.show();
     getCardReader()->LoadLibraty();
+    getCardReader()->InitDevice(1,115200);
+    getCardReader()->DevBeep(10);
+    getCardReader()->ReadCard();
     //    PrinterWidget testWidget;
     //    testWidget.EnterWidget(&testWidget);
     //    testWidget.show();
 
-    PrinterWidget testWidget;
-    testWidget.EnterWidget(&testWidget);
-    testWidget.show();
+//    PrinterWidget testWidget;
+//    testWidget.EnterWidget(&testWidget);
+//    testWidget.show();
+    VipWidget vip;
+    vip.show();
     //处理消息
     WindowsEventHandler handler;
     return a.exec();

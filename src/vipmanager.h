@@ -2,7 +2,6 @@
 #define VIPMANAGER_H
 
 #include <QObject>
-
 class VIPManager : public QObject
 {
     Q_OBJECT

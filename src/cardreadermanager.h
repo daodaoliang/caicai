@@ -18,9 +18,11 @@ public:
     bool RequestCard(unsigned char model,unsigned int *type);
     bool AnticollCard(unsigned char Bcnt,unsigned long *Snr);
     bool SelectCard(unsigned long Snr,unsigned char *Size);
-    bool LoadKey(unsigned char Mode,unsigned char SecNr,unsigned char *NKey);
+    bool LoadKey(unsigned char KeyMode,unsigned char SecNr,unsigned char *NKey);
     bool AuthenticationCard(unsigned char Mode,unsigned char SecNr);
+    bool ReadCard(unsigned char Adr,unsigned char *Data);
     bool ReadCard();
+    bool Write();
 signals:
     
 public slots:
@@ -28,6 +30,7 @@ private:
     QLibrary m_CardReaderLib;
     QString m_LibName;
     int m_DeviceID;
+    long m_Snr;
 private:
     typedef int _stdcall (*lib_ver) (unsigned char* buffer);
     lib_ver m_Lib_ver;
@@ -53,6 +56,9 @@ private:
     rf_reset m_rf_reset;
     typedef int _stdcall(*rf_exit) (int icdev);
     rf_exit m_rf_exit;
+    typedef int _stdcall (*rf_read) (int icdev,unsigned char Adr,unsigned char *Data);
+    rf_read m_rf_read;
+
 };
 CardReaderManager* getCardReader();
 #endif // CARDREADERMANAGER_H

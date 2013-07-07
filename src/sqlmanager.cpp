@@ -85,6 +85,17 @@ bool SqlManager::UpdateVipInfo(QString name, QString phone, QString idCard, QDat
     return false;
 }
 
+bool SqlManager::GetVipInfo()
+{
+    QString sql = tr("select * from memeber");
+    QSqlQuery query(sql);
+    if(!query.exec())
+    {
+        return false;
+    }
+    return true;
+}
+
 QSqlQuery *SqlManager::ExecQuery(QString sql)
 {
     m_Query->clear();
