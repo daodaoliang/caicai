@@ -7,7 +7,7 @@ FunctionWidget::FunctionWidget(QWidget *parent) :
     ui(new Ui::FunctionWidget)
 {
     ui->setupUi(this);
-    ui->stackedWidget->addWidget(new DinnerWidget);
+    ui->stackedWidget->addWidget(dinnerWidget());
 }
 
 FunctionWidget::~FunctionWidget()

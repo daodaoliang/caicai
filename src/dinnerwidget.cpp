@@ -21,6 +21,11 @@ DinnerWidget::~DinnerWidget()
     delete ui;
 }
 
+void DinnerWidget::updateData()
+{
+    m_model->setQuery("select * from diningtable", *getSqlManager()->getdb());
+}
+
 void DinnerWidget::startWx()
 {
 

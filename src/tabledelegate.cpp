@@ -9,7 +9,9 @@ TableDelegate::TableDelegate(QObject *parent) :
 void TableDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     //QItemDelegate::paint(painter, option, index);
-
+    //ÅÐ¶ÏÊÇ·ñÊÇÑ¡ÖÐ×´Ì¬
+    if (option.state & QStyle::State_Selected)
+            painter->fillRect(option.rect, option.palette.highlight());
     //»­³ö²Í×À
     painter->save();
     QRect newRect = option.rect;
@@ -26,11 +28,10 @@ void TableDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     painter->setFont(font);
     painter->drawText(nameRect, Qt::AlignCenter, index.sibling(index.row(), 1).data().toString());
     //²Í×À×´Ì¬
-
     if(index.sibling(index.row(), 2).data().toInt() == 1)
     {
         QRect busyRect;
-        busyRect.setLeft((option.rect.width() - m_busyImage.width()) / 2);
+        busyRect.setLeft(option.rect.left() + (option.rect.width() - m_busyImage.width()) / 2);
         busyRect.setTop((option.rect.top() + 25));
         busyRect.setWidth(m_busyImage.width());
         busyRect.setHeight(m_busyImage.height());

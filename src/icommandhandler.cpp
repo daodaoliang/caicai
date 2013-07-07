@@ -6,6 +6,8 @@
 #include <QFile>
 #include "sqlmanager.h"
 #include <windows.h>
+#include <QSqlResult>
+#include "dinnerwidget.h"
 ICommandHandler::ICommandHandler() :
     QObject()
 {
@@ -48,6 +50,7 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
                 QString nickName = query->value(0).toString();
                 replyList.append(tr("1 %1").arg(nickName));
                 reply(replyList, index);
+                return;
             }
         }
     }
@@ -58,14 +61,44 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
 
 void OpenMachineHandler::handleCommand(const QStringList &cmdDetail, int index)
 {
-    qDebug() << cmdDetail;
 
 }
 
 
 void OpenTableHandler::handleCommand(const QStringList &cmdDetail, int index)
 {
+    QStringList replyList;
+    replyList.append(cmdDetail[0].trimmed());
+    if(cmdDetail.size() >= 2)
+    {
+        //餐桌编号
+        QString tableId = cmdDetail[1].left(4);
+        //人数
+        tableId = tr("%1").arg(tableId.toInt(), 4, 10, QLatin1Char('0'));
 
+        int guestNumber = cmdDetail[1].mid(5, 2).toInt();
+        QString waiterId = cmdDetail[1].right(5);
+        QString sql = tr("update diningtable set state = 1, guestnumber = %1, waiterid = %2 where id = '%3' and state = 0")
+                .arg(guestNumber).arg(waiterId).arg(tableId);
+        QSqlQuery *query = getSqlManager()->ExecQuery(sql);
+        if(query != NULL)
+        {
+            if(query->numRowsAffected() == 1)
+            {
+                //TODO:处理数据库添加订单
+                replyList.append(tableId + "开台成功！");
+                reply(replyList, index);
+                //界面显示
+                dinnerWidget()->updateData();
+                return;
+            }
+
+        }
+
+        replyList.append(tableId + "开台失败");
+        reply(replyList, index);
+    }
+    return;
 }
 
 
