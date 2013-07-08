@@ -18,6 +18,8 @@ CardReaderManager::CardReaderManager(QObject *parent) :
     m_rf_reset = NULL;
     m_rf_exit = NULL;
     m_rf_read = NULL;
+    m_rf_halt = NULL;
+    m_rf_write = NULL;
 }
 CardReaderManager* getCardReader()
 {
@@ -45,6 +47,8 @@ bool CardReaderManager::LoadLibraty()
     m_rf_authentication = (rf_authentication)m_CardReaderLib.resolve("rf_authentication");
     m_rf_exit = (rf_exit)m_CardReaderLib.resolve("rf_exit");
     m_rf_read = (rf_read)m_CardReaderLib.resolve("rf_read");
+    m_rf_halt = (rf_halt)m_CardReaderLib.resolve("rf_halt");
+    m_rf_write = (rf_write)m_CardReaderLib.resolve("rf_write");
     return true;
 }
 
@@ -77,7 +81,6 @@ void CardReaderManager::ExitDevice(int com)
 
 bool CardReaderManager::DevBeep(unsigned int mesc)
 {
-    qDebug()<<"beep start";
     if(m_rf_beep == NULL)
     {
         return false;
@@ -87,10 +90,8 @@ bool CardReaderManager::DevBeep(unsigned int mesc)
     ret = m_rf_beep(m_DeviceID,mesc);
     if(ret != 0)
     {
-        qDebug()<<"beep "<<ret;
         return false;
     }
-    qDebug()<<"beep end"<<m_DeviceID;
     return true;
 }
 
@@ -244,30 +245,87 @@ bool CardReaderManager::ReadCard(unsigned char Adr, unsigned char *Data)
     return true;
 }
 
-bool CardReaderManager::ReadCard()
+bool CardReaderManager::WriteCard(unsigned char Adr, unsigned char *Data)
+{
+    if(m_rf_write == NULL)
+    {
+        return false;
+    }
+    qint16 ret = m_rf_write(m_DeviceID,Adr,Data);
+    if(ret!= 0)
+    {
+        qDebug()<<"write ret"<<ret;
+        return false;
+    }
+    qDebug()<<"write ret"<<ret;
+    return true;
+}
+
+bool CardReaderManager::Halt()
+{
+    if(m_rf_halt == NULL)
+    {
+        return false;
+    }
+    int ret = m_rf_halt(m_DeviceID);
+    if( ret!= 0)
+    {
+        qDebug()<<"Halt 0"<<ret;
+        return false;
+    }
+    qDebug()<<tr("Halt ret%1").arg(ret);
+    return true;
+}
+
+bool CardReaderManager::ReadCard(const QString readKey,const int readAdr,char* readData,int readLen)
 {
     unsigned int type = 0x0004;
+    //返回卡序列号地址
     unsigned long snr;
     unsigned char size;
+    // adr :要读的块号
+    //要读的扇区
+    int sec = readAdr/4;
     unsigned char key[12];
     memset(key,0,12);
-    char kkey[12] = {'f','f','f','f','f','f','f','f','f','f','f','f'};
-    //char kkey[12] = {'1','f','f','f','f','f','f','f','f','f','f','0'};
-    unsigned char data[16];
-    memcpy(key,kkey,12);
+    memcpy(key,readKey.toLocal8Bit().data(),readKey.length());
+    unsigned char rdata[16];
     Reset(10);
-    RequestCard(0,&type);
+    RequestCard(1,&type);
     AnticollCard(0,&snr);
     SelectCard(snr,&size);
     LoadKey(0,1,key);
-    AuthenticationCard(0,2);
-    ReadCard(9,data);
-    char ndata[16];
-    memset(ndata,0,16);
-    memcpy(ndata,data,16);
-    qDebug()<<snr<<":"<<size<<"data:"<<QString::fromLocal8Bit(ndata,16);
+    AuthenticationCard(0,sec);
+    ReadCard(readAdr,rdata);
+    memcpy(readData,rdata,qMin(readLen,16));
+    DevBeep(10);
+    Halt();
 }
 
-bool CardReaderManager::Write()
+bool CardReaderManager::WriteCard(const QString writeKey,const int writeAdr,char* writeData,int writeLen)
 {
+    unsigned int type = 0x0004;
+    //返回卡序列号地址
+    unsigned long snr;
+    unsigned char size;
+    // adr :要读的块号
+    //要写的扇区
+    int sec = writeAdr/4;
+    unsigned char key[12];
+    memset(key,0,12);
+    memcpy(key,writeKey.toLocal8Bit().data(),writeKey.length());
+    unsigned char wdata[16];
+    qDebug()<<"str:"<<QString::fromLocal8Bit(writeData,writeLen)<<"len"<<writeLen;
+    QByteArray warry = QByteArray::fromRawData(writeData,writeLen).toHex();
+    qDebug()<<"hex:"<<warry<<"wsize:"<<warry.size();
+    memcpy(wdata,warry.data(),qMin(16,writeLen));
+    Reset(10);
+    RequestCard(1,&type);
+    AnticollCard(0,&snr);
+    SelectCard(snr,&size);
+    LoadKey(0,1,key);
+    AuthenticationCard(0,sec);
+    WriteCard(writeAdr,wdata);
+    DevBeep(10);
+    Halt();
 }
