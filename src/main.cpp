@@ -25,16 +25,12 @@ int main(int argc, char *argv[])
     getCardReader()->LoadLibraty();
     getCardReader()->InitDevice(2,115200);
     QString key = "ffffffffffff";
-    //QString wdata = "bbbbbbbbbbbbbbbb1111111111111111";
-    QString wdata = "bbbbbbbbbbbbbbbb";
-    qDebug()<<"size:"<<wdata.toLocal8Bit().size();
+    QString wdata = "dddd";
+    getCardReader()->WriteCard(key,13,wdata.toLocal8Bit().data(),wdata.length());
+    //
     char rdata[16];
-    getCardReader()->ReadCard(key,13,rdata,16);
-    QByteArray arry;
-    arry = QByteArray::fromRawData(rdata,16);
-    qDebug()<<"read hex"<<arry.toHex();
-    //qDebug()<<"read str"<<QString::fromLocal8Bit(arry,16);
-    //getCardReader()->WriteCard(key,13,wdata.toLocal8Bit().data(),wdata.length());
+    getCardReader()->ReadCard(key,13,rdata,wdata.length());
+    qDebug()<<"read:"<<QString::fromLocal8Bit(rdata,wdata.length());
     //    PrinterWidget testWidget;
     //    testWidget.EnterWidget(&testWidget);
     //    testWidget.show();
