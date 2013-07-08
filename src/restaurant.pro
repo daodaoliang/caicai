@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     icommandhandler.cpp \
     tabledelegate.cpp \
     vipwidget.cpp \
-    readonlydelegate.cpp
+    readonlydelegate.cpp \
+    orderhelper.cpp
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -56,7 +57,8 @@ HEADERS  += mainwidget.h \
     icommandhandler.h \
     tabledelegate.h \
     vipwidget.h \
-    readonlydelegate.h
+    readonlydelegate.h \
+    orderhelper.h
 
 RESOURCES += \
     src.qrc
