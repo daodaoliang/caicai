@@ -22,8 +22,10 @@ public:
     bool LoadKey(unsigned char KeyMode,unsigned char SecNr,unsigned char *NKey);
     bool AuthenticationCard(unsigned char Mode,unsigned char SecNr);
     bool ReadCard(unsigned char Adr,unsigned char *Data);
-    bool ReadCard();
-    bool Write();
+    bool WriteCard(unsigned char Adr,unsigned char *Data);
+    bool Halt();
+    bool ReadCard(const QString readKey, const int readAdr, char *readData, int readLen);
+    bool WriteCard(const QString writeKey, const int writeAdr, char *writeData, int writeLen);
 signals:
     
 public slots:
@@ -59,7 +61,10 @@ private:
     rf_exit m_rf_exit;
     typedef qint16 __stdcall (*rf_read) (qint16 icdev,unsigned char Adr,unsigned char *Data);
     rf_read m_rf_read;
-
+    typedef qint16 __stdcall (*rf_halt) (qint16 icdev);
+    rf_halt m_rf_halt;
+    typedef qint16 __stdcall (*rf_write) (qint16 icdev,unsigned char Adr,unsigned char *Data);
+    rf_write m_rf_write;
 };
 CardReaderManager* getCardReader();
 #endif // CARDREADERMANAGER_H

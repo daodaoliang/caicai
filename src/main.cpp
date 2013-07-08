@@ -21,20 +21,29 @@ int main(int argc, char *argv[])
     palette.setColor(QPalette::WindowText,Qt::white);
     a.setPalette(palette);
     mainWidget w;
-    w.show();
+    //w.show();
     getCardReader()->LoadLibraty();
-    getCardReader()->InitDevice(1,115200);
-    getCardReader()->DevBeep(10);
-    getCardReader()->ReadCard();
+    getCardReader()->InitDevice(2,115200);
+    QString key = "ffffffffffff";
+    //QString wdata = "bbbbbbbbbbbbbbbb1111111111111111";
+    QString wdata = "bbbbbbbbbbbbbbbb";
+    qDebug()<<"size:"<<wdata.toLocal8Bit().size();
+    char rdata[16];
+    getCardReader()->ReadCard(key,13,rdata,16);
+    QByteArray arry;
+    arry = QByteArray::fromRawData(rdata,16);
+    qDebug()<<"read hex"<<arry.toHex();
+    //qDebug()<<"read str"<<QString::fromLocal8Bit(arry,16);
+    //getCardReader()->WriteCard(key,13,wdata.toLocal8Bit().data(),wdata.length());
     //    PrinterWidget testWidget;
     //    testWidget.EnterWidget(&testWidget);
     //    testWidget.show();
 
-//    PrinterWidget testWidget;
-//    testWidget.EnterWidget(&testWidget);
-//    testWidget.show();
-    VipWidget vip;
-    vip.show();
+    //    PrinterWidget testWidget;
+    //    testWidget.EnterWidget(&testWidget);
+    //    testWidget.show();
+    //    VipWidget vip;
+    //    vip.show();
     //处理消息
     WindowsEventHandler handler;
     return a.exec();
