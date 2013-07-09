@@ -21,6 +21,16 @@ int main(int argc, char *argv[])
     palette.setColor(QPalette::WindowText,Qt::white);
     a.setPalette(palette);
     mainWidget w;
+    //w.show();
+    getCardReader()->LoadLibraty();
+    getCardReader()->InitDevice(2,115200);
+    QString key = "ffffffffffff";
+    QString wdata = "dddd";
+    getCardReader()->WriteCard(key,13,wdata.toLocal8Bit().data(),wdata.length());
+    //
+    char rdata[16];
+    getCardReader()->ReadCard(key,13,rdata,wdata.length());
+    qDebug()<<"read:"<<QString::fromLocal8Bit(rdata,wdata.length());
     w.show();
     getCardReader()->LoadLibraty();
     getCardReader()->InitDevice(2,115200);
