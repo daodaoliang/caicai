@@ -277,7 +277,7 @@ bool CardReaderManager::Halt()
     return true;
 }
 
-bool CardReaderManager::ReadCard(const QString readKey,const int readAdr,char* readData,int readLen)
+bool CardReaderManager::ReadCard(const QString readKey,const int readAdr,char* readData,int readLen,QString &cardID)
 {
     unsigned int type = 0x0004;
     //∑µªÿø®–Ú¡–∫≈µÿ÷∑
@@ -294,12 +294,14 @@ bool CardReaderManager::ReadCard(const QString readKey,const int readAdr,char* r
     RequestCard(1,&type);
     AnticollCard(0,&snr);
     SelectCard(snr,&size);
+    cardID = QString::number(snr);
     LoadKey(0,1,key);
     AuthenticationCard(0,sec);
     ReadCard(readAdr,rdata);
     memcpy(readData,rdata,qMin(readLen,16));
-    DevBeep(10);
+    //DevBeep(10);
     Halt();
+    return true;
 }
 
 bool CardReaderManager::WriteCard(const QString writeKey,const int writeAdr,char* writeData,int writeLen)
@@ -316,7 +318,7 @@ bool CardReaderManager::WriteCard(const QString writeKey,const int writeAdr,char
     memcpy(key,writeKey.toLocal8Bit().data(),writeKey.length());
     unsigned char wdata[16];
     memset(wdata,0,16);
-    qDebug()<<"str:"<<QString::fromLocal8Bit(writeData,writeLen)<<"len"<<writeLen;
+    qDebug()<<"str:"<<QString::fromLocal8Bit(writeData)<<"len"<<writeLen;
     memcpy(wdata,writeData,qMin(16,writeLen));
     Reset(10);
     RequestCard(1,&type);
@@ -325,6 +327,6 @@ bool CardReaderManager::WriteCard(const QString writeKey,const int writeAdr,char
     LoadKey(0,1,key);
     AuthenticationCard(0,sec);
     WriteCard(writeAdr,wdata);
-    DevBeep(10);
+    //DevBeep(10);
     Halt();
 }

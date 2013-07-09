@@ -24,7 +24,7 @@ public:
     bool ReadCard(unsigned char Adr,unsigned char *Data);
     bool WriteCard(unsigned char Adr,unsigned char *Data);
     bool Halt();
-    bool ReadCard(const QString readKey, const int readAdr, char *readData, int readLen);
+    bool ReadCard(const QString readKey, const int readAdr, char *readData, int readLen, QString &cardID);
     bool WriteCard(const QString writeKey, const int writeAdr, char *writeData, int writeLen);
 signals:
     

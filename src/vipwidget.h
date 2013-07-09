@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QSqlTableModel>
-
+#include <QSqlQueryModel>
 namespace Ui {
 class VipWidget;
 }
@@ -23,9 +23,14 @@ private slots:
 
     void on_pushButton_Save_clicked();
 
+    void on_pushButton_OpenCard_clicked();
+
 private:
     Ui::VipWidget *ui;
-    QSqlTableModel *m_model;
+    QSqlTableModel *m_TableModel;
+    QSqlQueryModel *m_QueryModel;
+    bool selectVipInfoByCardID(const QString id);
+    bool writeInfoToCard();
 };
 
 #endif // VIPWIDGET_H
