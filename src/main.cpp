@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     palette.setColor(QPalette::WindowText,Qt::white);
     a.setPalette(palette);
     mainWidget w;
-    //w.show();
+    w.show();
     getCardReader()->LoadLibraty();
     getCardReader()->InitDevice(2,115200);
     QString key = "ffffffffffff";
@@ -38,8 +38,8 @@ int main(int argc, char *argv[])
     //    PrinterWidget testWidget;
     //    testWidget.EnterWidget(&testWidget);
     //    testWidget.show();
-    //    VipWidget vip;
-    //    vip.show();
+    VipWidget vip;
+    vip.show();
     //处理消息
     WindowsEventHandler handler;
     return a.exec();

@@ -317,8 +317,6 @@ bool CardReaderManager::WriteCard(const QString writeKey,const int writeAdr,char
     unsigned char wdata[16];
     memset(wdata,0,16);
     qDebug()<<"str:"<<QString::fromLocal8Bit(writeData,writeLen)<<"len"<<writeLen;
-    //    QByteArray warry = QByteArray::fromRawData(writeData,writeLen).toHex();
-    //    qDebug()<<"hex:"<<warry<<"wsize:"<<warry.size();
     memcpy(wdata,writeData,qMin(16,writeLen));
     Reset(10);
     RequestCard(1,&type);
