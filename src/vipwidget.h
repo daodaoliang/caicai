@@ -25,6 +25,8 @@ private slots:
 
     void on_pushButton_OpenCard_clicked();
 
+    void on_pushButton_Cancle_clicked();
+
 private:
     Ui::VipWidget *ui;
     QSqlTableModel *m_TableModel;

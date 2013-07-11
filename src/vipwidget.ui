@@ -131,7 +131,7 @@
   <widget class="QPushButton" name="pushButton_Add">
    <property name="geometry">
     <rect>
-     <x>400</x>
+     <x>350</x>
      <y>400</y>
      <width>75</width>
      <height>23</height>
@@ -144,7 +144,7 @@
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>570</x>
+     <x>490</x>
      <y>400</y>
      <width>75</width>
      <height>23</height>
@@ -167,7 +167,7 @@
   <widget class="QPushButton" name="pushButton_Save">
    <property name="geometry">
     <rect>
-     <x>760</x>
+     <x>620</x>
      <y>400</y>
      <width>75</width>
      <height>23</height>
@@ -203,7 +203,7 @@
   <widget class="QPushButton" name="pushButton_OpenCard">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>230</x>
      <y>400</y>
      <width>75</width>
      <height>23</height>
@@ -211,6 +211,19 @@
    </property>
    <property name="text">
     <string>打开卡片</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_Cancle">
+   <property name="geometry">
+    <rect>
+     <x>740</x>
+     <y>400</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>取消</string>
    </property>
   </widget>
  </widget>

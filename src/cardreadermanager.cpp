@@ -318,8 +318,10 @@ bool CardReaderManager::WriteCard(const QString writeKey,const int writeAdr,char
     memcpy(key,writeKey.toLocal8Bit().data(),writeKey.length());
     unsigned char wdata[16];
     memset(wdata,0,16);
-    qDebug()<<"str:"<<QString::fromLocal8Bit(writeData)<<"len"<<writeLen;
+    qDebug()<<"str:"<<QString::fromLocal8Bit(writeData)<<"hex"<<QByteArray::fromRawData(writeData,strlen(writeData)).toHex()<<"len"<<writeLen;
     memcpy(wdata,writeData,qMin(16,writeLen));
+    //qDebug()<<writeData[2];
+    //qDebug()<<"str:"<<QString::fromLocal8Bit((char*)wdata)<<"hex"<<QByteArray::fromRawData(wdata,strlen(wdata)).toHex()<<"len"<<writeLen<<strlen(wdata);
     Reset(10);
     RequestCard(1,&type);
     AnticollCard(0,&snr);
