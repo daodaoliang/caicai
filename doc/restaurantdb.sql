@@ -108,6 +108,7 @@ CREATE TABLE `member` (
   `expiretime` datetime DEFAULT NULL COMMENT '过期时间',
   `membertypeid` int(11) NOT NULL COMMENT '会员类型ID',
   `shopid` varchar(10) NOT NULL COMMENT '分店ID',
+  `balance` decimal(20) DEFAULT NULL COMMENT '账户余额',
   PRIMARY KEY (`memberid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 

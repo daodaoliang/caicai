@@ -24,11 +24,6 @@ int main(int argc, char *argv[])
     w.show();
     getCardReader()->LoadLibraty();
     getCardReader()->InitDevice(2,115200);
-    //    PrinterWidget testWidget;
-    //    testWidget.EnterWidget(&testWidget);
-    //    testWidget.show();
-    VipWidget vip;
-    vip.show();
     //处理消息
     WindowsEventHandler handler;
     return a.exec();

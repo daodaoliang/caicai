@@ -279,10 +279,10 @@ bool CardReaderManager::Halt()
 
 bool CardReaderManager::ReadCard(const QString readKey,const int readAdr,char* readData,int readLen,QString &cardID)
 {
-    unsigned int type = 0x0004;
-    //返回卡序列号地址
-    unsigned long snr;
-    unsigned char size;
+    //    unsigned int type = 0x0004;
+    //    //返回卡序列号地址
+    //    unsigned long snr;
+    //    unsigned char size;
     // adr :要读的块号
     //要读的扇区
     int sec = readAdr/4;
@@ -349,6 +349,8 @@ bool CardReaderManager::WriteCard(const QString writeKey,const int writeAdr,char
     memset(wdata,0,16);
     qDebug()<<"str:"<<QString::fromLocal8Bit(writeData)<<"hex"<<QByteArray::fromRawData(writeData,strlen(writeData)).toHex()<<"len"<<writeLen;
     memcpy(wdata,writeData,qMin(16,writeLen));
+    //寻卡、加载密钥等操作已在读卡操作中实现，保证每次写卡前必须要先打开卡片
+
     //qDebug()<<writeData[2];
     //qDebug()<<"str:"<<QString::fromLocal8Bit((char*)wdata)<<"hex"<<QByteArray::fromRawData(wdata,strlen(wdata)).toHex()<<"len"<<writeLen<<strlen(wdata);
     //    if(!Reset(10))
@@ -371,11 +373,11 @@ bool CardReaderManager::WriteCard(const QString writeKey,const int writeAdr,char
     //        qDebug()<<tr("selectcard false");
     //        return false;
     //    }
-    if(!LoadKey(0,1,key))
-    {
-        qDebug()<<tr("write card loadkey false");
-        return false;
-    }
+    //    if(!LoadKey(0,1,key))
+    //    {
+    //        qDebug()<<tr("write card loadkey false");
+    //        return false;
+    //    }
     if(!AuthenticationCard(0,sec))
     {
         qDebug()<<tr("authencard false");
@@ -388,4 +390,5 @@ bool CardReaderManager::WriteCard(const QString writeKey,const int writeAdr,char
     }
     //DevBeep(10);
     //Halt();
+    return true;
 }

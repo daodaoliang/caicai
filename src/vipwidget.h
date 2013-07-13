@@ -34,6 +34,15 @@ private:
     bool selectVipInfoByCardID(const QString id);
     bool writeInfoToCard();
     void resetText();
+    void setTextEnable(bool enable);
 };
-
+inline VipWidget *vipWidget()
+{
+    static VipWidget *w = NULL;
+    if(w == NULL)
+    {
+        w = new VipWidget();
+    }
+    return w;
+}
 #endif // VIPWIDGET_H
