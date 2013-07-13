@@ -9,6 +9,9 @@
 #include "cardreadermanager.h"
 #include <QStringList>
 #include <QTableWidget>
+#include <QHeaderView>
+#include <QStandardItem>
+#include <QStandardItemModel>
 VipWidget::VipWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::VipWidget)
@@ -19,7 +22,12 @@ VipWidget::VipWidget(QWidget *parent) :
     m_TableModel = new QSqlTableModel(this,*getSqlManager()->getdb());
     m_TableModel->setTable("member");
     m_TableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    //使用分页模式，第一次打开只显示前m_Interval条记录
     m_TableModel->select();
+    //设置view的数据源
+    ui->tableView->setModel(m_TableModel);
+    //显示页信息
+    resetPageInfo();
     //显示的列名
     m_TableModel->setHeaderData(0,Qt::Horizontal,tr("会员编号"));
     m_TableModel->setHeaderData(1,Qt::Horizontal,tr("会员卡号"));
@@ -31,7 +39,6 @@ VipWidget::VipWidget(QWidget *parent) :
     m_TableModel->setHeaderData(7,Qt::Horizontal,tr("会员类型"));
     m_TableModel->setHeaderData(8,Qt::Horizontal,tr("所属分店"));
     m_TableModel->setHeaderData(9,Qt::Horizontal,tr("账户余额"));
-    ui->tableView->setModel(m_TableModel);
     //设置列不可编辑
     ui->tableView->setItemDelegateForColumn(0,new readonlyDelegate(this));
     ui->tableView->setItemDelegateForColumn(1,new readonlyDelegate(this));
@@ -40,6 +47,14 @@ VipWidget::VipWidget(QWidget *parent) :
     //设置列不显示
     ui->tableView->setColumnHidden(0,true);
     ui->tableView->setColumnHidden(6,true);
+    //设置点击标题排序
+    QHeaderView* header = ui->tableView->horizontalHeader();
+    header->setSortIndicator(0,Qt::AscendingOrder);
+    header->setSortIndicatorShown(true);
+    header->setClickable(true);
+    //connect(header,SIGNAL(sectionClicked(int)),this,SLOT(slot_Sort(int)));
+    //
+    m_CurCardSnr = "";
 }
 
 VipWidget::~VipWidget()
@@ -61,7 +76,7 @@ void VipWidget::on_pushButton_Add_clicked()
     {
         return;
     }
-    if(selectVipInfoByCardID(cardNum))
+    if(selectVipInfoByCardID(cardNum) > 0)
     {
         QMessageBox::warning(NULL, tr("警告"), "该卡已注册会员！");
         return;
@@ -86,6 +101,14 @@ void VipWidget::on_pushButton_2_clicked()
         return;
     }
     int curRow = ui->tableView->currentIndex().row();
+    int curCol = ui->tableView->currentIndex().column();
+    QString cardSnr = ui->tableView->model()->data(ui->tableView->model()->index(curRow,curCol)).toString();
+    qDebug()<<"get card "<<cardSnr;
+    if(cardSnr!= ui->lineEdit_CardNum->text())
+    {
+        qDebug()<<"卡序列号不同";
+        return;
+    }
     m_TableModel->removeRow(curRow);
     resetText();
     setTextEnable(true);
@@ -94,6 +117,7 @@ void VipWidget::on_pushButton_2_clicked()
 //每次保存都会重新获取界面会员信息写到卡中
 void VipWidget::on_pushButton_Save_clicked()
 {
+    //TODO:如果顾客丢失会员卡进行卡注销(在会员类型中设置为0,丢失卡单独管理?)
     if(!writeInfoToCard())
     {
         qDebug()<<"保存信息到卡失败";
@@ -103,20 +127,26 @@ void VipWidget::on_pushButton_Save_clicked()
     m_TableModel->submitAll();
     resetText();
     setTextEnable(true);
+    //添加或者删除后重新更新分页信息
+    resetPageInfo();
 }
 
-bool VipWidget::selectVipInfoByCardID(const QString id)
+int VipWidget::selectVipInfoByCardID(const QString id)
 {
-    m_QueryModel->setQuery(tr("select count(*) from member where cardid = '%1'").arg(id),*getSqlManager()->getdb());
+    QString sql = tr("select count(*) from member");
+    if(id != "")
+    {
+        sql = tr("select count(*) from member where cardid = '%1'").arg(id);
+    }
+    m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
     while(m_QueryModel->query().next())
     {
         if(m_QueryModel->query().value(0).toInt() > 0 )
         {
-            qDebug()<<"exist cardnum.....";
-            return true;
+            return m_QueryModel->query().value(0).toInt();
         }
     }
-    return false;
+    return 0;
 }
 
 bool VipWidget::writeInfoToCard()
@@ -217,6 +247,40 @@ void VipWidget::setTextEnable(bool enable)
     ui->lineEdit_ShopID->setEnabled(enable);
 }
 
+void VipWidget::updateRecord(int startPage)
+{
+    QString filer = tr("1=1 LIMIT %1,%2").arg((startPage-1)*m_Interval).arg(m_Interval);
+    qDebug()<<tr("start:%1end:%2").arg((startPage-1)*m_Interval).arg(startPage*m_Interval);
+    m_TableModel->setFilter(filer);
+    ui->label_PageInfo->setText(tr("第%2页/共%1页/%3条").arg(m_PageCount).arg(startPage).arg(m_RecordCount));
+    if(m_CurPage == 1)
+    {
+        ui->but_PreviousPage->setEnabled(false);
+    }
+    if(m_CurPage == m_PageCount)
+    {
+        ui->but_NextPage->setEnabled(false);
+    }
+}
+
+void VipWidget::setPageCount()
+{
+    if(m_RecordCount%m_Interval != 0)
+    {
+        m_PageCount = m_RecordCount / m_Interval + 1;
+        return;
+    }
+    m_PageCount = m_RecordCount / m_Interval;
+}
+
+void VipWidget::resetPageInfo()
+{
+    m_RecordCount = selectVipInfoByCardID("");
+    setPageCount();
+    m_CurPage = 1;
+    updateRecord(m_CurPage);
+}
+
 void VipWidget::on_pushButton_OpenCard_clicked()
 {
     unsigned int type = 0x0004;
@@ -252,6 +316,7 @@ void VipWidget::on_pushButton_OpenCard_clicked()
     if(getCardReader()->ReadCard(key,8,rdata,16,cardID))
     {
         ui->lineEdit_CardNum->setText(cardID);
+        m_CurCardSnr = cardID;
         ui->lineEdit_MemName->setText(QString::fromLocal8Bit(rdata));
     }
     memset(rdata,0,16);
@@ -284,9 +349,10 @@ void VipWidget::on_pushButton_OpenCard_clicked()
     {
         ui->lineEdit_ShopID->setText(QString::fromLocal8Bit(rdata));
     }
-    if(selectVipInfoByCardID(cardID))
+    if(selectVipInfoByCardID(cardID) > 0)
     {
-        //TODO:如果存在该卡会员,列表单独显示该会员信息
+        //((QSqlQueryModel*)m_TableModel)->setQuery(tr("select * from member where cardid = '%1'").arg(cardID),*getSqlManager()->getdb());
+        m_TableModel->setFilter(tr("cardid = '%1'").arg(cardID));
     }
     //getCardReader()->Halt();
     qDebug()<<"read:"<<QString::fromLocal8Bit(rdata)<<"ID:"<<cardID;
@@ -297,4 +363,35 @@ void VipWidget::on_pushButton_Cancle_clicked()
     m_TableModel->revertAll();
     resetText();
     setTextEnable(true);
+    //((QSqlQueryModel*)m_TableModel)->setQuery(tr("select * from member LIMIT 10"),*getSqlManager()->getdb());
+    updateRecord(m_CurPage);
+}
+
+void VipWidget::on_but_NextPage_clicked()
+{
+    m_CurPage = m_CurPage + 1;
+    ui->but_PreviousPage->setEnabled(true);
+    updateRecord(m_CurPage);
+}
+
+void VipWidget::on_but_PreviousPage_clicked()
+{
+    m_CurPage = m_CurPage -1;
+    ui->but_NextPage->setEnabled(true);
+    updateRecord(m_CurPage);
+}
+
+void VipWidget::on_but_Skip_clicked()
+{
+    int page = ui->lineEdit_Skip->text().toInt();
+    if(1 <= page && page <= m_PageCount)
+    {
+        updateRecord(page);
+    }
+    ui->lineEdit_Skip->clear();
+}
+
+void VipWidget::slot_Sort(int column)
+{
+    m_TableModel->setSort(column,Qt::AscendingOrder);
 }
