@@ -33,6 +33,7 @@ private:
     QSqlQueryModel *m_QueryModel;
     bool selectVipInfoByCardID(const QString id);
     bool writeInfoToCard();
+    void resetText();
 };
 
 #endif // VIPWIDGET_H

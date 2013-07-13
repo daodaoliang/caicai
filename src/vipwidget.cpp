@@ -58,29 +58,27 @@ void VipWidget::on_pushButton_Add_clicked()
     m_TableModel->setData(m_TableModel->index(rowCount,7),memType);
     m_TableModel->setData(m_TableModel->index(rowCount,8),shopid);
 
-
     //保存身份证号到2扇区块10
     char tmp [16];
     memset(tmp,0,16);
     QByteArray arry = QByteArray::fromRawData(idCard.toLocal8Bit().data(),strlen(idCard.toLocal8Bit().data()));
     memcpy(tmp,QByteArray::fromHex(arry).data(),QByteArray::fromHex(arry).size());
-    //getCardReader()->WriteCard(key,10,tmp,16);
-    //qDebug()<<"-----------------------------"<<QString::fromLocal8Bit(QByteArray::fromHex(arry).data())<<arry<<QByteArray::fromHex(arry).size();
-    //qDebug()<<tr("%1").arg(QByteArray::fromHex(arry).data());
-    //m_model->submitAll();
 }
 
 void VipWidget::on_pushButton_2_clicked()
 {
     int curRow = ui->tableView->currentIndex().row();
     m_TableModel->removeRow(curRow);
+    resetText();
     //m_model->submitAll();
 }
 
 void VipWidget::on_pushButton_Save_clicked()
 {
+
     m_TableModel->submitAll();
     writeInfoToCard();
+    resetText();
 }
 
 bool VipWidget::selectVipInfoByCardID(const QString id)
@@ -99,11 +97,38 @@ bool VipWidget::selectVipInfoByCardID(const QString id)
 
 bool VipWidget::writeInfoToCard()
 {
-    //保存会员个人信息姓名到2扇区块8
+    unsigned int type = 0x0004;
+    //返回卡序列号地址
+    unsigned long snr;
+    unsigned char size;
     QString key = "ffffffffffff";
-    QString name = ui->lineEdit_MemName->text();
     char tmp [16];
     memset(tmp,0,16);
+    QString cardID = "";
+    if(!getCardReader()->Reset(10))
+    {
+        qDebug()<<tr("reset false");
+        return false;
+    }
+    if(!getCardReader()->RequestCard(1,&type))
+    {
+        qDebug()<<tr("requestcard false");
+        return false;
+    }
+    if(!getCardReader()->AnticollCard(0,&snr))
+    {
+        qDebug()<<tr("anticollcard false");
+        return false;
+    }
+    if(!getCardReader()->SelectCard(snr,&size))
+    {
+        qDebug()<<tr("selectcard false");
+        return false;
+    }
+    cardID = QString::number(snr);
+    //
+    //保存会员个人信息姓名到2扇区块8
+    QString name = ui->lineEdit_MemName->text();
     memcpy(tmp,name.toLocal8Bit().data(),qMin(16,(int)strlen(name.toLocal8Bit().data())));
     qDebug()<<"name len:"<<name.length();
     getCardReader()->WriteCard(key,8,tmp,16);
@@ -141,12 +166,49 @@ bool VipWidget::writeInfoToCard()
     return true;
 }
 
+void VipWidget::resetText()
+{
+    ui->lineEdit_CardNum->clear();
+    ui->lineEdit_IDCard->clear();
+    ui->lineEdit_MemName->clear();
+    ui->lineEdit_MemType->clear();
+    ui->lineEdit_Phone->clear();
+    ui->lineEdit_ShopID->clear();
+    ui->lineEdit_CardNum->clear();
+}
+
 void VipWidget::on_pushButton_OpenCard_clicked()
 {
+    unsigned int type = 0x0004;
+    //返回卡序列号地址
+    unsigned long snr;
+    unsigned char size;
     QString key = "ffffffffffff";
     char rdata[16];
     QString cardID;
     memset(rdata,0,16);
+    if(!getCardReader()->Reset(10))
+    {
+        qDebug()<<tr("reset false");
+        return;
+    }
+    if(!getCardReader()->RequestCard(1,&type))
+    {
+        qDebug()<<tr("requestcard false");
+        return;
+    }
+    if(!getCardReader()->AnticollCard(0,&snr))
+    {
+        qDebug()<<tr("anticollcard false");
+        return;
+    }
+    if(!getCardReader()->SelectCard(snr,&size))
+    {
+        qDebug()<<tr("selectcard false");
+        return;
+    }
+    cardID = QString::number(snr);
+    //
     if(getCardReader()->ReadCard(key,8,rdata,16,cardID))
     {
         ui->lineEdit_CardNum->setText(cardID);
@@ -182,16 +244,15 @@ void VipWidget::on_pushButton_OpenCard_clicked()
     {
         ui->lineEdit_ShopID->setText(QString::fromLocal8Bit(rdata));
     }
-    //memset(rdata,0,16);
     if(selectVipInfoByCardID(cardID))
     {
         //TODO:如果存在该卡会员,列表单独显示该会员信息
     }
     qDebug()<<"read:"<<QString::fromLocal8Bit(rdata)<<"ID:"<<cardID;
-
 }
 
 void VipWidget::on_pushButton_Cancle_clicked()
 {
     m_TableModel->revertAll();
+    resetText();
 }

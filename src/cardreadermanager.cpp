@@ -205,7 +205,7 @@ bool CardReaderManager::LoadKey(unsigned char KeyMode, unsigned char SecNr, unsi
     int ret = m_rf_load_key(m_DeviceID,KeyMode,SecNr,NKey);
     if(ret != 0)
     {
-        qDebug()<<"LoadKey"<<ret;
+        qDebug()<<" LoadKey"<<ret;
         return false;
     }
     qDebug()<<"loadkey ret"<<ret;
@@ -290,22 +290,51 @@ bool CardReaderManager::ReadCard(const QString readKey,const int readAdr,char* r
     memset(key,0,12);
     memcpy(key,readKey.toLocal8Bit().data(),readKey.length());
     unsigned char rdata[16];
-    Reset(10);
-    RequestCard(1,&type);
-    AnticollCard(0,&snr);
-    SelectCard(snr,&size);
-    cardID = QString::number(snr);
-    LoadKey(0,1,key);
-    AuthenticationCard(0,sec);
-    ReadCard(readAdr,rdata);
+    //    if(!Reset(10))
+    //    {
+    //        qDebug()<<tr("reset false");
+    //        return false;
+    //    }
+    //    if(!RequestCard(1,&type))
+    //    {
+    //        qDebug()<<tr("requestcard false");
+    //        return false;
+    //    }
+    //    if(!AnticollCard(0,&snr))
+    //    {
+    //        qDebug()<<tr("anticollcard false");
+    //        return false;
+    //    }
+    //    if(!SelectCard(snr,&size))
+    //    {
+    //        qDebug()<<tr("selectcard false");
+    //        return false;
+    //    }
+    //    cardID = QString::number(snr);
+    if(!LoadKey(0,1,key))
+    {
+        qDebug()<<tr(" read card loadkey false");
+        return false;
+    }
+    if(!AuthenticationCard(0,sec))
+    {
+        qDebug()<<tr("readcard authencard false");
+        return false;
+    }
+    if(!ReadCard(readAdr,rdata))
+    {
+        qDebug()<<tr("read false");
+        return false;
+    }
     memcpy(readData,rdata,qMin(readLen,16));
     //DevBeep(10);
-    Halt();
+    //Halt();
     return true;
 }
 
 bool CardReaderManager::WriteCard(const QString writeKey,const int writeAdr,char* writeData,int writeLen)
 {
+    qDebug()<<"write card---------------------------------------------";
     unsigned int type = 0x0004;
     //·µ»Ø¿¨ÐòÁÐºÅµØÖ·
     unsigned long snr;
@@ -322,13 +351,41 @@ bool CardReaderManager::WriteCard(const QString writeKey,const int writeAdr,char
     memcpy(wdata,writeData,qMin(16,writeLen));
     //qDebug()<<writeData[2];
     //qDebug()<<"str:"<<QString::fromLocal8Bit((char*)wdata)<<"hex"<<QByteArray::fromRawData(wdata,strlen(wdata)).toHex()<<"len"<<writeLen<<strlen(wdata);
-    Reset(10);
-    RequestCard(1,&type);
-    AnticollCard(0,&snr);
-    SelectCard(snr,&size);
-    LoadKey(0,1,key);
-    AuthenticationCard(0,sec);
-    WriteCard(writeAdr,wdata);
+    //    if(!Reset(10))
+    //    {
+    //        qDebug()<<tr("reset false");
+    //        return false;
+    //    }
+    //    if(!RequestCard(1,&type))
+    //    {
+    //        qDebug()<<tr("requestcard false");
+    //        return false;
+    //    }
+    //    if(!AnticollCard(0,&snr))
+    //    {
+    //        qDebug()<<tr("anticollcard false");
+    //        return false;
+    //    }
+    //    if(!SelectCard(snr,&size))
+    //    {
+    //        qDebug()<<tr("selectcard false");
+    //        return false;
+    //    }
+    if(!LoadKey(0,1,key))
+    {
+        qDebug()<<tr("write card loadkey false");
+        return false;
+    }
+    if(!AuthenticationCard(0,sec))
+    {
+        qDebug()<<tr("authencard false");
+        return false;
+    }
+    if(!WriteCard(writeAdr,wdata))
+    {
+        qDebug()<<tr("writecard false");
+        return false;
+    }
     //DevBeep(10);
-    Halt();
+    //Halt();
 }
