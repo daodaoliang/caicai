@@ -10,7 +10,7 @@
 titleWidget::titleWidget(QWidget *parent) :
     QWidget(parent)
 {
-    QLabel *versionText=new QLabel(tr("360安全卫士 8.7"));
+    QLabel *versionText=new QLabel(tr("旗鼓村点菜软件 1.0"));
 
     btnSkin=new myPushButton("SkinButton.png",tr("换肤"));
     connect(btnSkin,SIGNAL(clicked()),this,SIGNAL(showSkin()));

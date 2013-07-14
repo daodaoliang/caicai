@@ -5,10 +5,10 @@
 statusWidget::statusWidget(QWidget *parent) :
     QWidget(parent)
 {
-    QLabel *labelVersion=new QLabel(tr("主程序版本:8.7.0.2001"));
-    QLabel *labelHorse=new QLabel(tr("备用木马库:20121-8-24"));
+    QLabel *labelVersion=new QLabel(tr("主程序版本:1.0.0.0"));
+    QLabel *labelHorse=new QLabel(tr(""));
     QLabel *labelUpdate=new QLabel(tr("检查更新"));
-    QLabel *labelConn360=new QLabel(tr("未连接至360云安全中心"));
+    QLabel *labelConn360=new QLabel(tr(""));
 
     QHBoxLayout *mainLayout=new QHBoxLayout;
     mainLayout->setMargin(0);

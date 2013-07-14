@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QSqlQueryModel>
 #include "orderhelper.h"
+#include "dishescountwidget.h"
+#include "detailwidget.h"
 namespace Ui {
 class DinnerWidget;
 }
@@ -18,13 +20,14 @@ public:
     void updateData();
 public:
 
-
 private slots:
-    void on_toolButton_clicked();
-
-    void on_toolButton_2_clicked();
-
     void on_toolButton_4_clicked();
+
+    void on_disheTypeList_doubleClicked(const QModelIndex &index);
+
+    void on_dishesList_doubleClicked(const QModelIndex &index);
+
+    void on_listView_doubleClicked(const QModelIndex &index);
 
 private:
 
@@ -32,8 +35,12 @@ private:
     void startWx();
 private:
     Ui::DinnerWidget *ui;
-    QSqlQueryModel *m_model;
+    QSqlQueryModel *m_tableModel;
+    QSqlQueryModel *m_dishesTypeModel;
+    QSqlQueryModel *m_dishesModel;
     QList<DishesInfo> m_dishesList;
+    DishesCountWidget m_countWidget;
+    DetailWidget m_detailWidget;
 };
 
 inline DinnerWidget *dinnerWidget()

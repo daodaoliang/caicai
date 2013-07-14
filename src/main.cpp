@@ -17,9 +17,9 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForName("GBK"));
     getSqlManager()->Init();
 
-    QPalette palette;
-    palette.setColor(QPalette::WindowText,Qt::white);
-    a.setPalette(palette);
+//    QPalette palette;
+//    palette.setColor(QPalette::WindowText,Qt::white);
+//    a.setPalette(palette);
     mainWidget w;
     w.show();
     getCardReader()->LoadLibraty();
@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
     //    PrinterWidget testWidget;
     //    testWidget.EnterWidget(&testWidget);
     //    testWidget.show();
-    VipWidget vip;
-    vip.show();
+//    VipWidget vip;
+//    vip.show();
     //处理消息
     WindowsEventHandler handler;
     return a.exec();

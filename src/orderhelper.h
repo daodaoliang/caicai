@@ -6,6 +6,7 @@ struct DishesInfo
 {
     int id;
     int count;
+    int type;
 };
 class OrderHelper : public QObject
 {
@@ -18,7 +19,7 @@ signals:
 public slots:
     
 public:
-    bool createOrder(int tableId, const QList<DishesInfo> &dishes, const QString &memberid = "");
+    bool createOrder(const QString &tableId, const QList<DishesInfo> &dishes,const QString &wasteId, const QString &memberid = "");
 };
 
 inline OrderHelper *orderHelperInstance()

@@ -115,4 +115,5 @@ public:
     void handleCommand(const QStringList &cmdDetail, int index);
 };
 
+
 #endif // ICOMMANDHANDLER_H
