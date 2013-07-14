@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForName("GBK"));
     getSqlManager()->Init();
 
+
 //    QPalette palette;
 //    palette.setColor(QPalette::WindowText,Qt::white);
 //    a.setPalette(palette);
