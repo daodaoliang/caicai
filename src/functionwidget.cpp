@@ -3,6 +3,7 @@
 #include <QDebug>
 #include "dinnerwidget.h"
 #include "vipwidget.h"
+#include "checkwidget.h"
 FunctionWidget::FunctionWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FunctionWidget)
@@ -10,6 +11,7 @@ FunctionWidget::FunctionWidget(QWidget *parent) :
     ui->setupUi(this);
     ui->stackedWidget->addWidget(dinnerWidget());
     ui->stackedWidget->addWidget(vipWidget());
+    ui->stackedWidget->addWidget(checkWidget());
 }
 
 FunctionWidget::~FunctionWidget()
