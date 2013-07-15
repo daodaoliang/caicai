@@ -12,6 +12,8 @@
 #include <QHeaderView>
 #include <QStandardItem>
 #include <QStandardItemModel>
+#include <QList>
+#include <QSqlQuery>
 VipWidget::VipWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::VipWidget)
@@ -22,6 +24,10 @@ VipWidget::VipWidget(QWidget *parent) :
     m_TableModel = new QSqlTableModel(this,*getSqlManager()->getdb());
     m_TableModel->setTable("member");
     m_TableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    //设置整个列表不可编辑
+    ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    //设置选中模式为选中整行
+    ui->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
     //使用分页模式，第一次打开只显示前m_Interval条记录
     m_TableModel->select();
     //设置view的数据源
@@ -39,7 +45,7 @@ VipWidget::VipWidget(QWidget *parent) :
     m_TableModel->setHeaderData(7,Qt::Horizontal,tr("会员类型"));
     m_TableModel->setHeaderData(8,Qt::Horizontal,tr("所属分店"));
     m_TableModel->setHeaderData(9,Qt::Horizontal,tr("账户余额"));
-    //设置列不可编辑
+    //用此方法壳设置某列不可编辑
     ui->tableView->setItemDelegateForColumn(0,new readonlyDelegate(this));
     ui->tableView->setItemDelegateForColumn(1,new readonlyDelegate(this));
     ui->tableView->setItemDelegateForColumn(5,new readonlyDelegate(this));
@@ -55,6 +61,9 @@ VipWidget::VipWidget(QWidget *parent) :
     //connect(header,SIGNAL(sectionClicked(int)),this,SLOT(slot_Sort(int)));
     //
     m_CurCardSnr = "";
+    //加载数据库会员类型到下拉列表
+    m_BoxMap.clear();
+    loadComBox();
 }
 
 VipWidget::~VipWidget()
@@ -68,28 +77,62 @@ void VipWidget::on_pushButton_Add_clicked()
 {
     QString shopid = ui->lineEdit_ShopID->text();
     QString memName = ui->lineEdit_MemName->text();
-    QString memType = ui->lineEdit_MemType->text();
+    QString nmemType = ui->Box_MemType->currentText();
+    int memType = 0;
+    if(!m_BoxMap.contains(nmemType))
+    {
+        qDebug()<<"has no box";
+        memType = 1;
+    }else
+    {
+        qDebug()<<nmemType<<m_BoxMap.values(nmemType).size()<<m_BoxMap.values(nmemType).at(0);
+        memType = m_BoxMap.values(nmemType).at(0);
+    }
+    qDebug()<<"add memtype"<<memType;
     QString idCard = ui->lineEdit_IDCard->text();
     QString phone = ui->lineEdit_Phone->text();
     QString cardNum = ui->lineEdit_CardNum->text();
-    if(shopid.length()==0||memName.length()==0||memType.length()==0||idCard.length()==0||phone.length()==0||ui->lineEdit_CardNum->text().length()==0)
+    if(shopid.length()==0||memName.length()==0||nmemType.length()==0||idCard.length()==0||phone.length()==0||ui->lineEdit_CardNum->text().length()==0)
     {
         return;
     }
-    if(selectVipInfoByCardID(cardNum) > 0)
+    if(ui->pushButton_Add->text() == "添加")
     {
-        QMessageBox::warning(NULL, tr("警告"), "该卡已注册会员！");
-        return;
+        if(selectVipInfoByCardID(cardNum) > 0)
+        {
+            QMessageBox::warning(NULL, tr("警告"), "该卡已注册会员！");
+            return;
+        }
+        int rowCount = m_TableModel->rowCount();
+        m_TableModel->insertRow(rowCount);
+        m_TableModel->setData(m_TableModel->index(rowCount,1),cardNum);
+        m_TableModel->setData(m_TableModel->index(rowCount,2),memName);
+        m_TableModel->setData(m_TableModel->index(rowCount,3),phone);
+        m_TableModel->setData(m_TableModel->index(rowCount,4),idCard);
+        m_TableModel->setData(m_TableModel->index(rowCount,5),QDateTime::currentDateTime());
+        m_TableModel->setData(m_TableModel->index(rowCount,7),memType);
+        m_TableModel->setData(m_TableModel->index(rowCount,8),shopid);
     }
-    int rowCount = m_TableModel->rowCount();
-    m_TableModel->insertRow(rowCount);
-    m_TableModel->setData(m_TableModel->index(rowCount,1),cardNum);
-    m_TableModel->setData(m_TableModel->index(rowCount,2),memName);
-    m_TableModel->setData(m_TableModel->index(rowCount,3),phone);
-    m_TableModel->setData(m_TableModel->index(rowCount,4),idCard);
-    m_TableModel->setData(m_TableModel->index(rowCount,5),QDateTime::currentDateTime());
-    m_TableModel->setData(m_TableModel->index(rowCount,7),memType);
-    m_TableModel->setData(m_TableModel->index(rowCount,8),shopid);
+    if(ui->pushButton_Add->text() == "修改")
+    {
+        QString sql = tr("update member set shopid=?,name=?,idcard=?,phone=?,membertypeid=? where cardid = '%1'").arg(cardNum);
+        QSqlQuery query(*getSqlManager()->getdb());
+        query.prepare(sql);
+        query.bindValue(0,shopid);
+        query.bindValue(1,memName);
+        query.bindValue(2,idCard);
+        query.bindValue(3,phone);
+        query.bindValue(4,memType);
+        m_QueryModel->setQuery(query);
+        if(query.exec())
+        {
+            qDebug()<<"success--------------------------------------";
+        }
+        else
+        {
+            qDebug()<<"fail--------------------"<<query.lastError().text();
+        }
+    }
     setTextEnable(false);
 }
 
@@ -102,7 +145,7 @@ void VipWidget::on_pushButton_2_clicked()
     }
     int curRow = ui->tableView->currentIndex().row();
     int curCol = ui->tableView->currentIndex().column();
-    QString cardSnr = ui->tableView->model()->data(ui->tableView->model()->index(curRow,curCol)).toString();
+    QString cardSnr = ui->tableView->model()->data(ui->tableView->model()->index(curRow,1)).toString();
     qDebug()<<"get card "<<cardSnr;
     if(cardSnr!= ui->lineEdit_CardNum->text())
     {
@@ -124,7 +167,10 @@ void VipWidget::on_pushButton_Save_clicked()
         m_TableModel->revertAll();
         return;
     }
-    m_TableModel->submitAll();
+    if(!m_TableModel->submitAll())
+    {
+        qDebug()<<"保存到数据库失败"<<m_TableModel->lastError().text();
+    }
     resetText();
     setTextEnable(true);
     //添加或者删除后重新更新分页信息
@@ -146,6 +192,7 @@ int VipWidget::selectVipInfoByCardID(const QString id)
             return m_QueryModel->query().value(0).toInt();
         }
     }
+    m_QueryModel->clear();
     return 0;
 }
 
@@ -205,7 +252,7 @@ bool VipWidget::writeInfoToCard()
         return false;
     }
     //保存会员类型到3扇区14块
-    QString memtype = ui->lineEdit_MemType->text();
+    QString memtype = ui->Box_MemType->currentText();
     memset(tmp,0,16);
     memcpy(tmp,memtype.toLocal8Bit().data(),(int)strlen(memtype.toLocal8Bit().data()));
     if(!getCardReader()->WriteCard(key,14,tmp,16))
@@ -222,6 +269,7 @@ bool VipWidget::writeInfoToCard()
         qDebug()<<"会员编号写卡失败";
         return false;
     }
+    //getCardReader()->DevBeep(10);
     getCardReader()->Halt();
     return true;
 }
@@ -231,9 +279,11 @@ void VipWidget::resetText()
     ui->lineEdit_CardNum->clear();
     ui->lineEdit_IDCard->clear();
     ui->lineEdit_MemName->clear();
-    ui->lineEdit_MemType->clear();
+    //ui->lineEdit_MemType->clear();
+    ui->Box_MemType->setCurrentIndex(0);
     ui->lineEdit_Phone->clear();
     ui->lineEdit_ShopID->clear();
+    ui->pushButton_Add->setText("添加");
 }
 
 void VipWidget::setTextEnable(bool enable)
@@ -241,7 +291,7 @@ void VipWidget::setTextEnable(bool enable)
     //ui->lineEdit_CardNum->setEnabled(enable);
     ui->lineEdit_IDCard->setEnabled(enable);
     ui->lineEdit_MemName->setEnabled(enable);
-    ui->lineEdit_MemType->setEnabled(enable);
+    ui->Box_MemType->setEnabled(enable);
     ui->lineEdit_Phone->setEnabled(enable);
     ui->lineEdit_ShopID->setEnabled(enable);
     ui->lineEdit_ShopID->setEnabled(enable);
@@ -260,6 +310,29 @@ void VipWidget::updateRecord(int startPage)
     if(m_CurPage == m_PageCount)
     {
         ui->but_NextPage->setEnabled(false);
+    }
+}
+
+void VipWidget::loadComBox()
+{
+    ui->Box_MemType->clear();
+    QStringList list;
+    QString type ="";
+    int tid = 0;
+    QString sql = tr("select * from membertype");
+    m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
+    while(m_QueryModel->query().next())
+    {
+        tid = m_QueryModel->query().value(0).toInt();
+        type = m_QueryModel->query().value(1).toString();
+        //list.append(type);
+        if(!m_BoxMap.contains(type))
+        {
+            ui->Box_MemType->addItem(type);
+            m_BoxMap.insert(type,ui->Box_MemType->count()-1);
+            m_BoxMap.insert(type,tid);
+            qDebug()<<"load"<<type<<tid<<ui->Box_MemType->count()-1;
+        }
     }
 }
 
@@ -342,19 +415,23 @@ void VipWidget::on_pushButton_OpenCard_clicked()
     memset(rdata,0,16);
     if(getCardReader()->ReadCard(key,14,rdata,16,cardID))
     {
-        ui->lineEdit_MemType->setText(QString::fromLocal8Bit(rdata));
+        //ui->lineEdit_MemType->setText(QString::fromLocal8Bit(rdata));
+        ui->Box_MemType->setCurrentIndex(m_BoxMap.values(QString::fromLocal8Bit(rdata)).at(1));
     }
     memset(rdata,0,16);
     if(getCardReader()->ReadCard(key,16,rdata,16,cardID))
     {
         ui->lineEdit_ShopID->setText(QString::fromLocal8Bit(rdata));
     }
+    qDebug();
     if(selectVipInfoByCardID(cardID) > 0)
     {
         //((QSqlQueryModel*)m_TableModel)->setQuery(tr("select * from member where cardid = '%1'").arg(cardID),*getSqlManager()->getdb());
         m_TableModel->setFilter(tr("cardid = '%1'").arg(cardID));
+        ui->pushButton_Add->setText("修改");
     }
     //getCardReader()->Halt();
+    //getCardReader()->DevBeep(10);
     qDebug()<<"read:"<<QString::fromLocal8Bit(rdata)<<"ID:"<<cardID;
 }
 
