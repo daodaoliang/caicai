@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
+#include <QMultiMap>
 namespace Ui {
 class VipWidget;
 }
@@ -43,11 +44,13 @@ private:
     void resetText();
     void setTextEnable(bool enable);
     void updateRecord(int startPage);
+    void loadComBox();
     void setPageCount();
     void resetPageInfo();
     int m_RecordCount;
     int m_PageCount;
     int m_CurPage;
+    QMultiMap<QString,int> m_BoxMap;
     //当前操作卡的序列号
     QString m_CurCardSnr;
 };
