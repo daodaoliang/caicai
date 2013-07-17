@@ -35,6 +35,12 @@ private slots:
     void on_but_Skip_clicked();
 
     void slot_Sort(int column);
+    void on_but_Recharge_clicked();
+
+    void on_but_CancleCharge_clicked();
+
+    void on_but_querenchong_clicked();
+
 private:
     Ui::VipWidget *ui;
     QSqlTableModel *m_TableModel;
@@ -51,7 +57,7 @@ private:
     int m_PageCount;
     int m_CurPage;
     QMultiMap<QString,int> m_BoxMap;
-    //当前操作卡的序列号
+    //
     QString m_CurCardSnr;
 };
 inline VipWidget *vipWidget()
