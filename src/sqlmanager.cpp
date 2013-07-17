@@ -9,6 +9,7 @@ SqlManager::SqlManager(QObject *parent) :
     m_HostName = "127.0.0.1";
     m_Password = "";
     m_UserName = "root";
+    m_Query = NULL;
 }
 
 SqlManager::~SqlManager()
@@ -98,10 +99,13 @@ bool SqlManager::GetVipInfo()
 
 QSqlQuery *SqlManager::ExecQuery(QString sql)
 {
-    m_Query->clear();
-    if(m_Query->exec(sql))
+    if(m_Query)
     {
-        return m_Query;
+        m_Query->clear();
+        if(m_Query->exec(sql))
+        {
+            return m_Query;
+        }
     }
     return NULL;
 }

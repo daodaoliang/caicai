@@ -4,12 +4,14 @@
 #include "dinnerwidget.h"
 #include "vipwidget.h"
 #include "checkwidget.h"
+#include "orderwidget.h"
 FunctionWidget::FunctionWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FunctionWidget)
 {
     ui->setupUi(this);
     ui->stackedWidget->addWidget(dinnerWidget());
+    ui->stackedWidget->addWidget(orderWidget());
     ui->stackedWidget->addWidget(vipWidget());
     ui->stackedWidget->addWidget(checkWidget());
 }
