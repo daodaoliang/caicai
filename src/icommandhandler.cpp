@@ -41,17 +41,32 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
         QString user = cmdDetail[1].mid(10, 4).trimmed();
         QString password = cmdDetail[1].mid(15, 10).trimmed();
         password = QCryptographicHash::hash(tr("%1%2").arg(user).arg(password).toLocal8Bit(), QCryptographicHash::Md5).toHex().data();
-        QString sql = tr("select nickname from user where username = '%1' and password = '%2'").arg(user).arg(password);
+        QString sql = tr("select nickname, userid from userinfo where username = '%1' and password = '%2'").arg(user).arg(password);
         qDebug() << sql;
         QSqlQuery *query = getSqlManager()->ExecQuery(sql);
         if(query != NULL)
         {
             if(query->next())
             {
+                //更新数据库
+                sql = tr("update login set userid = %1 where machineid = '%2'").arg(query->value(1).toInt()).arg(cmdDetail[0].right(3));
                 QString nickName = query->value(0).toString();
-                replyList.append(tr("1 %1").arg(nickName));
-                reply(replyList, index);
-                return;
+                QSqlQuery *updateQuery = getSqlManager()->ExecQuery(sql);
+                if(updateQuery != NULL)
+                {
+                    if(updateQuery->numRowsAffected() == 1)
+                    {
+                        replyList.append(tr("1 %1").arg(nickName));
+                        reply(replyList, index);
+                        return;
+                    }
+                    else
+                    {
+                        replyList.append(tr("0 %1").arg("已经登录"));
+                        reply(replyList, index);
+                        return;
+                    }
+                }
             }
         }
     }
@@ -135,33 +150,44 @@ void OrderHandler::handleCommand(const QStringList &cmdDetail, int index)
                 {
                     if(!query->next())
                     {
-                        QList<DishesInfo> dishesList;
-                        DishesInfo info;
+                        //获取操作员编号
+                        sql = tr("select userid from login where machineid = '%1'").arg(cmdDetail[0].right(3));
+                        query = getSqlManager()->ExecQuery(sql);
+                        if(query != NULL)
+                        {
+                            if(query->next())
+                            {
+                                int userid = query->value(0).toInt();
+                                QList<DishesInfo> dishesList;
+                                DishesInfo info;
 
-                        //添加菜品
-                        for(int i = 2; i < cmdDetail.count(); i++)
-                        {
-                            info.id = cmdDetail[i].mid(8, 5).toInt();
-                            info.count = cmdDetail[i].mid(14, 4).toInt();
-                            info.type = 0;
-                            dishesList.append(info);
+                                //添加菜品
+                                for(int i = 2; i < cmdDetail.count(); i++)
+                                {
+                                    info.id = cmdDetail[i].mid(8, 5).toInt();
+                                    info.count = cmdDetail[i].mid(14, 4).toInt();
+                                    info.type = 0;
+                                    dishesList.append(info);
+                                }
+                                bool result = orderHelperInstance()->createOrder(tableId,dishesList, wasteId, userid);
+                                if(result)
+                                {
+                                    //减少库存
+                                    //进行打印
+                                    //回复正常
+                                    replyList.append("点菜成功");
+                                    reply(replyList, index);
+                                    return;
+                                }
+                                else
+                                {
+                                    replyList.append("点菜失败");
+                                    reply(replyList, index);
+                                    return;
+                                }
+                            }
                         }
-                        bool result = orderHelperInstance()->createOrder(tableId,dishesList, wasteId);
-                        if(result)
-                        {
-                            //减少库存
-                            //进行打印
-                            //回复正常
-                            replyList.append("点菜成功");
-                            reply(replyList, index);
-                            return;
-                        }
-                        else
-                        {
-                            replyList.append("点菜失败");
-                            reply(replyList, index);
-                            return;
-                        }
+
 
                     }
                     else
@@ -213,31 +239,38 @@ void BackDishHandler::handleCommand(const QStringList &cmdDetail, int index)
         {
             if(query->next())
             {
-                QList<DishesInfo> dishesList;
-                DishesInfo info;
-                info.id = cmdDetail[1].mid(8, 5).toInt();
-                info.count = cmdDetail[1].mid(19, 4).toInt();
-                info.type = 1;
-                dishesList.append(info);
-                bool result = orderHelperInstance()->createOrder(tableId,dishesList, "");
-                if(result)
+                //获取操作员编号
+                sql = tr("select userid from login where machineid = '%1'").arg(cmdDetail[0].right(3));
+                query = getSqlManager()->ExecQuery(sql);
+                if(query != NULL)
                 {
-                    //减少库存
-                    //进行打印
-                    //回复正常
-                    replyList.append("退菜成功");
-                    reply(replyList, index);
-                    return;
+                    if(query->next())
+                    {
+                        int userid = query->value(0).toInt();
+                        QList<DishesInfo> dishesList;
+                        DishesInfo info;
+                        info.id = cmdDetail[1].mid(8, 5).toInt();
+                        info.count = cmdDetail[1].mid(19, 4).toInt();
+                        info.type = 1;
+                        dishesList.append(info);
+                        bool result = orderHelperInstance()->createOrder(tableId,dishesList, "", userid);
+                        if(result)
+                        {
+                            //减少库存
+                            //进行打印
+                            //回复正常
+                            replyList.append("退菜成功");
+                            reply(replyList, index);
+                            return;
+                        }
+                        else
+                        {
+                            replyList.append("退菜失败");
+                            reply(replyList, index);
+                            return;
+                        }
+                    }
                 }
-                else
-                {
-                    replyList.append("退菜失败");
-                    reply(replyList, index);
-                    return;
-                }
-
-
-
             }
             else
             {

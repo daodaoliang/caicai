@@ -19,7 +19,7 @@ signals:
 public slots:
     
 public:
-    bool createOrder(const QString &tableId, const QList<DishesInfo> &dishes,const QString &wasteId, const QString &memberid = "");
+    bool createOrder(const QString &tableId, const QList<DishesInfo> &dishes,const QString &wasteId,  int userid, const QString &memberid = "");
 };
 
 inline OrderHelper *orderHelperInstance()
