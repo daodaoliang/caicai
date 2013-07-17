@@ -16,6 +16,7 @@ DishesCountWidget::~DishesCountWidget()
 void DishesCountWidget::showEvent(QShowEvent *event)
 {
     m_count = 0;
+    ui->lcdNumber->display(m_count);
 }
 
 void DishesCountWidget::on_toolButton_clicked()

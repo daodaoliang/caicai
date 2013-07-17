@@ -7,6 +7,7 @@ struct DishesInfo
     int id;
     int count;
     int type;
+    double price;
 };
 class OrderHelper : public QObject
 {

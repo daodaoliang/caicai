@@ -17,15 +17,7 @@ DinnerWidget::DinnerWidget(QWidget *parent) :
     m_tableModel->setQuery("select * from diningtable", *getSqlManager()->getdb());
     ui->listView->setModel(m_tableModel);
     ui->listView->setItemDelegate(new TableDelegate);
-    //显示菜品类型
-    m_dishesTypeModel = new QSqlQueryModel(this);
-    m_dishesTypeModel->setQuery("select * from dishestype", *getSqlManager()->getdb());
-    ui->disheTypeList->setModel(m_dishesTypeModel);
-    ui->disheTypeList->setItemDelegate(new DishesTypeDelegeate);
-    //初始化菜品model
-    m_dishesModel = new QSqlQueryModel(this);
-    ui->dishesList->setModel(m_dishesModel);
-    ui->dishesList->setItemDelegate(new DishesDelegate);
+
 }
 
 DinnerWidget::~DinnerWidget()
@@ -83,23 +75,17 @@ void DinnerWidget::startWx()
 
 void DinnerWidget::on_toolButton_4_clicked()
 {
-    ui->stackedWidget_2->setCurrentIndex(0);
+//    ui->stackedWidget_2->setCurrentIndex(0);
 }
 
 void DinnerWidget::on_disheTypeList_doubleClicked(const QModelIndex &index)
 {
-    ui->stackedWidget_2->setCurrentIndex(1);
-    int dishesTypeId = index.data().toInt();
-    QString sql = tr("select * from dishes where typeid = %1").arg(dishesTypeId);
-    m_dishesModel->setQuery(sql, *getSqlManager()->getdb());
+
 }
 
 void DinnerWidget::on_dishesList_doubleClicked(const QModelIndex &index)
 {
-    if(m_countWidget.exec())
-    {
-        qDebug() << m_countWidget.getDishesCount();
-    }
+
 }
 
 void DinnerWidget::on_listView_doubleClicked(const QModelIndex &index)

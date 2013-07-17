@@ -13,7 +13,9 @@ public:
 signals:
     
 public slots:
-    
+public:
+    virtual void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };
 
 #endif // DISHESDELEGATE_H
