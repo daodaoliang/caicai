@@ -33,32 +33,16 @@
           <string>会员信息</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="2" column="0">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>会员姓名：</string>
-            </property>
-           </widget>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEdit_ShopID"/>
           </item>
           <item row="2" column="1">
            <widget class="QLineEdit" name="lineEdit_MemName"/>
           </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="lineEdit_IDCard"/>
-          </item>
-          <item row="5" column="1">
-           <widget class="QComboBox" name="Box_MemType"/>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit_ShopID"/>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="lineEdit_Phone"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_6">
+          <item row="6" column="0">
+           <widget class="QPushButton" name="but_Recharge">
             <property name="text">
-             <string>会员卡号：</string>
+             <string>充值</string>
             </property>
            </widget>
           </item>
@@ -69,13 +53,6 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>会员电话：</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1">
            <widget class="QLineEdit" name="lineEdit_CardNum">
             <property name="enabled">
@@ -83,10 +60,30 @@
             </property>
            </widget>
           </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="lineEdit_IDCard"/>
+          </item>
           <item row="3" column="0">
            <widget class="QLabel" name="label_3">
             <property name="text">
              <string>身份证号：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>会员姓名：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="Box_MemType"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>会员电话：</string>
             </property>
            </widget>
           </item>
@@ -97,10 +94,20 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="0">
-           <widget class="QPushButton" name="but_Recharge">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_6">
             <property name="text">
-             <string>充值</string>
+             <string>会员卡号：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="lineEdit_Phone"/>
+          </item>
+          <item row="6" column="1">
+           <widget class="QPushButton" name="but_pay">
+            <property name="text">
+             <string>消费</string>
             </property>
            </widget>
           </item>
@@ -122,7 +129,7 @@
           <item row="1" column="0">
            <widget class="QStackedWidget" name="stackedWidget_2">
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="page_3">
              <layout class="QGridLayout" name="gridLayout_5">
@@ -282,7 +289,7 @@
                 </property>
                 <layout class="QGridLayout" name="gridLayout_9">
                  <item row="0" column="1">
-                  <widget class="QLabel" name="label_9">
+                  <widget class="QLabel" name="label_chong">
                    <property name="text">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;充值金额：&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
@@ -292,7 +299,7 @@
                   <widget class="QLineEdit" name="lineEdit_chongzhi"/>
                  </item>
                  <item row="1" column="1">
-                  <widget class="QLabel" name="label_10">
+                  <widget class="QLabel" name="label_queren">
                    <property name="text">
                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;确认金额：&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
