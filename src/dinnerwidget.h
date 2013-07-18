@@ -39,7 +39,6 @@ private:
     QSqlQueryModel *m_dishesTypeModel;
     QSqlQueryModel *m_dishesModel;
     QList<DishesInfo> m_dishesList;
-    DishesCountWidget m_countWidget;
     DetailWidget m_detailWidget;
 };
 
