@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     dishescountwidget.cpp \
     detailwidget.cpp \
     checkwidget.cpp \
-    orderwidget.cpp
+    orderwidget.cpp \
+    loginwidget.cpp
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -70,7 +71,8 @@ HEADERS  += mainwidget.h \
     dishescountwidget.h \
     detailwidget.h \
     checkwidget.h \
-    orderwidget.h
+    orderwidget.h \
+    loginwidget.h
 
 RESOURCES += \
     src.qrc
@@ -83,4 +85,5 @@ FORMS += \
     dishescountwidget.ui \
     detailwidget.ui \
     checkwidget.ui \
-    orderwidget.ui
+    orderwidget.ui \
+    loginwidget.ui

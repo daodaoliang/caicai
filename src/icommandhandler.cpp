@@ -40,34 +40,19 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
     {
         QString user = cmdDetail[1].mid(10, 4).trimmed();
         QString password = cmdDetail[1].mid(15, 10).trimmed();
-        password = QCryptographicHash::hash(tr("%1%2").arg(user).arg(password).toLocal8Bit(), QCryptographicHash::Md5).toHex().data();
-        QString sql = tr("select nickname, userid from userinfo where username = '%1' and password = '%2'").arg(user).arg(password);
-        qDebug() << sql;
-        QSqlQuery *query = getSqlManager()->ExecQuery(sql);
-        if(query != NULL)
+        int userId = 0;
+        QString nickName = getSqlManager()->login(user, password, cmdDetail[0].right(3), userId);
+        if(nickName.isEmpty())
         {
-            if(query->next())
-            {
-                //更新数据库
-                sql = tr("update login set userid = %1 where machineid = '%2'").arg(query->value(1).toInt()).arg(cmdDetail[0].right(3));
-                QString nickName = query->value(0).toString();
-                QSqlQuery *updateQuery = getSqlManager()->ExecQuery(sql);
-                if(updateQuery != NULL)
-                {
-                    if(updateQuery->numRowsAffected() == 1)
-                    {
-                        replyList.append(tr("1 %1").arg(nickName));
-                        reply(replyList, index);
-                        return;
-                    }
-                    else
-                    {
-                        replyList.append(tr("0 %1").arg("已经登录"));
-                        reply(replyList, index);
-                        return;
-                    }
-                }
-            }
+            replyList.append("0 登录失败");
+            reply(replyList, index);
+            return;
+        }
+        else
+        {
+            replyList.append("1 登录成功");
+            reply(replyList, index);
+            return;
         }
     }
     replyList.append("0 验证失败");

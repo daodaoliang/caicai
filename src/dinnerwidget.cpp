@@ -73,20 +73,6 @@ void DinnerWidget::startWx()
 //    }
 //}
 
-void DinnerWidget::on_toolButton_4_clicked()
-{
-//    ui->stackedWidget_2->setCurrentIndex(0);
-}
-
-void DinnerWidget::on_disheTypeList_doubleClicked(const QModelIndex &index)
-{
-
-}
-
-void DinnerWidget::on_dishesList_doubleClicked(const QModelIndex &index)
-{
-
-}
 
 void DinnerWidget::on_listView_doubleClicked(const QModelIndex &index)
 {

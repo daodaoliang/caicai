@@ -9,6 +9,7 @@
 #include "cardreadermanager.h"
 #include "windowseventhandler.h"
 #include "vipwidget.h"
+#include "loginwidget.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -17,7 +18,13 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr(QTextCodec::codecForName("GBK"));
     getSqlManager()->Init();
 
-
+    //ÓÃ»§µÇÂ¼
+    LoginWidget login;
+    if(!login.exec())
+    {
+        a.quit();
+        return 0;
+    }
 //    QPalette palette;
 //    palette.setColor(QPalette::WindowText,Qt::white);
 //    a.setPalette(palette);

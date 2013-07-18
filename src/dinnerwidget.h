@@ -21,16 +21,9 @@ public:
 public:
 
 private slots:
-    void on_toolButton_4_clicked();
-
-    void on_disheTypeList_doubleClicked(const QModelIndex &index);
-
-    void on_dishesList_doubleClicked(const QModelIndex &index);
-
     void on_listView_doubleClicked(const QModelIndex &index);
 
 private:
-
     //Æô¶¯µã²Ë±¦¼àÌý³ÌÐò
     void startWx();
 private:

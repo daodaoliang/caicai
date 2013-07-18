@@ -12,7 +12,7 @@
 #include <QVBoxLayout>
 #include <QApplication>
 #include <QDesktopWidget>
-
+#include "sqlmanager.h"
 mainWidget::mainWidget(QWidget *parent)
     : QWidget(parent)
 {
@@ -72,6 +72,7 @@ void mainWidget::paintEvent(QPaintEvent *)
     painter.begin(this);
     painter.drawPixmap(this->rect(),pixmap);
 }
+
 void mainWidget::showMin()
 {
     showMinimized();

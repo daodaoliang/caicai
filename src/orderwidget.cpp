@@ -4,6 +4,7 @@
 #include "dishestypedelegeate.h"
 #include "dishesdelegate.h"
 #include <QDebug>
+#include <QMessageBox>
 OrderWidget::OrderWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::OrderWidget)
@@ -25,7 +26,7 @@ OrderWidget::OrderWidget(QWidget *parent) :
     {
         while(query->next())
         {
-            ui->comboBox->insertItem(ui->comboBox->count(), query->value(1).toString(), query->value(0).toInt());
+            ui->comboBox->insertItem(ui->comboBox->count(), query->value(1).toString(), query->value(0).toString());
         }
     }
 }
@@ -100,5 +101,27 @@ void OrderWidget::on_toolButton_2_clicked()
         ui->tableWidget_2->removeRow(index);
         m_dishesInfo.removeAt(index);
         showTotal();
+    }
+}
+
+void OrderWidget::on_toolButton_3_clicked()
+{
+    bool result = orderHelperInstance()->createOrder(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
+                                                     m_dishesInfo,
+                                                     "",
+                                                     qApp->property("userId").toInt());
+    if(result)
+    {
+        QMessageBox::information(this, "提示", "点菜成功");
+        m_dishesInfo.clear();
+        while(ui->tableWidget_2->rowCount() > 0)
+        {
+            ui->tableWidget_2->removeRow(0);
+        }
+
+    }
+    else
+    {
+        QMessageBox::information(this, "提示", "点菜失败");
     }
 }

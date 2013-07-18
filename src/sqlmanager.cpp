@@ -2,6 +2,8 @@
 #include <QDebug>
 #include <QSqlQuery>
 #include <QSqlError>
+#include <QCryptographicHash>
+#include <QBitArray>
 SqlManager::SqlManager(QObject *parent) :
     QObject(parent)
 {
@@ -14,6 +16,7 @@ SqlManager::SqlManager(QObject *parent) :
 
 SqlManager::~SqlManager()
 {
+    logOut();
     delete m_Query;
 }
 SqlManager* getSqlManager()
@@ -96,6 +99,54 @@ bool SqlManager::GetVipInfo()
         return false;
     }
     return true;
+}
+
+QString SqlManager::login(const QString &user, QString password, const QString &machineId, int &userId)
+{
+    password = QCryptographicHash::hash(tr("%1%2").arg(user).arg(password).toLocal8Bit(), QCryptographicHash::Md5).toHex().data();
+    QString sql = tr("select nickname, userid, purview from userinfo where username = '%1' and password = '%2' and machineid = ''").arg(user).arg(password);
+    qDebug() << sql;
+    QSqlQuery *query = getSqlManager()->ExecQuery(sql);
+
+    if(query != NULL)
+    {
+        if(query->next())
+        {
+            QByteArray function = query->value(2).toByteArray();
+            //高权限登录
+            if(machineId == "000")
+            {
+                if(function.at(0) != 1)
+                {
+                    return "";
+                }
+            }
+            //更新数据库
+            sql = tr("update userinfo set machineid = '%1' where userid = '%2'").arg(machineId).arg(query->value(1).toInt());
+            QString nickName = query->value(0).toString();
+            int user = query->value(1).toInt();
+            QSqlQuery *updateQuery = getSqlManager()->ExecQuery(sql);
+            if(updateQuery != NULL)
+            {
+                if(updateQuery->numRowsAffected() == 1)
+                {
+                    userId = user;
+                    return nickName;
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+    }
+    return "";
+}
+
+void SqlManager::logOut()
+{
+    QString sql = "update userinfo set machineid = '' where machineid = '000'";
+    ExecQuery(sql);
 }
 
 QSqlQuery *SqlManager::ExecQuery(QString sql)

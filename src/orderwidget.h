@@ -28,6 +28,8 @@ private slots:
     void on_toolButton_5_clicked();
     void on_toolButton_2_clicked();
 
+    void on_toolButton_3_clicked();
+
 private:
     void showTotal();
 private:
