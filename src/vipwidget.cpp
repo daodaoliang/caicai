@@ -64,6 +64,8 @@ VipWidget::VipWidget(QWidget *parent) :
     //加载数据库会员类型到下拉列表
     m_BoxMap.clear();
     loadComBox();
+    //默认充值不可用,只有打开卡片确认有该用户后充值按钮可用
+    ui->but_Recharge->setEnabled(false);
 }
 
 VipWidget::~VipWidget()
@@ -284,6 +286,7 @@ void VipWidget::resetText()
     ui->lineEdit_Phone->clear();
     ui->lineEdit_ShopID->clear();
     ui->pushButton_Add->setText("添加");
+    ui->but_Recharge->setEnabled(false);
 }
 
 void VipWidget::setTextEnable(bool enable)
@@ -429,6 +432,10 @@ void VipWidget::on_pushButton_OpenCard_clicked()
         //((QSqlQueryModel*)m_TableModel)->setQuery(tr("select * from member where cardid = '%1'").arg(cardID),*getSqlManager()->getdb());
         m_TableModel->setFilter(tr("cardid = '%1'").arg(cardID));
         ui->pushButton_Add->setText("修改");
+        //        ui->but_NextPage->setEnabled(false);
+        //        ui->but_PreviousPage->setEnabled(false);
+        //        ui->but_Skip->setEnabled(false);
+        ui->but_Recharge->setEnabled(true);
     }
     //getCardReader()->Halt();
     //getCardReader()->DevBeep(10);
@@ -441,7 +448,8 @@ void VipWidget::on_pushButton_Cancle_clicked()
     resetText();
     setTextEnable(true);
     //((QSqlQueryModel*)m_TableModel)->setQuery(tr("select * from member LIMIT 10"),*getSqlManager()->getdb());
-    updateRecord(m_CurPage);
+    resetPageInfo();
+    //updateRecord(m_CurPage);
 }
 
 void VipWidget::on_but_NextPage_clicked()
@@ -471,4 +479,69 @@ void VipWidget::on_but_Skip_clicked()
 void VipWidget::slot_Sort(int column)
 {
     m_TableModel->setSort(column,Qt::AscendingOrder);
+}
+
+void VipWidget::on_but_Recharge_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(1);
+    ui->groupBox_2->setTitle(tr("充值信息"));
+    ui->but_CancleCharge->setText("取消");
+    m_QueryModel->clear();
+    m_QueryModel->setQuery(tr("select balance from member where cardid = '%1'").arg(ui->lineEdit_CardNum->text()),*getSqlManager()->getdb());
+    qDebug()<<ui->lineEdit_CardNum->text();
+    QPalette pe;
+    pe.setColor(QPalette::WindowText,Qt::red);
+    QFont font;
+    font.setPointSize(30);
+    while(m_QueryModel->query().next())
+    {
+        qDebug()<<"余额"<<m_QueryModel->query().value(0).toString();
+        ui->label_yue->setText(m_QueryModel->query().value(0).toString());
+        ui->label_yue->setPalette(pe);
+        ui->label_yue->setFont(font);
+    }
+    m_QueryModel->clear();
+    ui->but_Recharge->setEnabled(false);
+}
+
+void VipWidget::on_but_CancleCharge_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(0);
+    ui->groupBox_2->setTitle(tr("会员信息"));
+    ui->but_Recharge->setEnabled(true);
+    ui->lineEdit_chongzhi->clear();
+    ui->lineEdit_querenchong->clear();
+    ui->label_yue->clear();
+    resetPageInfo();
+    //updateRecord(m_CurPage);
+}
+
+void VipWidget::on_but_querenchong_clicked()
+{
+    if((ui->lineEdit_querenchong->text() == ui->lineEdit_chongzhi->text()) && ui->lineEdit_chongzhi->text().length()!=0)
+    {
+
+        double yue = ui->label_yue->text().toDouble();
+        double chong = ui->lineEdit_chongzhi->text().toDouble();
+        m_QueryModel->clear();
+        m_QueryModel->setQuery(tr("update member set balance = '%1' where cardid = '%2'").arg(yue+chong).arg(ui->lineEdit_CardNum->text()),*getSqlManager()->getdb());
+        if(!m_QueryModel->lastError().isValid())
+        {
+            QMessageBox::warning(NULL, tr("提示"), "充值成功！");
+            ui->label_yue->setText(tr("%1").arg(yue+chong));
+            QPalette pe;
+            pe.setColor(QPalette::WindowText,Qt::red);
+            QFont font;
+            font.setPointSize(30);
+            ui->label_yue->setPalette(pe);
+            ui->label_yue->setFont(font);
+            ui->but_CancleCharge->setText("返回");
+            ui->lineEdit_chongzhi->clear();
+            ui->lineEdit_querenchong->clear();
+        }
+    }
+    else
+    {
+        qDebug()<<m_QueryModel->lastError().text();
+    }
 }

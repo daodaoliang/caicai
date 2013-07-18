@@ -35,6 +35,7 @@ bool SqlManager::Init()
     }
     m_Query = new QSqlQuery(m_DB);
     qDebug()<<"MySql Open Success";
+    return true;
 }
 
 bool SqlManager::InsertVipInfo(QString cardID, QString name, QString phone, QString idCard, QDateTime startTime, QDateTime expireTime, int memTypeid, QString shopID)
