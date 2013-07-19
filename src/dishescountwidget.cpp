@@ -87,5 +87,8 @@ void DishesCountWidget::on_toolButton_11_clicked()
 
 void DishesCountWidget::on_toolButton_10_clicked()
 {
-    this->accept();
+    if(m_count != 0)
+    {
+        this->accept();
+    }
 }

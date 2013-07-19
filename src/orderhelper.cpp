@@ -85,6 +85,10 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
 
 double OrderHelper::discount(const QList<DishesInfo> &dishes)
 {
+    if(dishes.count() == 0)
+    {
+        return 0;
+    }
     int a = 0;
     int b = 0;
     int c = 0;

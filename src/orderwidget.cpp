@@ -111,6 +111,7 @@ void OrderWidget::on_toolButton_2_clicked()
         ui->tableWidget_2->removeRow(index);
         m_dishesInfo.removeAt(index);
         showTotal();
+        ui->label->clear();
     }
 }
 
