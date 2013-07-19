@@ -10,6 +10,7 @@
 #include "windowseventhandler.h"
 #include "vipwidget.h"
 #include "loginwidget.h"
+#include "configerfileprocesser.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -17,7 +18,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("GBK"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("GBK"));
     getSqlManager()->Init();
-
+    getConfigerFileInstance()->createInstance();
     //ÓÃ»§µÇÂ¼
     LoginWidget login;
     if(!login.exec())
