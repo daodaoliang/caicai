@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50524
 File Encoding         : 65001
 
-Date: 2013-07-04 00:20:58
+Date: 2013-07-20 01:31:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,10 +20,10 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `consume`;
 CREATE TABLE `consume` (
-  `consumeid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Ê³²ÄÏûºÄ¶ÔÓ¦±íID',
-  `dishesid` int(11) NOT NULL COMMENT '²ËÆ·ID',
-  `materialid` int(11) NOT NULL COMMENT 'Ê³²ÄID',
-  `consumecount` int(11) NOT NULL COMMENT 'ÏûºÄÊıÁ¿',
+  `consumeid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'é£Ÿææ¶ˆè€—å¯¹åº”è¡¨ID',
+  `dishesid` int(11) NOT NULL COMMENT 'èœå“ID',
+  `materialid` int(11) NOT NULL COMMENT 'é£ŸæID',
+  `consumecount` int(11) NOT NULL COMMENT 'æ¶ˆè€—æ•°é‡',
   PRIMARY KEY (`consumeid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -36,43 +36,118 @@ CREATE TABLE `consume` (
 -- ----------------------------
 DROP TABLE IF EXISTS `diningtable`;
 CREATE TABLE `diningtable` (
-  `id` char(4) NOT NULL COMMENT '²Í×À±íID,¶ÔÓ¦ÎªÌ¨ºÅ£¬4Î»',
-  `tablename` varchar(20) NOT NULL COMMENT '²Í×À±íÃû³Æ',
-  `state` int(11) NOT NULL DEFAULT '0' COMMENT '²Í×À×´Ì¬£¬ÔİÊ±¹æ¶¨0-Îª¿ÕÏĞ£¬1-Ã¦Âµ£¬ÆäËû±¸ÓÃ',
-  `guestnumber` int(11) NOT NULL DEFAULT '1' COMMENT 'µ±Ç°¿ÍÈËÊıÁ¿',
-  `waiterid` varchar(10) DEFAULT NULL COMMENT '¿ª×ÀµÄ·şÎñÔ±±àºÅ',
+  `id` char(4) NOT NULL COMMENT 'é¤æ¡Œè¡¨ID,å¯¹åº”ä¸ºå°å·ï¼Œ4ä½',
+  `tablename` varchar(20) NOT NULL COMMENT 'é¤æ¡Œè¡¨åç§°',
+  `state` int(11) NOT NULL DEFAULT '0' COMMENT 'é¤æ¡ŒçŠ¶æ€ï¼Œæš‚æ—¶è§„å®š0-ä¸ºç©ºé—²ï¼Œ1-å¿™ç¢Œï¼Œå…¶ä»–å¤‡ç”¨',
+  `guestnumber` int(11) NOT NULL DEFAULT '1' COMMENT 'å½“å‰å®¢äººæ•°é‡',
+  `waiterid` varchar(10) DEFAULT NULL COMMENT 'å¼€æ¡Œçš„æœåŠ¡å‘˜ç¼–å·',
+  `lastopentime` datetime DEFAULT NULL,
+  `orderid` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
 -- ----------------------------
 -- Records of diningtable
 -- ----------------------------
+INSERT INTO `diningtable` VALUES ('0001', '1å·æ¡Œ', '0', '1', '1', '2013-07-15 23:50:34', null);
+INSERT INTO `diningtable` VALUES ('0002', '2å·æ¡Œ', '0', '3', '1', null, null);
+INSERT INTO `diningtable` VALUES ('0003', '3å·æ¡Œ', '0', '2', '1111', null, null);
+INSERT INTO `diningtable` VALUES ('0004', '4å·æ¡Œ', '0', '3', '3', null, null);
+INSERT INTO `diningtable` VALUES ('0005', '5å·æ¡Œ', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0006', 'åŒ…é—´1', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0007', 'åŒ…é—´2', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('1', '1', '0', '1', '0001', null, null);
+INSERT INTO `diningtable` VALUES ('21', '21', '0', '1', '0001', null, null);
+INSERT INTO `diningtable` VALUES ('8', '8', '0', '1', '0001', null, null);
 
 -- ----------------------------
 -- Table structure for `dishes`
 -- ----------------------------
 DROP TABLE IF EXISTS `dishes`;
 CREATE TABLE `dishes` (
-  `dishesid` int(11) NOT NULL AUTO_INCREMENT COMMENT '²ËÆ·ID',
-  `dishesname` varchar(30) NOT NULL COMMENT '²ËÆ·Ãû³Æ',
-  `price` decimal(10,0) NOT NULL COMMENT '²ËÆ·¼Û¸ñ',
+  `dishesid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'èœå“ID',
+  `dishesname` varchar(30) NOT NULL COMMENT 'èœå“åç§°',
+  `price` decimal(10,0) NOT NULL COMMENT 'èœå“ä»·æ ¼',
+  `imagefile` varchar(255) DEFAULT NULL,
+  `pinyin` varchar(200) DEFAULT NULL,
+  `typeid` int(11) NOT NULL,
   PRIMARY KEY (`dishesid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=3006 DEFAULT CHARSET=gbk;
 
 -- ----------------------------
 -- Records of dishes
 -- ----------------------------
+INSERT INTO `dishes` VALUES ('1', 'ç½ç½è¿‡æ¡¥ç±³çº¿', '22', './img/mixian.jpg', 'gggqmx', '3');
+INSERT INTO `dishes` VALUES ('2', 'ç•ªèŒ„è¿‡æ¡¥ç±³çº¿', '26', null, 'fqgqmx', '3');
+INSERT INTO `dishes` VALUES ('3', 'éº»è¾£è¿‡æ¡¥ç±³çº¿', '26', null, 'mlgqmx', '3');
+INSERT INTO `dishes` VALUES ('4', 'è€å›é…¸èœè¿‡æ¡¥ç±³çº¿', '26', null, 'ltscgqmx', '3');
+INSERT INTO `dishes` VALUES ('5', 'éº»è¾£é¸¡å—è¿‡æ¡¥ç±³çº¿', '28', null, 'mljkgqmx', '3');
+INSERT INTO `dishes` VALUES ('6', 'ç•ªèŒ„å¤§æ’è¿‡æ¡¥ç±³çº¿', '28', null, 'fqdpgqmx', '3');
+INSERT INTO `dishes` VALUES ('7', 'éº»è¾£é±¼ç‰‡è¿‡æ¡¥ç±³çº¿', '28', null, 'mlypgqmx', '3');
+INSERT INTO `dishes` VALUES ('8', 'ç•ªèŒ„è´¡ä¸¸è¿‡æ¡¥ç±³çº¿', '28', null, 'fqgwgqmx', '3');
+INSERT INTO `dishes` VALUES ('1001', 'å§œæ±æ¾èŠ±è›‹', '9', null, 'jzshd', '2');
+INSERT INTO `dishes` VALUES ('1002', 'è€é†‹èŠ±ç”Ÿ', '8', null, 'lchs', '2');
+INSERT INTO `dishes` VALUES ('1003', 'åœ°ç“œä¸¸', '8', null, 'dgw', '2');
+INSERT INTO `dishes` VALUES ('1004', 'å‡‰æ‹ŒåœŸè±†ä¸', '8', null, 'lbtds', '2');
+INSERT INTO `dishes` VALUES ('1005', 'æ·±æµ·å°æµ·å¸¦', '8', null, 'shxhd', '2');
+INSERT INTO `dishes` VALUES ('1006', 'éª¨è‚‰ç›¸è¿', '8', null, 'grxl', '2');
+INSERT INTO `dishes` VALUES ('2001', 'çº¢æ£å…»é¢œè±†æµ†', '8', null, 'hzyydj', '1');
+INSERT INTO `dishes` VALUES ('2002', 'é…¸æ¢…æ±', '8', null, 'smz', '1');
+INSERT INTO `dishes` VALUES ('2003', 'é›€å·¢èŠ’æœC', '8', null, 'qcmgc', '1');
+INSERT INTO `dishes` VALUES ('2004', 'åŠ å¤šå®', '6', null, 'jdb', '1');
+INSERT INTO `dishes` VALUES ('2005', 'å¯ä¹', '5', null, 'kl', '1');
+INSERT INTO `dishes` VALUES ('2006', 'å†œå¤«å±±æ³‰', '3', null, 'nfsq', '1');
+INSERT INTO `dishes` VALUES ('2007', 'é’å²›å•¤é…’', '8', null, 'qdpj', '1');
+INSERT INTO `dishes` VALUES ('3001', 'å¥—é¤A', '32', null, 'tca', '4');
+INSERT INTO `dishes` VALUES ('3002', 'å¥—é¤B', '32', null, 'tcb', '4');
+INSERT INTO `dishes` VALUES ('3003', 'å¥—é¤C', '36', null, 'tcc', '4');
+INSERT INTO `dishes` VALUES ('3004', 'å¥—é¤D', '36', null, 'tcd', '4');
+INSERT INTO `dishes` VALUES ('3005', 'å¥—é¤E', '36', null, 'tce', '4');
+
+-- ----------------------------
+-- Table structure for `dishestype`
+-- ----------------------------
+DROP TABLE IF EXISTS `dishestype`;
+CREATE TABLE `dishestype` (
+  `typeid` int(11) NOT NULL AUTO_INCREMENT,
+  `typename` varchar(40) NOT NULL,
+  `typeimage` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`typeid`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=gbk;
+
+-- ----------------------------
+-- Records of dishestype
+-- ----------------------------
+INSERT INTO `dishestype` VALUES ('1', 'é¥®æ–™', './img/yinliao.jpg');
+INSERT INTO `dishestype` VALUES ('2', 'å°åƒ', null);
+INSERT INTO `dishestype` VALUES ('3', 'ç±³çº¿', null);
+INSERT INTO `dishestype` VALUES ('4', 'å¥—é¤', null);
+
+-- ----------------------------
+-- Table structure for `login`
+-- ----------------------------
+DROP TABLE IF EXISTS `login`;
+CREATE TABLE `login` (
+  `machineid` varchar(10) NOT NULL,
+  `userid` int(11) NOT NULL,
+  PRIMARY KEY (`machineid`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+
+-- ----------------------------
+-- Records of login
+-- ----------------------------
+INSERT INTO `login` VALUES ('001', '1');
 
 -- ----------------------------
 -- Table structure for `material`
 -- ----------------------------
 DROP TABLE IF EXISTS `material`;
 CREATE TABLE `material` (
-  `materialid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Ê³²Äid',
-  `materialname` varchar(30) NOT NULL COMMENT 'Ê³²ÄÃû³Æ',
-  `materialtypeid` int(11) NOT NULL COMMENT 'Ê³²ÄÀàĞÍid',
-  `count` int(11) NOT NULL COMMENT 'Ê³²Ä±£ÓĞÁ¿',
-  `measurename` varchar(20) DEFAULT NULL COMMENT 'Ê³²Ä¶ÈÁ¿µ¥Î»Ãû³Æ',
+  `materialid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'é£Ÿæid',
+  `materialname` varchar(30) NOT NULL COMMENT 'é£Ÿæåç§°',
+  `materialtypeid` int(11) NOT NULL COMMENT 'é£Ÿæç±»å‹id',
+  `count` int(11) NOT NULL COMMENT 'é£Ÿæä¿æœ‰é‡',
+  `measurename` varchar(20) DEFAULT NULL COMMENT 'é£Ÿæåº¦é‡å•ä½åç§°',
   PRIMARY KEY (`materialid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -85,8 +160,8 @@ CREATE TABLE `material` (
 -- ----------------------------
 DROP TABLE IF EXISTS `materialtype`;
 CREATE TABLE `materialtype` (
-  `materialtypeid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Ê³²ÄÀàĞÍID',
-  `materialtype` varchar(20) NOT NULL COMMENT 'Ê³²ÄÀàĞÍÃû³Æ',
+  `materialtypeid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'é£Ÿæç±»å‹ID',
+  `materialtype` varchar(20) NOT NULL COMMENT 'é£Ÿæç±»å‹åç§°',
   PRIMARY KEY (`materialtypeid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -99,22 +174,22 @@ CREATE TABLE `materialtype` (
 -- ----------------------------
 DROP TABLE IF EXISTS `member`;
 CREATE TABLE `member` (
-  `memberid` int(11) NOT NULL AUTO_INCREMENT COMMENT '»áÔ±ID',
-  `cardid` varchar(20) NOT NULL COMMENT '¿¨Æ¬±àºÅ',
-  `name` varchar(20) NOT NULL COMMENT '»áÔ±ĞÕÃû',
-  `phone` varchar(20) NOT NULL COMMENT '»áÔ±µç»°',
-  `idcard` varchar(20) NOT NULL COMMENT '»áÔ±Éí·İÖ¤ºÅ',
-  `starttime` datetime NOT NULL COMMENT '¿ª¿¨Ê±¼ä',
-  `expiretime` datetime DEFAULT NULL COMMENT '¹ıÆÚÊ±¼ä',
-  `membertypeid` int(11) NOT NULL COMMENT '»áÔ±ÀàĞÍID',
-  `shopid` varchar(10) NOT NULL COMMENT '·ÖµêID',
-  `balance` decimal(20) DEFAULT NULL COMMENT 'ÕË»§Óà¶î',
+  `memberid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ä¼šå‘˜ID',
+  `cardid` varchar(20) NOT NULL COMMENT 'å¡ç‰‡ç¼–å·',
+  `name` varchar(20) NOT NULL COMMENT 'ä¼šå‘˜å§“å',
+  `phone` varchar(20) NOT NULL COMMENT 'ä¼šå‘˜ç”µè¯',
+  `idcard` varchar(20) NOT NULL COMMENT 'ä¼šå‘˜èº«ä»½è¯å·',
+  `starttime` datetime NOT NULL COMMENT 'å¼€å¡æ—¶é—´',
+  `expiretime` datetime DEFAULT NULL COMMENT 'è¿‡æœŸæ—¶é—´',
+  `membertypeid` int(11) NOT NULL COMMENT 'ä¼šå‘˜ç±»å‹ID',
+  `shopid` varchar(10) NOT NULL COMMENT 'åˆ†åº—ID',
   PRIMARY KEY (`memberid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
 
 -- ----------------------------
 -- Records of member
 -- ----------------------------
+INSERT INTO `member` VALUES ('1', '1', '1', '1', '1', '2013-07-07 15:23:57', null, '1', '1');
 
 -- ----------------------------
 -- Table structure for `membertype`
@@ -131,53 +206,112 @@ CREATE TABLE `membertype` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `order`
--- ----------------------------
-DROP TABLE IF EXISTS `order`;
-CREATE TABLE `order` (
-  `orderid` varchar(20) NOT NULL COMMENT '¶©µ¥ID',
-  `orderstate` int(11) NOT NULL DEFAULT '0' COMMENT '¶©µ¥×´Ì¬£¬0ÎªÎ´½á£¬1ÎªÒÑ½á',
-  `begintime` datetime NOT NULL COMMENT '¶©µ¥¿ªÊ¼Ê±¼ä',
-  `endtime` datetime DEFAULT NULL COMMENT '¶©µ¥½áÊøÊ±¼ä',
-  `accounts` decimal(10,0) DEFAULT NULL COMMENT 'Ó¦ÊÕ½ğ¶î',
-  `paid` decimal(10,0) DEFAULT NULL COMMENT 'ÊµÊÕ½ğ¶î',
-  `tableid` char(4) NOT NULL COMMENT '²Í×À±àºÅ',
-  `memberid` varchar(20) DEFAULT NULL COMMENT '»áÔ±±àºÅ',
-  PRIMARY KEY (`orderid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
-
--- ----------------------------
--- Records of order
--- ----------------------------
-
--- ----------------------------
 -- Table structure for `orderdetail`
 -- ----------------------------
 DROP TABLE IF EXISTS `orderdetail`;
 CREATE TABLE `orderdetail` (
-  `detailid` int(11) NOT NULL AUTO_INCREMENT COMMENT '¶©µ¥ÏêÇéID',
-  `orderid` varchar(20) NOT NULL COMMENT '¶ÔÓ¦¶©µ¥±àºÅ',
-  `dishesid` int(11) NOT NULL COMMENT 'Ëùµã²ËÆ·id',
-  `dishescount` int(11) NOT NULL DEFAULT '1' COMMENT 'Ëùµã²ËÆ·ÊıÁ¿',
-  `dishestype` int(11) NOT NULL DEFAULT '0' COMMENT 'ÓÃÓÚ±êÊ¾µã²Ë»òÕßÍË²Ë0-µã²Ë£¬1-»®²Ë£¬2-ÍË²Ë',
-  `handletime` datetime NOT NULL COMMENT '¶©µ¥ÏêÏ¸µÄ²Ù×÷Ê±¼ä',
+  `detailid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'è®¢å•è¯¦æƒ…ID',
+  `orderid` varchar(20) NOT NULL COMMENT 'å¯¹åº”è®¢å•ç¼–å·',
+  `dishesid` int(11) NOT NULL COMMENT 'æ‰€ç‚¹èœå“id',
+  `dishescount` int(11) NOT NULL DEFAULT '1' COMMENT 'æ‰€ç‚¹èœå“æ•°é‡',
+  `dishestype` int(11) NOT NULL DEFAULT '0' COMMENT 'ç”¨äºæ ‡ç¤ºç‚¹èœæˆ–è€…é€€èœ0-ç‚¹èœï¼Œ1-åˆ’èœï¼Œ2-é€€èœ',
+  `handletime` datetime NOT NULL COMMENT 'è®¢å•è¯¦ç»†çš„æ“ä½œæ—¶é—´',
   PRIMARY KEY (`detailid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=gbk;
 
 -- ----------------------------
 -- Records of orderdetail
 -- ----------------------------
+INSERT INTO `orderdetail` VALUES ('6', '201307150037310001', '1', '1', '0', '2013-07-15 00:37:31');
+INSERT INTO `orderdetail` VALUES ('7', '201307150038290001', '1', '0', '1', '2013-07-15 00:38:29');
+INSERT INTO `orderdetail` VALUES ('8', '201307150039450001', '1', '1', '1', '2013-07-15 00:39:45');
+INSERT INTO `orderdetail` VALUES ('9', '201307150126340001', '1', '1', '0', '2013-07-15 01:26:34');
+INSERT INTO `orderdetail` VALUES ('10', '201307152240240001', '1001', '1', '0', '2013-07-15 22:40:24');
+INSERT INTO `orderdetail` VALUES ('11', '201307160000030001', '1', '1', '0', '2013-07-16 00:00:03');
+INSERT INTO `orderdetail` VALUES ('12', '201307190002141', '2001', '5', '0', '2013-07-19 00:02:14');
+INSERT INTO `orderdetail` VALUES ('13', '201307190004290002', '2001', '2', '0', '2013-07-19 00:04:29');
+INSERT INTO `orderdetail` VALUES ('14', '201307192246580001', '2001', '1', '1', '2013-07-19 22:46:58');
+INSERT INTO `orderdetail` VALUES ('15', '201307192257060001', '2001', '1', '1', '2013-07-19 22:57:06');
+INSERT INTO `orderdetail` VALUES ('16', '201307192330580001', '2001', '1', '0', '2013-07-19 23:30:58');
+INSERT INTO `orderdetail` VALUES ('17', '201307192332250001', '1', '1', '0', '2013-07-19 23:32:25');
+INSERT INTO `orderdetail` VALUES ('18', '201307192335370001', '1', '1', '0', '2013-07-19 23:35:37');
+INSERT INTO `orderdetail` VALUES ('19', '201307200114410001', '2001', '1', '0', '2013-07-20 01:14:41');
+INSERT INTO `orderdetail` VALUES ('20', '201307200114410001', '1001', '1', '0', '2013-07-20 01:14:41');
+INSERT INTO `orderdetail` VALUES ('21', '201307200114410001', '1', '1', '0', '2013-07-20 01:14:41');
+INSERT INTO `orderdetail` VALUES ('22', '201307200126060001', '2001', '1', '0', '2013-07-20 01:26:06');
+INSERT INTO `orderdetail` VALUES ('23', '201307200126060001', '1001', '1', '0', '2013-07-20 01:26:06');
+INSERT INTO `orderdetail` VALUES ('24', '201307200126060001', '1', '1', '0', '2013-07-20 01:26:06');
+INSERT INTO `orderdetail` VALUES ('25', '201307200127500001', '2001', '1', '1', '2013-07-20 01:27:50');
+INSERT INTO `orderdetail` VALUES ('26', '201307200127500001', '1001', '1', '1', '2013-07-20 01:27:50');
+INSERT INTO `orderdetail` VALUES ('27', '201307200127500001', '1', '1', '1', '2013-07-20 01:27:50');
+
+-- ----------------------------
+-- Table structure for `orderinfo`
+-- ----------------------------
+DROP TABLE IF EXISTS `orderinfo`;
+CREATE TABLE `orderinfo` (
+  `orderid` varchar(20) NOT NULL COMMENT 'è®¢å•ID',
+  `orderstate` int(11) NOT NULL DEFAULT '0' COMMENT 'è®¢å•çŠ¶æ€ï¼Œ0ä¸ºæœªç»“ï¼Œ1ä¸ºå·²ç»“',
+  `begintime` datetime NOT NULL COMMENT 'è®¢å•å¼€å§‹æ—¶é—´',
+  `endtime` datetime DEFAULT NULL COMMENT 'è®¢å•ç»“æŸæ—¶é—´',
+  `accounts` decimal(10,0) DEFAULT NULL COMMENT 'åº”æ”¶é‡‘é¢',
+  `paid` decimal(10,0) DEFAULT NULL COMMENT 'å®æ”¶é‡‘é¢',
+  `tableid` char(4) NOT NULL COMMENT 'é¤æ¡Œç¼–å·',
+  `memberid` varchar(20) DEFAULT NULL COMMENT 'ä¼šå‘˜ç¼–å·',
+  `wasteid` varchar(30) NOT NULL,
+  `paytype` int(11) NOT NULL DEFAULT '0',
+  `userid` int(11) NOT NULL,
+  PRIMARY KEY (`orderid`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+
+-- ----------------------------
+-- Records of orderinfo
+-- ----------------------------
+INSERT INTO `orderinfo` VALUES ('201307150037310001', '0', '2013-07-15 00:37:31', null, '0', '10', '0001', '', '0012013071500:00:24', '0', '0');
+INSERT INTO `orderinfo` VALUES ('201307150038290001', '0', '2013-07-15 00:38:29', null, '0', '10', '0001', '', '', '0', '0');
+INSERT INTO `orderinfo` VALUES ('201307150039450001', '0', '2013-07-15 00:39:45', null, '0', '10', '0001', '', '', '0', '0');
+INSERT INTO `orderinfo` VALUES ('201307150126340001', '0', '2013-07-15 01:26:34', null, '0', '10', '0001', '', '0012013071500:00:25', '0', '0');
+INSERT INTO `orderinfo` VALUES ('201307152240240001', '0', '2013-07-15 22:40:24', null, '0', '10', '0001', '', '0012013071500:00:26', '0', '1');
+INSERT INTO `orderinfo` VALUES ('201307160000030001', '0', '2013-07-16 00:00:03', null, '22', '32', '0001', '', '0012013071600:00:30', '0', '1');
+INSERT INTO `orderinfo` VALUES ('201307190002141', '0', '2013-07-19 00:02:14', null, '40', '50', '1', '', '', '0', '1');
+INSERT INTO `orderinfo` VALUES ('201307190004290002', '0', '2013-07-19 00:04:29', null, '16', '26', '0002', '', '', '0', '1');
+INSERT INTO `orderinfo` VALUES ('201307192246580001', '0', '2013-07-19 22:46:58', null, '-8', '-8', '0001', '', '', '0', '1');
+INSERT INTO `orderinfo` VALUES ('201307192257060001', '0', '2013-07-19 22:57:06', null, '-8', '-8', '0001', '', '', '0', '1');
+INSERT INTO `orderinfo` VALUES ('201307192330580001', '0', '2013-07-19 23:30:58', null, '8', '8', '0001', '', '', '0', '1');
+INSERT INTO `orderinfo` VALUES ('201307192332250001', '0', '2013-07-19 23:32:25', null, '22', '22', '0001', '', '', '0', '1');
+INSERT INTO `orderinfo` VALUES ('201307192335370001', '0', '2013-07-19 23:35:37', null, '22', '22', '0001', '', '', '0', '1');
+INSERT INTO `orderinfo` VALUES ('201307200114410001', '0', '2013-07-20 01:14:41', null, '39', '39', '0001', '', '', '0', '1');
+INSERT INTO `orderinfo` VALUES ('201307200126060001', '0', '2013-07-20 01:26:06', null, '39', '33', '0001', '', '', '0', '1');
+INSERT INTO `orderinfo` VALUES ('201307200127500001', '0', '2013-07-20 01:27:50', null, '-39', '-33', '0001', '', '', '0', '1');
+
+-- ----------------------------
+-- Table structure for `packages`
+-- ----------------------------
+DROP TABLE IF EXISTS `packages`;
+CREATE TABLE `packages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `Packagesid` int(11) NOT NULL,
+  `dishesid` int(11) NOT NULL,
+  `dishescount` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=gbk;
+
+-- ----------------------------
+-- Records of packages
+-- ----------------------------
+INSERT INTO `packages` VALUES ('1', '3001', '1', '1');
+INSERT INTO `packages` VALUES ('2', '3001', '1005', '1');
 
 -- ----------------------------
 -- Table structure for `shop`
 -- ----------------------------
 DROP TABLE IF EXISTS `shop`;
 CREATE TABLE `shop` (
-  `shopid` varchar(20) NOT NULL COMMENT '·ÖµêID',
-  `shopname` varchar(20) NOT NULL COMMENT '·ÖµêÃû³Æ',
-  `shopaddress` varchar(100) NOT NULL COMMENT '·ÖµêµØÖ·',
-  `telphonenumber` varchar(20) DEFAULT NULL COMMENT '×ù»ú±àºÅ',
-  `cellphonenumber` varchar(20) DEFAULT NULL COMMENT 'ÊÖ»ú±àºÅ',
+  `shopid` varchar(20) NOT NULL COMMENT 'åˆ†åº—ID',
+  `shopname` varchar(20) NOT NULL COMMENT 'åˆ†åº—åç§°',
+  `shopaddress` varchar(100) NOT NULL COMMENT 'åˆ†åº—åœ°å€',
+  `telphonenumber` varchar(20) DEFAULT NULL COMMENT 'åº§æœºç¼–å·',
+  `cellphonenumber` varchar(20) DEFAULT NULL COMMENT 'æ‰‹æœºç¼–å·',
   PRIMARY KEY (`shopid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=gbk;
 
@@ -186,21 +320,24 @@ CREATE TABLE `shop` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `user`
+-- Table structure for `userinfo`
 -- ----------------------------
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
-  `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ÓÃ»§id',
-  `username` varchar(20) NOT NULL COMMENT 'ÓÃ»§Ãû³Æ',
-  `password` varchar(100) NOT NULL COMMENT 'ÃÜÂë',
-  `registertime` datetime NOT NULL COMMENT '×¢²áÊ±¼ä',
-  `	
-function` binary(100) NOT NULL COMMENT 'È¨ÏŞ´úÂë',
-  `lastlogintime` datetime NOT NULL COMMENT 'ÉÏ´ÎµÇÂ¼Ê±¼ä',
-  `expiretime` datetime DEFAULT NULL COMMENT '¹ıÆÚÊ±¼ä',
+DROP TABLE IF EXISTS `userinfo`;
+CREATE TABLE `userinfo` (
+  `userid` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ç”¨æˆ·id',
+  `username` varchar(20) NOT NULL COMMENT 'ç”¨æˆ·åç§°',
+  `password` varchar(100) NOT NULL COMMENT 'å¯†ç ',
+  `registertime` datetime NOT NULL COMMENT 'æ³¨å†Œæ—¶é—´',
+  `purview` binary(100) NOT NULL COMMENT 'æƒé™ä»£ç ',
+  `lastlogintime` datetime NOT NULL COMMENT 'ä¸Šæ¬¡ç™»å½•æ—¶é—´',
+  `expiretime` datetime DEFAULT NULL COMMENT 'è¿‡æœŸæ—¶é—´',
+  `nickname` varchar(20) DEFAULT NULL,
+  `machineid` varchar(10) DEFAULT '',
   PRIMARY KEY (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=gbk;
 
 -- ----------------------------
--- Records of user
+-- Records of userinfo
 -- ----------------------------
+INSERT INTO `userinfo` VALUES ('1', '1', '6512bd43d9caa6e02c990b0a82652dca', '2013-07-06 17:28:50', 0x01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, '0000-00-00 00:00:00', null, 'å°å¼º', '');
+INSERT INTO `userinfo` VALUES ('2', '', '', '0000-00-00 00:00:00', 0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, '0000-00-00 00:00:00', null, null, '');
