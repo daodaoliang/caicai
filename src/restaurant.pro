@@ -40,7 +40,8 @@ SOURCES += main.cpp\
     detailwidget.cpp \
     checkwidget.cpp \
     orderwidget.cpp \
-    loginwidget.cpp
+    loginwidget.cpp \
+    backprinter.cpp
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -72,7 +73,8 @@ HEADERS  += mainwidget.h \
     detailwidget.h \
     checkwidget.h \
     orderwidget.h \
-    loginwidget.h
+    loginwidget.h \
+    backprinter.h
 
 RESOURCES += \
     src.qrc

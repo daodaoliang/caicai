@@ -5,6 +5,8 @@
 #include "dishesdelegate.h"
 #include <QDebug>
 #include <QMessageBox>
+#include "backprinter.h"
+
 OrderWidget::OrderWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::OrderWidget)
@@ -62,6 +64,7 @@ void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
         QString dishes = index.sibling(index.row(), 1).data().toString();
         int count = m_countWidget.getDishesCount();
         double price = index.sibling(index.row(), 2).data().toDouble();
+        int dishType = index.sibling(index.row(), 5).data().toInt();
         ui->tableWidget_2->insertRow(ui->tableWidget_2->rowCount());
         ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 0, new QTableWidgetItem(dishes));
         ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 1, new QTableWidgetItem(QString::number(count)));
@@ -71,6 +74,8 @@ void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
         dishesInfo.id = index.data().toInt();
         dishesInfo.type = ui->comboBox_2->itemData(ui->comboBox_2->currentIndex()).toInt();
         dishesInfo.price = price;
+        dishesInfo.dishType = dishType;
+        qDebug() << "dish type" << dishType;
         m_dishesInfo.append(dishesInfo);
         showTotal();
     }
@@ -93,7 +98,8 @@ void OrderWidget::showTotal()
     {
         total += m_dishesInfo.at(i).count * m_dishesInfo.at(i).price * (m_dishesInfo[i].type ? -1 : 1);
     }
-    QString text = tr("总计:<font size='6' color='red'><b>%1元</b></font>").arg(total, 0, 'f', 2);
+    double rest = orderHelperInstance()->discount(m_dishesInfo);
+    QString text = tr("总计:<font size='6' color='red'><b>%1元</b></font>").arg(total - rest, 0, 'f', 2);
     ui->label->setText(text);
 }
 
@@ -114,25 +120,29 @@ void OrderWidget::on_toolButton_3_clicked()
     {
         return;
     }
-
+    QString orderId;
+    double price = 0;
     bool result = orderHelperInstance()->createOrder(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
                                                      m_dishesInfo,
                                                      "",
-                                                     qApp->property("userId").toInt());
+                                                     qApp->property("userId").toInt(), price, orderId);
     if(result)
     {
-        QMessageBox::information(this, "提示", "操作成功");
-        m_dishesInfo.clear();
-        while(ui->tableWidget_2->rowCount() > 0)
+        result = getBackPrinter()->print(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
+                                         m_dishesInfo, orderId, price);
+        if(result)
         {
-            ui->tableWidget_2->removeRow(0);
+            QMessageBox::information(this, "提示", "操作成功");
+            m_dishesInfo.clear();
+            while(ui->tableWidget_2->rowCount() > 0)
+            {
+                ui->tableWidget_2->removeRow(0);
+            }
+            ui->label->clear();
+            return;
         }
-
     }
-    else
-    {
-        QMessageBox::information(this, "提示", "操作失败");
-    }
+    QMessageBox::information(this, "提示", "操作失败");
 }
 
 void OrderWidget::on_comboBox_2_activated(int index)
