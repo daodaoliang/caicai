@@ -162,11 +162,15 @@ void OrderHandler::handleCommand(const QStringList &cmdDetail, int index)
                                 {
                                     //减少库存
                                     //进行打印
-                                    getBackPrinter()->print(tableId, dishesList, orderId, money);
-                                    //回复正常
-                                    replyList.append("点菜成功");
-                                    reply(replyList, index);
-                                    return;
+                                    result = getBackPrinter()->print(tableId, dishesList, orderId, money);
+                                    if(result)
+                                    {
+                                        //回复正常
+                                        replyList.append("点菜成功");
+                                        reply(replyList, index);
+                                        return;
+                                    }
+
                                 }
                                 else
                                 {
@@ -202,6 +206,8 @@ void OrderHandler::handleCommand(const QStringList &cmdDetail, int index)
         reply(replyList, index);
         return;
     }
+    replyList.append("点菜失败");
+    reply(replyList, index);
 }
 
 
