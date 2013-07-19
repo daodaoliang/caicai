@@ -39,7 +39,7 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
     foreach(DishesInfo dish, dishes)
     {
         command.append(createDishes(dish));
-        money += dish.price;
+        money += dish.price * dish.count;
     }
     //¥Ú”°∑÷∏Óœﬂ
     createSplit();
@@ -52,6 +52,11 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
     command.append(createLine(paidString));
     //¥Ú”°Ω· ¯”Ô
     command.append(createLine("–ª–ªª›πÀ£°"));
+    //«–÷Ω
+    command.append(0x1d);
+    command.append(0x56);
+    command.append(66);
+    command.append(10);
     m_socket.write(command);
     return m_socket.waitForBytesWritten(1000);
 }
@@ -78,6 +83,7 @@ QByteArray BackPrinter::createDishes(const DishesInfo &dishes)
     QString priceString = tr("%1‘™").arg(dishes.price, 0, 'f', 2);
     strncpy(tmp + 26, priceString.toLocal8Bit().data(), 10);
     line.append(tmp, 36);
+    line.append(0x0a);
     return line;
 }
 
