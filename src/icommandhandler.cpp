@@ -10,6 +10,7 @@
 #include "dinnerwidget.h"
 #include "orderhelper.h"
 #include "backprinter.h"
+#include "frontprinter.h"
 ICommandHandler::ICommandHandler() :
     QObject()
 {
@@ -163,6 +164,7 @@ void OrderHandler::handleCommand(const QStringList &cmdDetail, int index)
                                     //减少库存
                                     //进行打印
                                     getBackPrinter()->print(tableId, dishesList, orderId, money);
+                                    getFrontPrinter()->print(tableId,dishesList,orderId,money);
                                     //回复正常
                                     replyList.append("点菜成功");
                                     reply(replyList, index);

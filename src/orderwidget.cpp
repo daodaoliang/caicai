@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include "backprinter.h"
-
+#include "frontprinter.h"
 OrderWidget::OrderWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::OrderWidget)
@@ -130,6 +130,8 @@ void OrderWidget::on_toolButton_3_clicked()
     {
         result = getBackPrinter()->print(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
                                          m_dishesInfo, orderId, price);
+       getFrontPrinter()->print(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
+                                m_dishesInfo, orderId, price);
         if(result)
         {
             QMessageBox::information(this, "提示", "操作成功");
