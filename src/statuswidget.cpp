@@ -5,6 +5,7 @@
 statusWidget::statusWidget(QWidget *parent) :
     QWidget(parent)
 {
+    this->setStyleSheet("color: rgb(255, 255, 255);");
     QLabel *labelVersion=new QLabel(tr("主程序版本:1.0.0.0"));
     QLabel *labelHorse=new QLabel(tr(""));
     QLabel *labelUpdate=new QLabel(tr("检查更新"));

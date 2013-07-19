@@ -30,6 +30,8 @@ private slots:
 
     void on_toolButton_3_clicked();
 
+    void on_comboBox_2_activated(int index);
+
 private:
     void showTotal();
 private:

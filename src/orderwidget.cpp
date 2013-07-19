@@ -29,6 +29,10 @@ OrderWidget::OrderWidget(QWidget *parent) :
             ui->comboBox->insertItem(ui->comboBox->count(), query->value(1).toString(), query->value(0).toString());
         }
     }
+    //初始化点菜退菜
+    ui->comboBox_2->insertItem(0, "退菜", 1);
+    ui->comboBox_2->insertItem(0, "点菜", 0);
+    ui->comboBox_2->setCurrentIndex(0);
 }
 
 OrderWidget::~OrderWidget()
@@ -65,7 +69,7 @@ void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
         DishesInfo dishesInfo;
         dishesInfo.count = count;
         dishesInfo.id = index.data().toInt();
-        dishesInfo.type = 0;
+        dishesInfo.type = ui->comboBox_2->itemData(ui->comboBox_2->currentIndex()).toInt();
         dishesInfo.price = price;
         m_dishesInfo.append(dishesInfo);
         showTotal();
@@ -87,7 +91,7 @@ void OrderWidget::showTotal()
     double total = 0;
     for(int i = 0; i < m_dishesInfo.count(); i++)
     {
-        total += m_dishesInfo.at(i).count * m_dishesInfo.at(i).price;
+        total += m_dishesInfo.at(i).count * m_dishesInfo.at(i).price * (m_dishesInfo[i].type ? -1 : 1);
     }
     QString text = tr("总计:<font size='6' color='red'><b>%1元</b></font>").arg(total, 0, 'f', 2);
     ui->label->setText(text);
@@ -106,13 +110,18 @@ void OrderWidget::on_toolButton_2_clicked()
 
 void OrderWidget::on_toolButton_3_clicked()
 {
+    if(ui->tableWidget_2->rowCount() == 0)
+    {
+        return;
+    }
+
     bool result = orderHelperInstance()->createOrder(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
                                                      m_dishesInfo,
                                                      "",
                                                      qApp->property("userId").toInt());
     if(result)
     {
-        QMessageBox::information(this, "提示", "点菜成功");
+        QMessageBox::information(this, "提示", "操作成功");
         m_dishesInfo.clear();
         while(ui->tableWidget_2->rowCount() > 0)
         {
@@ -122,6 +131,15 @@ void OrderWidget::on_toolButton_3_clicked()
     }
     else
     {
-        QMessageBox::information(this, "提示", "点菜失败");
+        QMessageBox::information(this, "提示", "操作失败");
     }
+}
+
+void OrderWidget::on_comboBox_2_activated(int index)
+{
+    for(int i = 0; i < m_dishesInfo.count(); i++)
+    {
+        m_dishesInfo[i].type = ui->comboBox_2->itemData(index).toInt();
+    }
+    showTotal();
 }

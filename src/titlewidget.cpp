@@ -11,7 +11,7 @@ titleWidget::titleWidget(QWidget *parent) :
     QWidget(parent)
 {
     QLabel *versionText=new QLabel(tr("旗鼓村点菜软件 1.0"));
-
+    versionText->setStyleSheet("color: rgb(255, 255, 255);");
     btnSkin=new myPushButton("SkinButton.png",tr("换肤"));
     connect(btnSkin,SIGNAL(clicked()),this,SIGNAL(showSkin()));
     btnMenuBar=new sysButton("title_bar_menu.png",tr("主菜单"));

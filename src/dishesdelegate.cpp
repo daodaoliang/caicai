@@ -18,7 +18,12 @@ void DishesDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option
     newRect.setY(newRect.y() + 15);
     newRect.setHeight(newRect.height() - 15);
     newRect.setWidth(newRect.width() - 15);
-    QPixmap iconImage(index.sibling(index.row(), 3).data().toString());
+    QString imageName = index.sibling(index.row(), 3).data().toString();
+    if(imageName.isEmpty())
+    {
+        imageName = "./img/no.jpg";
+    }
+    QPixmap iconImage(imageName);
     painter->drawPixmap(newRect, iconImage);
 
     //»­³öÎÄ×Ö

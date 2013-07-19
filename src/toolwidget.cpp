@@ -24,6 +24,7 @@ toolWidget::toolWidget(QWidget *parent) :
     mainLayout->setContentsMargins(5,0,5,0);
     foreach(toolButton *button, m_buttonList)
     {
+        button->setStyleSheet("color: rgb(255, 255, 255);");
         mainLayout->addWidget(button);
     }
     mainLayout->addStretch();
