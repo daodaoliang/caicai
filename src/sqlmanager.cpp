@@ -4,6 +4,7 @@
 #include <QSqlError>
 #include <QCryptographicHash>
 #include <QBitArray>
+#include <QMessageBox>
 SqlManager::SqlManager(QObject *parent) :
     QObject(parent)
 {
@@ -139,6 +140,10 @@ QString SqlManager::login(const QString &user, QString password, const QString &
                 }
             }
         }
+    }
+    else
+    {
+        QMessageBox::information(NULL,"","");
     }
     return "";
 }

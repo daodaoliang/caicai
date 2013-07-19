@@ -14,10 +14,12 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    QApplication::addLibraryPath("./plugins");
     QTextCodec::setCodecForCStrings(QTextCodec::codecForName("GBK"));
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("GBK"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("GBK"));
     getSqlManager()->Init();
+    qApp->setProperty("name", "ºéÂ¥µê");
     getConfigerFileInstance()->createInstance();
     //ÓÃ»§µÇÂ¼
     LoginWidget login;

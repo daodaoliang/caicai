@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50524
 File Encoding         : 65001
 
-Date: 2013-07-20 01:31:40
+Date: 2013-07-20 02:41:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,9 +56,6 @@ INSERT INTO `diningtable` VALUES ('0004', '4号桌', '0', '3', '3', null, null);
 INSERT INTO `diningtable` VALUES ('0005', '5号桌', '0', '0', null, null, null);
 INSERT INTO `diningtable` VALUES ('0006', '包间1', '0', '0', null, null, null);
 INSERT INTO `diningtable` VALUES ('0007', '包间2', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('1', '1', '0', '1', '0001', null, null);
-INSERT INTO `diningtable` VALUES ('21', '21', '0', '1', '0001', null, null);
-INSERT INTO `diningtable` VALUES ('8', '8', '0', '1', '0001', null, null);
 
 -- ----------------------------
 -- Table structure for `dishes`
@@ -98,11 +95,6 @@ INSERT INTO `dishes` VALUES ('2004', '加多宝', '6', null, 'jdb', '1');
 INSERT INTO `dishes` VALUES ('2005', '可乐', '5', null, 'kl', '1');
 INSERT INTO `dishes` VALUES ('2006', '农夫山泉', '3', null, 'nfsq', '1');
 INSERT INTO `dishes` VALUES ('2007', '青岛啤酒', '8', null, 'qdpj', '1');
-INSERT INTO `dishes` VALUES ('3001', '套餐A', '32', null, 'tca', '4');
-INSERT INTO `dishes` VALUES ('3002', '套餐B', '32', null, 'tcb', '4');
-INSERT INTO `dishes` VALUES ('3003', '套餐C', '36', null, 'tcc', '4');
-INSERT INTO `dishes` VALUES ('3004', '套餐D', '36', null, 'tcd', '4');
-INSERT INTO `dishes` VALUES ('3005', '套餐E', '36', null, 'tce', '4');
 
 -- ----------------------------
 -- Table structure for `dishestype`
@@ -121,7 +113,6 @@ CREATE TABLE `dishestype` (
 INSERT INTO `dishestype` VALUES ('1', '饮料', './img/yinliao.jpg');
 INSERT INTO `dishestype` VALUES ('2', '小吃', null);
 INSERT INTO `dishestype` VALUES ('3', '米线', null);
-INSERT INTO `dishestype` VALUES ('4', '套餐', null);
 
 -- ----------------------------
 -- Table structure for `login`
@@ -136,7 +127,7 @@ CREATE TABLE `login` (
 -- ----------------------------
 -- Records of login
 -- ----------------------------
-INSERT INTO `login` VALUES ('001', '1');
+INSERT INTO `login` VALUES ('001', '0');
 
 -- ----------------------------
 -- Table structure for `material`
@@ -217,33 +208,11 @@ CREATE TABLE `orderdetail` (
   `dishestype` int(11) NOT NULL DEFAULT '0' COMMENT '用于标示点菜或者退菜0-点菜，1-划菜，2-退菜',
   `handletime` datetime NOT NULL COMMENT '订单详细的操作时间',
   PRIMARY KEY (`detailid`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=gbk;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=gbk;
 
 -- ----------------------------
 -- Records of orderdetail
 -- ----------------------------
-INSERT INTO `orderdetail` VALUES ('6', '201307150037310001', '1', '1', '0', '2013-07-15 00:37:31');
-INSERT INTO `orderdetail` VALUES ('7', '201307150038290001', '1', '0', '1', '2013-07-15 00:38:29');
-INSERT INTO `orderdetail` VALUES ('8', '201307150039450001', '1', '1', '1', '2013-07-15 00:39:45');
-INSERT INTO `orderdetail` VALUES ('9', '201307150126340001', '1', '1', '0', '2013-07-15 01:26:34');
-INSERT INTO `orderdetail` VALUES ('10', '201307152240240001', '1001', '1', '0', '2013-07-15 22:40:24');
-INSERT INTO `orderdetail` VALUES ('11', '201307160000030001', '1', '1', '0', '2013-07-16 00:00:03');
-INSERT INTO `orderdetail` VALUES ('12', '201307190002141', '2001', '5', '0', '2013-07-19 00:02:14');
-INSERT INTO `orderdetail` VALUES ('13', '201307190004290002', '2001', '2', '0', '2013-07-19 00:04:29');
-INSERT INTO `orderdetail` VALUES ('14', '201307192246580001', '2001', '1', '1', '2013-07-19 22:46:58');
-INSERT INTO `orderdetail` VALUES ('15', '201307192257060001', '2001', '1', '1', '2013-07-19 22:57:06');
-INSERT INTO `orderdetail` VALUES ('16', '201307192330580001', '2001', '1', '0', '2013-07-19 23:30:58');
-INSERT INTO `orderdetail` VALUES ('17', '201307192332250001', '1', '1', '0', '2013-07-19 23:32:25');
-INSERT INTO `orderdetail` VALUES ('18', '201307192335370001', '1', '1', '0', '2013-07-19 23:35:37');
-INSERT INTO `orderdetail` VALUES ('19', '201307200114410001', '2001', '1', '0', '2013-07-20 01:14:41');
-INSERT INTO `orderdetail` VALUES ('20', '201307200114410001', '1001', '1', '0', '2013-07-20 01:14:41');
-INSERT INTO `orderdetail` VALUES ('21', '201307200114410001', '1', '1', '0', '2013-07-20 01:14:41');
-INSERT INTO `orderdetail` VALUES ('22', '201307200126060001', '2001', '1', '0', '2013-07-20 01:26:06');
-INSERT INTO `orderdetail` VALUES ('23', '201307200126060001', '1001', '1', '0', '2013-07-20 01:26:06');
-INSERT INTO `orderdetail` VALUES ('24', '201307200126060001', '1', '1', '0', '2013-07-20 01:26:06');
-INSERT INTO `orderdetail` VALUES ('25', '201307200127500001', '2001', '1', '1', '2013-07-20 01:27:50');
-INSERT INTO `orderdetail` VALUES ('26', '201307200127500001', '1001', '1', '1', '2013-07-20 01:27:50');
-INSERT INTO `orderdetail` VALUES ('27', '201307200127500001', '1', '1', '1', '2013-07-20 01:27:50');
 
 -- ----------------------------
 -- Table structure for `orderinfo`
@@ -267,22 +236,6 @@ CREATE TABLE `orderinfo` (
 -- ----------------------------
 -- Records of orderinfo
 -- ----------------------------
-INSERT INTO `orderinfo` VALUES ('201307150037310001', '0', '2013-07-15 00:37:31', null, '0', '10', '0001', '', '0012013071500:00:24', '0', '0');
-INSERT INTO `orderinfo` VALUES ('201307150038290001', '0', '2013-07-15 00:38:29', null, '0', '10', '0001', '', '', '0', '0');
-INSERT INTO `orderinfo` VALUES ('201307150039450001', '0', '2013-07-15 00:39:45', null, '0', '10', '0001', '', '', '0', '0');
-INSERT INTO `orderinfo` VALUES ('201307150126340001', '0', '2013-07-15 01:26:34', null, '0', '10', '0001', '', '0012013071500:00:25', '0', '0');
-INSERT INTO `orderinfo` VALUES ('201307152240240001', '0', '2013-07-15 22:40:24', null, '0', '10', '0001', '', '0012013071500:00:26', '0', '1');
-INSERT INTO `orderinfo` VALUES ('201307160000030001', '0', '2013-07-16 00:00:03', null, '22', '32', '0001', '', '0012013071600:00:30', '0', '1');
-INSERT INTO `orderinfo` VALUES ('201307190002141', '0', '2013-07-19 00:02:14', null, '40', '50', '1', '', '', '0', '1');
-INSERT INTO `orderinfo` VALUES ('201307190004290002', '0', '2013-07-19 00:04:29', null, '16', '26', '0002', '', '', '0', '1');
-INSERT INTO `orderinfo` VALUES ('201307192246580001', '0', '2013-07-19 22:46:58', null, '-8', '-8', '0001', '', '', '0', '1');
-INSERT INTO `orderinfo` VALUES ('201307192257060001', '0', '2013-07-19 22:57:06', null, '-8', '-8', '0001', '', '', '0', '1');
-INSERT INTO `orderinfo` VALUES ('201307192330580001', '0', '2013-07-19 23:30:58', null, '8', '8', '0001', '', '', '0', '1');
-INSERT INTO `orderinfo` VALUES ('201307192332250001', '0', '2013-07-19 23:32:25', null, '22', '22', '0001', '', '', '0', '1');
-INSERT INTO `orderinfo` VALUES ('201307192335370001', '0', '2013-07-19 23:35:37', null, '22', '22', '0001', '', '', '0', '1');
-INSERT INTO `orderinfo` VALUES ('201307200114410001', '0', '2013-07-20 01:14:41', null, '39', '39', '0001', '', '', '0', '1');
-INSERT INTO `orderinfo` VALUES ('201307200126060001', '0', '2013-07-20 01:26:06', null, '39', '33', '0001', '', '', '0', '1');
-INSERT INTO `orderinfo` VALUES ('201307200127500001', '0', '2013-07-20 01:27:50', null, '-39', '-33', '0001', '', '', '0', '1');
 
 -- ----------------------------
 -- Table structure for `packages`
@@ -339,5 +292,5 @@ CREATE TABLE `userinfo` (
 -- ----------------------------
 -- Records of userinfo
 -- ----------------------------
-INSERT INTO `userinfo` VALUES ('1', '1', '6512bd43d9caa6e02c990b0a82652dca', '2013-07-06 17:28:50', 0x01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, '0000-00-00 00:00:00', null, '小强', '');
-INSERT INTO `userinfo` VALUES ('2', '', '', '0000-00-00 00:00:00', 0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, '0000-00-00 00:00:00', null, null, '');
+INSERT INTO `userinfo` VALUES ('1', '1', '6512bd43d9caa6e02c990b0a82652dca', '2013-07-06 17:28:50', 0x01000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, '0000-00-00 00:00:00', null, '管理员', '');
+INSERT INTO `userinfo` VALUES ('2', '2', '6512bd43d9caa6e02c990b0a82652dca', '2013-07-06 17:28:50', 0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, '0000-00-00 00:00:00', null, '点菜宝', '');

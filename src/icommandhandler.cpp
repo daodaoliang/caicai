@@ -163,12 +163,16 @@ void OrderHandler::handleCommand(const QStringList &cmdDetail, int index)
                                 {
                                     //减少库存
                                     //进行打印
-                                    getBackPrinter()->print(tableId, dishesList, orderId, money);
+                                    result = getBackPrinter()->print(tableId, dishesList, orderId, money);
                                     getFrontPrinter()->print(tableId,dishesList,orderId,money);
-                                    //回复正常
-                                    replyList.append("点菜成功");
-                                    reply(replyList, index);
-                                    return;
+                                    if(result)
+                                    {
+                                        //回复正常
+                                        replyList.append("点菜成功");
+                                        reply(replyList, index);
+                                        return;
+                                    }
+
                                 }
                                 else
                                 {
@@ -204,6 +208,8 @@ void OrderHandler::handleCommand(const QStringList &cmdDetail, int index)
         reply(replyList, index);
         return;
     }
+    replyList.append("点菜失败");
+    reply(replyList, index);
 }
 
 
@@ -216,72 +222,72 @@ void MessageHandler::handleCommand(const QStringList &cmdDetail, int index)
 
 void BackDishHandler::handleCommand(const QStringList &cmdDetail, int index)
 {
-//    qDebug() << cmdDetail;
-//    QStringList replyList;
-//    replyList.append(cmdDetail[0].trimmed());
-//    if(cmdDetail.count() == 2)
-//    {
-//        //确认已经开台
-//        QString tableId = cmdDetail[1].left(7);
-//        tableId = tr("%1").arg(tableId.toInt(), 4, 10, QLatin1Char('0'));
-//        QString sql = tr("select * from diningtable where id = '%1' and state = 1").arg(tableId);
-//        QSqlQuery *query = getSqlManager()->ExecQuery(sql);
-//        if(query != NULL)
-//        {
-//            if(query->next())
-//            {
-//                //获取操作员编号
-//                sql = tr("select userid from login where machineid = '%1'").arg(cmdDetail[0].right(3));
-//                query = getSqlManager()->ExecQuery(sql);
-//                if(query != NULL)
-//                {
-//                    if(query->next())
-//                    {
-//                        int userid = query->value(0).toInt();
-//                        QList<DishesInfo> dishesList;
-//                        DishesInfo info;
-//                        info.id = cmdDetail[1].mid(8, 5).toInt();
-//                        info.count = cmdDetail[1].mid(19, 4).toInt();
-//                        info.type = 1;
-//                        dishesList.append(info);
-//                        bool result = orderHelperInstance()->createOrder(tableId,dishesList, "", userid);
-//                        if(result)
-//                        {
-//                            //减少库存
-//                            //进行打印
-//                            //回复正常
-//                            replyList.append("退菜成功");
-//                            reply(replyList, index);
-//                            return;
-//                        }
-//                        else
-//                        {
-//                            replyList.append("退菜失败");
-//                            reply(replyList, index);
-//                            return;
-//                        }
-//                    }
-//                }
-//            }
-//            else
-//            {
-//                replyList.append("此台未开");
-//                reply(replyList, index);
-//                return;
-//            }
-//        }
-//        else
-//        {
-//            replyList.append("查询失败");
-//            reply(replyList, index);
-//            return;
-//        }
-//    }
-//    else
-//    {
-//        replyList.append("格式错误");
-//        reply(replyList, index);
-//        return;
-//    }
+    //    qDebug() << cmdDetail;
+    //    QStringList replyList;
+    //    replyList.append(cmdDetail[0].trimmed());
+    //    if(cmdDetail.count() == 2)
+    //    {
+    //        //确认已经开台
+    //        QString tableId = cmdDetail[1].left(7);
+    //        tableId = tr("%1").arg(tableId.toInt(), 4, 10, QLatin1Char('0'));
+    //        QString sql = tr("select * from diningtable where id = '%1' and state = 1").arg(tableId);
+    //        QSqlQuery *query = getSqlManager()->ExecQuery(sql);
+    //        if(query != NULL)
+    //        {
+    //            if(query->next())
+    //            {
+    //                //获取操作员编号
+    //                sql = tr("select userid from login where machineid = '%1'").arg(cmdDetail[0].right(3));
+    //                query = getSqlManager()->ExecQuery(sql);
+    //                if(query != NULL)
+    //                {
+    //                    if(query->next())
+    //                    {
+    //                        int userid = query->value(0).toInt();
+    //                        QList<DishesInfo> dishesList;
+    //                        DishesInfo info;
+    //                        info.id = cmdDetail[1].mid(8, 5).toInt();
+    //                        info.count = cmdDetail[1].mid(19, 4).toInt();
+    //                        info.type = 1;
+    //                        dishesList.append(info);
+    //                        bool result = orderHelperInstance()->createOrder(tableId,dishesList, "", userid);
+    //                        if(result)
+    //                        {
+    //                            //减少库存
+    //                            //进行打印
+    //                            //回复正常
+    //                            replyList.append("退菜成功");
+    //                            reply(replyList, index);
+    //                            return;
+    //                        }
+    //                        else
+    //                        {
+    //                            replyList.append("退菜失败");
+    //                            reply(replyList, index);
+    //                            return;
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //            else
+    //            {
+    //                replyList.append("此台未开");
+    //                reply(replyList, index);
+    //                return;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            replyList.append("查询失败");
+    //            reply(replyList, index);
+    //            return;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        replyList.append("格式错误");
+    //        reply(replyList, index);
+    //        return;
+    //    }
 
 }
