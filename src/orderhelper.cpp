@@ -25,12 +25,24 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         //            return false;
         //        }
         //获取总价
-        QString sql = tr("select price, dishesname, typeid from dishes where dishesid in(%1").arg(dishes.first().id);
-        for(int i = 1; i < dishes.count(); i++)
+        //QString sql = tr("select price, dishesname, typeid from dishes where dishesid in(%1").arg(dishes.first().id);
+        //QString sql = tr("select price, dishesname, typeid from dishes where dishesid in(%1) ORDER BY FIND_IN_SET(dishesid '%1')").arg(dishes.first().id);
+        QString id = "";
+        QString sql = "";
+        if(dishes.count() > 0)
         {
-            sql.append(tr(",%1").arg(dishes[i].id));
+            id = tr("%1").arg(dishes[0].id);
+            for(int i = 1; i < dishes.count(); i++)
+            {
+                id.append(tr(",%1").arg(dishes[i].id));
+            }
         }
-        sql.append(")");
+        else
+        {
+            return false;
+        }
+        sql = tr("select price, dishesname, typeid from dishes where dishesid in(%1) ORDER BY FIND_IN_SET(dishesid, '%1')").arg(id);
+        //sql.append(")");
         qDebug() << sql;
         QSqlQuery *priceQuery = getSqlManager()->ExecQuery(sql);
         double paid = 0;
@@ -38,8 +50,10 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         while(priceQuery->next())
         {
             paid += priceQuery->value(0).toDouble() * dishes[index].count;
+            qDebug()<<priceQuery->value(0).toDouble()<<dishes[index].count<<QString::number(paid);
             dishes[index].name = priceQuery->value(1).toString();
             dishes[index].dishType = priceQuery->value(2).toInt();
+            qDebug()<<"sql-----"<<dishes[index].name<<dishes[index].count;
             index++;
         }
         if(dishes.first().type == 1)
