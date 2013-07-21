@@ -421,14 +421,16 @@ void VipWidget::on_pushButton_OpenCard_clicked()
     if(getCardReader()->ReadCard(key,14,rdata,16,cardID))
     {
         //ui->lineEdit_MemType->setText(QString::fromLocal8Bit(rdata));
-        ui->Box_MemType->setCurrentIndex(m_BoxMap.values(QString::fromLocal8Bit(rdata)).at(1));
+        if(m_BoxMap.contains(QString::fromLocal8Bit(rdata).at(1)))
+        {
+            ui->Box_MemType->setCurrentIndex(m_BoxMap.values(QString::fromLocal8Bit(rdata)).at(1));
+        }
     }
     memset(rdata,0,16);
     if(getCardReader()->ReadCard(key,16,rdata,16,cardID))
     {
         ui->lineEdit_ShopID->setText(QString::fromLocal8Bit(rdata));
     }
-    qDebug();
     if(selectVipInfoByCardID(cardID) > 0)
     {
         //((QSqlQueryModel*)m_TableModel)->setQuery(tr("select * from member where cardid = '%1'").arg(cardID),*getSqlManager()->getdb());
