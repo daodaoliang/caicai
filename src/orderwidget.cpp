@@ -75,7 +75,7 @@ void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
         dishesInfo.type = ui->comboBox_2->itemData(ui->comboBox_2->currentIndex()).toInt();
         dishesInfo.price = price;
         dishesInfo.dishType = dishType;
-        qDebug() << "dish type" << dishType;
+        qDebug() << "dish type" << dishType<<dishesInfo.name<<dishesInfo.count;
         m_dishesInfo.append(dishesInfo);
         showTotal();
     }
