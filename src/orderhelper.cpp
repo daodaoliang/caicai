@@ -97,7 +97,7 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
     return false;
 }
 
-double OrderHelper::discount(const QList<DishesInfo> &dishes)
+double OrderHelper::discount(QList<DishesInfo> &dishes)
 {
     if(dishes.count() == 0)
     {
@@ -125,5 +125,20 @@ double OrderHelper::discount(const QList<DishesInfo> &dishes)
     }
     int count = qMin(a, b);
     count = qMin(count, c);
+    //套餐中的饮料加套餐备注
+    int d = 0;
+    for(int i = 0; i < dishes.count(); i++)
+    {
+        if(dishes[i].dishType == 1)
+        {
+            QString name = dishes[i].name;
+            dishes[i].name = name+"(套餐)";
+            d++;
+        }
+        if(d == count)
+        {
+            break;
+        }
+    }
     return count * 6 * (dishes.first().type ? -1 : 1);
 }

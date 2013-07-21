@@ -42,6 +42,7 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
     {
         QString user = cmdDetail[1].mid(10, 4).trimmed();
         QString password = cmdDetail[1].mid(15, 10).trimmed();
+        qDebug()<<"dian cai bao"<<user<<password;
         int userId = 0;
         QString nickName = getSqlManager()->login(user, password, cmdDetail[0].right(3), userId);
         if(nickName.isEmpty())

@@ -23,7 +23,7 @@ public slots:
     
 public:
     bool createOrder(const QString &tableId, QList<DishesInfo> &dishes,const QString &wasteId,  int userid, double &totalPrice, QString &orderId,const QString &memberid = "");
-    double discount(const QList<DishesInfo> &dishes);
+    double discount(QList<DishesInfo> &dishes);
 };
 
 inline OrderHelper *orderHelperInstance()

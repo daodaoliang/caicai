@@ -1,6 +1,7 @@
 #include "loginwidget.h"
 #include "ui_loginwidget.h"
 #include "sqlmanager.h"
+#include <QDebug>
 LoginWidget::LoginWidget(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LoginWidget)
@@ -22,6 +23,7 @@ void LoginWidget::on_pushButton_clicked()
     QString user = ui->lineEdit->text();
     QString password = ui->lineEdit_2->text();
     int userId = 0;
+    qDebug()<<"password "<<password;
     QString nickName = getSqlManager()->login(user, password, "000", userId);
     qApp->setProperty("userId", userId);
     if(!nickName.isEmpty())

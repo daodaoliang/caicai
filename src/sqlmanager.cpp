@@ -17,6 +17,7 @@ SqlManager::SqlManager(QObject *parent) :
 
 SqlManager::~SqlManager()
 {
+    qDebug()<<"log out---------------------------------------------";
     logOut();
     delete m_Query;
 }
@@ -104,6 +105,7 @@ bool SqlManager::GetVipInfo()
 
 QString SqlManager::login(const QString &user, QString password, const QString &machineId, int &userId)
 {
+    qDebug()<<"start log:"<<password;
     password = QCryptographicHash::hash(tr("%1%2").arg(user).arg(password).toLocal8Bit(), QCryptographicHash::Md5).toHex().data();
     QString sql = tr("select nickname, userid, purview from userinfo where username = '%1' and password = '%2' and machineid = ''").arg(user).arg(password);
     qDebug() << sql;
