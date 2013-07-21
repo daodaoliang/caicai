@@ -1,4 +1,4 @@
-/*
+﻿/*
 Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
@@ -174,13 +174,14 @@ CREATE TABLE `member` (
   `expiretime` datetime DEFAULT NULL COMMENT '过期时间',
   `membertypeid` int(11) NOT NULL COMMENT '会员类型ID',
   `shopid` varchar(10) NOT NULL COMMENT '分店ID',
+`balance` decimal(20,0) DEFAULT NULL COMMENT '账户余额',
   PRIMARY KEY (`memberid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=gbk;
 
 -- ----------------------------
 -- Records of member
 -- ----------------------------
-INSERT INTO `member` VALUES ('1', '1', '1', '1', '1', '2013-07-07 15:23:57', null, '1', '1');
+INSERT INTO `member` VALUES ('1', '1', '1', '1', '1', '2013-07-07 15:23:57', null, '1', '1',0);
 
 -- ----------------------------
 -- Table structure for `membertype`
