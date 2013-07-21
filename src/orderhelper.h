@@ -2,6 +2,7 @@
 #define ORDERHELPER_H
 
 #include <QObject>
+#include <QQueue>
 struct DishesInfo
 {
     int id;
@@ -24,6 +25,9 @@ public slots:
 public:
     bool createOrder(const QString &tableId, QList<DishesInfo> &dishes,const QString &wasteId,  int userid, double &totalPrice, QString &orderId,const QString &memberid = "");
     double discount(QList<DishesInfo> &dishes);
+    bool isDiscount(const QString &name);
+private:
+    QQueue<QString> m_disOrangre;
 };
 
 inline OrderHelper *orderHelperInstance()
@@ -31,5 +35,4 @@ inline OrderHelper *orderHelperInstance()
     static OrderHelper order;
     return &order;
 }
-
 #endif // ORDERHELPER_H

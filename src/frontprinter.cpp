@@ -42,15 +42,32 @@ bool frontprinter::print(const QString &tableId, const QList<DishesInfo> &dishes
     cmd.append(tr("时间: ")+QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+"<br>");
     cmd.append(tr("桌号: ")+tableId+"<br>");
     double money1 = 0;
+    double price = 0;
+    QString bz = "";
+    int cout = 0;
     foreach(DishesInfo dish, dishes)
     {
-        //cmd.append(createDishes(dish)+"<br>");
-        qDebug()<<dish.name<<dish.count;
-        cmd.append(dish.name+ QString::number(dish.count)+tr("份 单价%1元").arg(dish.price, 0, 'f', 2)+"<br>");
+        money1 += dish.price * dish.count;
+    }
+    double rest1 = money1 - paid;
+    int num = rest1 / 6;
+    qDebug()<<"pay"<<money1<<paid;
+    foreach(DishesInfo dish, dishes)
+    {
+        qDebug()<<dish.name<<dish.count << dish.dishType <<orderHelperInstance()->isDiscount(dish.name);
+        price = dish.price;
+        bz = "";
+        if(dish.dishType == 1 && orderHelperInstance()->isDiscount(dish.name) && cout < num)
+        {
+            qDebug()<<"taocan---------------------------------------------------";
+            price = price -6;
+            bz = tr("(套餐)");
+            cout++;
+        }
+        cmd.append(dish.name+ QString::number(dish.count)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
         money1 += dish.price * dish.count;
     }
     //打印优惠金额
-    double rest1 = money1 - paid;
     QString restString1 = "优惠: " + QString::number(rest1, 'f', 2) + "元";
     cmd.append(restString1+"<br>");
     cmd.append("金额: " + QString::number(paid, 'f', 2) + "元"+"<br>");

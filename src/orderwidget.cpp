@@ -70,6 +70,7 @@ void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
         ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 1, new QTableWidgetItem(QString::number(count)));
         ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 2, new QTableWidgetItem(QString::number(price, 'f', 2) + "元"));
         DishesInfo dishesInfo;
+        dishesInfo.name = dishes;
         dishesInfo.count = count;
         dishesInfo.id = index.data().toInt();
         dishesInfo.type = ui->comboBox_2->itemData(ui->comboBox_2->currentIndex()).toInt();
@@ -99,6 +100,7 @@ void OrderWidget::showTotal()
         total += m_dishesInfo.at(i).count * m_dishesInfo.at(i).price * (m_dishesInfo[i].type ? -1 : 1);
     }
     double rest = orderHelperInstance()->discount(m_dishesInfo);
+    qDebug()<<"money"<<total<<rest;
     QString text = tr("总计:<font size='6' color='red'><b>%1元</b></font>").arg(total - rest, 0, 'f', 2);
     ui->label->setText(text);
 }

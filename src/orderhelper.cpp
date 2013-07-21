@@ -5,6 +5,14 @@
 OrderHelper::OrderHelper(QObject *parent) :
     QObject(parent)
 {
+    m_disOrangre.clear();
+    m_disOrangre.enqueue("∆œÃ—÷≠");
+    m_disOrangre.enqueue("±˘Ã«—©¿Ê÷≠÷≠");
+    m_disOrangre.enqueue("”£Ã“÷≠");
+    m_disOrangre.enqueue("≤§¬‹÷≠");
+    m_disOrangre.enqueue("∫Ï‘Ê—¯—’∂πΩ¨");
+    m_disOrangre.enqueue("À·√∑÷≠");
+    m_disOrangre.enqueue("»∏≥≤√¢π˚C");
 }
 
 bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,const QString &wasteId, int userid, double &totalPrice, QString &orderId, const QString &memberid)
@@ -63,6 +71,7 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         //Ω¯––¥Ú’€
         double discountMoney = discount(dishes);
         totalPrice = paid - discountMoney;
+        qDebug()<<"order"<<paid<<totalPrice;
         //…˙≥…¡˜ÀÆ∫≈
         QString serialId = tr("%1%2").arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")).arg(tableId);
         orderId = serialId;
@@ -109,36 +118,49 @@ double OrderHelper::discount(QList<DishesInfo> &dishes)
 
     for(int i = 0; i < dishes.count(); i++)
     {
-        if(dishes[i].dishType == 1)
+        qDebug()<<"name"<<dishes[i].name;
+        if(dishes[i].dishType == 1 && m_disOrangre.contains(dishes[i].name))
         {
-            a++;
+            qDebug()<<"name"<<dishes[i].name;
+            a= a+dishes[i].count;
         }
         if(dishes[i].dishType == 2)
         {
-            b++;
+            //b++;
+            b= b+dishes[i].count;
         }
         if(dishes[i].dishType == 3)
         {
-            c++;
+            //c++;
+            c=c+dishes[i].count;
         }
 
     }
     int count = qMin(a, b);
     count = qMin(count, c);
+    qDebug()<<"discout"<<a<<b<<c<<count;
     //Ã◊≤Õ÷–µƒ“˚¡œº”Ã◊≤Õ±∏◊¢
-    int d = 0;
-    for(int i = 0; i < dishes.count(); i++)
-    {
-        if(dishes[i].dishType == 1)
-        {
-            QString name = dishes[i].name;
-            dishes[i].name = name+"(Ã◊≤Õ)";
-            d++;
-        }
-        if(d == count)
-        {
-            break;
-        }
-    }
+    //    if(count > 0)
+    //    {
+    //        int d = 0;
+    //        for(int i = 0; i < dishes.count(); i++)
+    //        {
+    //            if(dishes[i].dishType == 1 && m_disOrangre.contains(dishes[i].name))
+    //            {
+    //                QString name = dishes[i].name;
+    //                dishes[i].name = name+"(Ã◊≤Õ)";
+    //                d++;
+    //            }
+    //            if(d == count)
+    //            {
+    //                break;
+    //            }
+    //        }
+    //    }
     return count * 6 * (dishes.first().type ? -1 : 1);
+}
+
+bool OrderHelper::isDiscount(const QString &name)
+{
+    return m_disOrangre.contains(name);
 }
