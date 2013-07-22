@@ -6,6 +6,8 @@
 #include "orderhelper.h"
 #include "dishescountwidget.h"
 #include "detailwidget.h"
+#include "adddiningtablewidget.h"
+
 namespace Ui {
 class DinnerWidget;
 }
@@ -23,6 +25,10 @@ public:
 private slots:
     void on_listView_doubleClicked(const QModelIndex &index);
 
+    void on_toolButton_2_clicked();
+
+    void on_toolButton_clicked();
+
 private:
     //Æô¶¯µã²Ë±¦¼àÌý³ÌÐò
     void startWx();
@@ -33,6 +39,7 @@ private:
     QSqlQueryModel *m_dishesModel;
     QList<DishesInfo> m_dishesList;
     DetailWidget m_detailWidget;
+    AddDiningTableWidget m_addWidget;
 };
 
 inline DinnerWidget *dinnerWidget()

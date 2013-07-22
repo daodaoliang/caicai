@@ -158,6 +158,7 @@ void SqlManager::logOut()
 
 QSqlQuery *SqlManager::ExecQuery(QString sql)
 {
+    qDebug() << "exec sql is" << sql;
     if(m_Query)
     {
         m_Query->clear();

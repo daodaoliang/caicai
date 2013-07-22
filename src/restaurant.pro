@@ -42,7 +42,8 @@ SOURCES += main.cpp\
     orderwidget.cpp \
     loginwidget.cpp \
     backprinter.cpp \
-    frontprinter.cpp
+    frontprinter.cpp \
+    adddiningtablewidget.cpp
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -76,7 +77,8 @@ HEADERS  += mainwidget.h \
     orderwidget.h \
     loginwidget.h \
     backprinter.h \
-    frontprinter.h
+    frontprinter.h \
+    adddiningtablewidget.h
 
 RESOURCES += \
     src.qrc
@@ -90,4 +92,5 @@ FORMS += \
     detailwidget.ui \
     checkwidget.ui \
     orderwidget.ui \
-    loginwidget.ui
+    loginwidget.ui \
+    adddiningtablewidget.ui

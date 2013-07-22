@@ -9,6 +9,30 @@ BackPrinter::BackPrinter(QObject *parent) :
 
 bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId, double paid)
 {
+    QList<DishesInfo> mixian;
+    QList<DishesInfo> drink;
+    //获取米线
+    foreach(DishesInfo dish, dishes)
+    {
+        if(dish.dishType == 3)
+        {
+            mixian.append(dish);
+        }
+    }
+    printDishes(tableId, mixian, orderId, paid);
+    //获取非饮料
+    foreach(DishesInfo dish, dishes)
+    {
+        if(dish.dishType != 3)
+        {
+            drink.append(dish);
+        }
+    }
+    printDishes(tableId, drink, orderId, paid);
+}
+
+bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId, double paid)
+{
     //连接打印机
     m_socket.connectToHost(getConfigerFileInstance()->printerIp(),
                            getConfigerFileInstance()->writerPort().toUInt());
@@ -19,7 +43,7 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
     QByteArray command;
 
     //打印公司抬头
-    command.append(createLine(qApp->property("name").toString()));
+    //command.append(createLine(qApp->property("name").toString()));
     //打印订单号
     QString printOrderId = "订单号:" + orderId;
     command.append(createLine(printOrderId));
@@ -41,17 +65,17 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
         command.append(createDishes(dish));
         money += dish.price * dish.count;
     }
-    //打印分割线
-    createSplit();
-    //打印优惠金额
-    double rest = money - paid;
-    QString restString = "优惠:" + QString::number(rest, 'f', 2) + "元";
-    command.append(createLine(restString));
-    //打印总金额
-    QString paidString = "金额:" + QString::number(paid, 'f', 2) + "元";
-    command.append(createLine(paidString));
-    //打印结束语
-    command.append(createLine("谢谢惠顾！"));
+//    //打印分割线
+//    createSplit();
+//    //打印优惠金额
+//    double rest = money - paid;
+//    QString restString = "优惠:" + QString::number(rest, 'f', 2) + "元";
+//    command.append(createLine(restString));
+//    //打印总金额
+//    QString paidString = "金额:" + QString::number(paid, 'f', 2) + "元";
+//    command.append(createLine(paidString));
+//    //打印结束语
+//    command.append(createLine("谢谢惠顾！"));
     //切纸
     //    command.append(0x1d);
     //    command.append(0x56);
