@@ -87,11 +87,17 @@ void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
         }
         int a = 0;
         qDebug() << ui->tableWidget_2->rowCount();
-        while(a < ui->tableWidget_2->rowCount())
+        //        while(a < ui->tableWidget_2->rowCount())
+        //        {
+        //            ui->tableWidget_2->removeRow(0);
+        //            a++;
+        //        }
+        while(ui->tableWidget_2->rowCount() > 0)
         {
             ui->tableWidget_2->removeRow(0);
             a++;
         }
+        qDebug()<<"remove count"<<a;
         for(int i = 0; i < m_dishesInfo.count(); i++)
         {
             ui->tableWidget_2->insertRow(ui->tableWidget_2->rowCount());
@@ -99,6 +105,11 @@ void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
             ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 1, new QTableWidgetItem(QString::number(m_dishesInfo.values()[i].count)));
             ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 2, new QTableWidgetItem(QString::number(m_dishesInfo.values()[i].price, 'f', 2) + "Ԫ"));
             ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 3, new QTableWidgetItem(QString::number(m_dishesInfo.values()[i].id)));
+            //            ui->tableWidget_2->insertRow(0);
+            //            ui->tableWidget_2->setItem(0, 0, new QTableWidgetItem(m_dishesInfo.values()[i].name));
+            //            ui->tableWidget_2->setItem(0, 1, new QTableWidgetItem(QString::number(m_dishesInfo.values()[i].count)));
+            //            ui->tableWidget_2->setItem(0, 2, new QTableWidgetItem(QString::number(m_dishesInfo.values()[i].price, 'f', 2) + "Ԫ"));
+            //            ui->tableWidget_2->setItem(0, 3, new QTableWidgetItem(QString::number(m_dishesInfo.values()[i].id)));
         }
         ui->tableWidget_2->hideColumn(3);
         showTotal();
