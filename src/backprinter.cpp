@@ -65,17 +65,17 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
         command.append(createDishes(dish));
         money += dish.price * dish.count;
     }
-//    //打印分割线
-//    createSplit();
-//    //打印优惠金额
-//    double rest = money - paid;
-//    QString restString = "优惠:" + QString::number(rest, 'f', 2) + "元";
-//    command.append(createLine(restString));
-//    //打印总金额
-//    QString paidString = "金额:" + QString::number(paid, 'f', 2) + "元";
-//    command.append(createLine(paidString));
-//    //打印结束语
-//    command.append(createLine("谢谢惠顾！"));
+    //    //打印分割线
+    //    createSplit();
+    //    //打印优惠金额
+    //    double rest = money - paid;
+    //    QString restString = "优惠:" + QString::number(rest, 'f', 2) + "元";
+    //    command.append(createLine(restString));
+    //    //打印总金额
+    //    QString paidString = "金额:" + QString::number(paid, 'f', 2) + "元";
+    //    command.append(createLine(paidString));
+    //    //打印结束语
+    //    command.append(createLine("谢谢惠顾！"));
     //切纸
     //    command.append(0x1d);
     //    command.append(0x56);
@@ -104,9 +104,10 @@ QByteArray BackPrinter::createDishes(const DishesInfo &dishes)
     strncpy(tmp, dishes.name.toLocal8Bit().data(), 16);
     QString countString = tr("%1份").arg(QString::number(dishes.count));
     strncpy(tmp + 18, countString.toLocal8Bit().data(), 6);
-    QString priceString = tr("%1元").arg(dishes.price, 0, 'f', 2);
-    strncpy(tmp + 26, priceString.toLocal8Bit().data(), 10);
-    line.append(tmp, 36);
+    //后台打印不显示菜品价格
+    //    QString priceString = tr("%1元").arg(dishes.price, 0, 'f', 2);
+    //    strncpy(tmp + 26, priceString.toLocal8Bit().data(), 10);
+    line.append(tmp, 26);
     line.append(0x0a);
     return line;
 }

@@ -42,12 +42,44 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
     {
         QString user = cmdDetail[1].mid(10, 4).trimmed();
         QString password = cmdDetail[1].mid(15, 10).trimmed();
+        if(password.length() == 0)
+        {
+            if(user.length() == 0)
+            {
+                replyList.append("0 ×¢ÏúÊ§°Ü");
+                reply(replyList, index);
+                qDebug()<<"user lenth 0";
+                return;
+            }else
+            {
+                QString sql = tr("select username from userinfo where machineid = '%1'").arg(cmdDetail[0].right(3));
+                QSqlQuery *query = getSqlManager()->ExecQuery(sql);
+                if(query != NULL)
+                {
+                    if(query->next())
+                    {
+                        qDebug()<<"get uset "<<query->value(0).toString()<<user;
+                        if(query->value(0).toString() == user)
+                        {
+                            getSqlManager()->logOut(cmdDetail[0].right(3));
+                            replyList.append("1 ×¢Ïú³É¹¦");
+                            reply(replyList, index);
+                            return;
+                        }
+                    }
+                }
+                qDebug()<<"select no";
+                replyList.append("0 ×¢ÏúÊ§°Ü");
+                reply(replyList, index);
+                return;
+            }
+        }
         qDebug()<<"dian cai bao"<<user<<password;
         int userId = 0;
         QString nickName = getSqlManager()->login(user, password, cmdDetail[0].right(3), userId);
         if(nickName.isEmpty())
         {
-            replyList.append("0 µÇÂ¼Ê§°Ü");
+            replyList.append("0 µÇÂ¼Ê§°Ü,Çë×¢ÏúÔÙµÇÂ¼ ");
             reply(replyList, index);
             return;
         }

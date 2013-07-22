@@ -18,7 +18,7 @@ SqlManager::SqlManager(QObject *parent) :
 SqlManager::~SqlManager()
 {
     qDebug()<<"log out---------------------------------------------";
-    logOut();
+    logOut("000");
     delete m_Query;
 }
 SqlManager* getSqlManager()
@@ -150,9 +150,9 @@ QString SqlManager::login(const QString &user, QString password, const QString &
     return "";
 }
 
-void SqlManager::logOut()
+void SqlManager::logOut(const QString &id)
 {
-    QString sql = "update userinfo set machineid = '' where machineid = '000'";
+    QString sql = tr("update userinfo set machineid = '' where machineid = '%1'").arg(id);
     ExecQuery(sql);
 }
 
