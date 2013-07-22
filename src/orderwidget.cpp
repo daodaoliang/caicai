@@ -65,10 +65,7 @@ void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
         int count = m_countWidget.getDishesCount();
         double price = index.sibling(index.row(), 2).data().toDouble();
         int dishType = index.sibling(index.row(), 5).data().toInt();
-        ui->tableWidget_2->insertRow(ui->tableWidget_2->rowCount());
-        ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 0, new QTableWidgetItem(dishes));
-        ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 1, new QTableWidgetItem(QString::number(count)));
-        ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 2, new QTableWidgetItem(QString::number(price, 'f', 2) + "元"));
+
         //如果有则合并，没有则添加
         if(m_dishesInfo.find(index.data().toInt()) != m_dishesInfo.end())
         {
@@ -88,7 +85,22 @@ void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
             qDebug() << "dish type" << dishType<<dishesInfo.name<<dishesInfo.count;
             m_dishesInfo[index.data().toInt()] = dishesInfo;
         }
-
+        int a = 0;
+        qDebug() << ui->tableWidget_2->rowCount();
+        while(a < ui->tableWidget_2->rowCount())
+        {
+            ui->tableWidget_2->removeRow(0);
+            a++;
+        }
+        for(int i = 0; i < m_dishesInfo.count(); i++)
+        {
+            ui->tableWidget_2->insertRow(ui->tableWidget_2->rowCount());
+            ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 0, new QTableWidgetItem(m_dishesInfo.values()[i].name));
+            ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 1, new QTableWidgetItem(QString::number(m_dishesInfo.values()[i].count)));
+            ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 2, new QTableWidgetItem(QString::number(m_dishesInfo.values()[i].price, 'f', 2) + "元"));
+            ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 3, new QTableWidgetItem(QString::number(m_dishesInfo.values()[i].id)));
+        }
+        ui->tableWidget_2->hideColumn(3);
         showTotal();
     }
 }
@@ -121,8 +133,9 @@ void OrderWidget::on_toolButton_2_clicked()
 {
     if(ui->tableWidget_2->currentIndex().row() != -1)
     {
+        qDebug() << ui->tableWidget_2->currentRow();
+        m_dishesInfo.remove(ui->tableWidget_2->item(ui->tableWidget_2->currentRow(), 3)->text().toInt());
         ui->tableWidget_2->removeRow(ui->tableWidget_2->currentIndex().row());
-        m_dishesInfo.remove(ui->tableWidget_2->currentIndex().data().toInt());
         showTotal();
     }
 }
@@ -144,8 +157,8 @@ void OrderWidget::on_toolButton_3_clicked()
     {
         result = getBackPrinter()->print(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
                                          m_dishesInfo.values(), orderId, price);
-       getFrontPrinter()->print(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
-                                m_dishesInfo.values(), orderId, price);
+        getFrontPrinter()->print(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
+                                 m_dishesInfo.values(), orderId, price);
         if(result)
         {
             QMessageBox::information(this, "提示", "操作成功");
