@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QSqlQueryModel>
+#include <QMap>
 #include "dishescountwidget.h"
 #include "orderhelper.h"
 namespace Ui {
@@ -39,7 +40,7 @@ private:
     QSqlQueryModel *m_dishesTypeModel;
     QSqlQueryModel *m_dishesModel;
     DishesCountWidget m_countWidget;
-    QList<DishesInfo> m_dishesInfo;
+    QMap<int, DishesInfo> m_dishesInfo;
 };
 
 inline OrderWidget *orderWidget()

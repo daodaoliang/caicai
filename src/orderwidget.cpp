@@ -69,15 +69,26 @@ void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
         ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 0, new QTableWidgetItem(dishes));
         ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 1, new QTableWidgetItem(QString::number(count)));
         ui->tableWidget_2->setItem(ui->tableWidget_2->rowCount() - 1, 2, new QTableWidgetItem(QString::number(price, 'f', 2) + "元"));
-        DishesInfo dishesInfo;
-        dishesInfo.name = dishes;
-        dishesInfo.count = count;
-        dishesInfo.id = index.data().toInt();
-        dishesInfo.type = ui->comboBox_2->itemData(ui->comboBox_2->currentIndex()).toInt();
-        dishesInfo.price = price;
-        dishesInfo.dishType = dishType;
-        qDebug() << "dish type" << dishType<<dishesInfo.name<<dishesInfo.count;
-        m_dishesInfo.append(dishesInfo);
+        //如果有则合并，没有则添加
+        if(m_dishesInfo.find(index.data().toInt()) != m_dishesInfo.end())
+        {
+            DishesInfo info = m_dishesInfo.value(index.data().toInt());
+            info.count += count;
+            m_dishesInfo[index.data().toInt()] = info;
+        }
+        else
+        {
+            DishesInfo dishesInfo;
+            dishesInfo.name = dishes;
+            dishesInfo.count = count;
+            dishesInfo.id = index.data().toInt();
+            dishesInfo.type = ui->comboBox_2->itemData(ui->comboBox_2->currentIndex()).toInt();
+            dishesInfo.price = price;
+            dishesInfo.dishType = dishType;
+            qDebug() << "dish type" << dishType<<dishesInfo.name<<dishesInfo.count;
+            m_dishesInfo[index.data().toInt()] = dishesInfo;
+        }
+
         showTotal();
     }
 }
@@ -97,9 +108,10 @@ void OrderWidget::showTotal()
     double total = 0;
     for(int i = 0; i < m_dishesInfo.count(); i++)
     {
-        total += m_dishesInfo.at(i).count * m_dishesInfo.at(i).price * (m_dishesInfo[i].type ? -1 : 1);
+        total += m_dishesInfo.values().at(i).count * m_dishesInfo.values().at(i).price * (m_dishesInfo.values()[i].type ? -1 : 1);
     }
-    double rest = orderHelperInstance()->discount(m_dishesInfo);
+    QList<DishesInfo> tmpList = m_dishesInfo.values();
+    double rest = orderHelperInstance()->discount(tmpList);
     qDebug()<<"money"<<total<<rest;
     QString text = tr("总计:<font size='6' color='red'><b>%1元</b></font>").arg(total - rest, 0, 'f', 2);
     ui->label->setText(text);
@@ -107,11 +119,10 @@ void OrderWidget::showTotal()
 
 void OrderWidget::on_toolButton_2_clicked()
 {
-    int index = ui->tableWidget_2->currentIndex().row();
-    if(index != -1)
+    if(ui->tableWidget_2->currentIndex().row() != -1)
     {
-        ui->tableWidget_2->removeRow(index);
-        m_dishesInfo.removeAt(index);
+        ui->tableWidget_2->removeRow(ui->tableWidget_2->currentIndex().row());
+        m_dishesInfo.remove(ui->tableWidget_2->currentIndex().data().toInt());
         showTotal();
     }
 }
@@ -124,16 +135,17 @@ void OrderWidget::on_toolButton_3_clicked()
     }
     QString orderId;
     double price = 0;
+    QList<DishesInfo> tmpList = m_dishesInfo.values();
     bool result = orderHelperInstance()->createOrder(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
-                                                     m_dishesInfo,
+                                                     tmpList,
                                                      "",
                                                      qApp->property("userId").toInt(), price, orderId);
     if(result)
     {
         result = getBackPrinter()->print(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
-                                         m_dishesInfo, orderId, price);
+                                         m_dishesInfo.values(), orderId, price);
        getFrontPrinter()->print(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
-                                m_dishesInfo, orderId, price);
+                                m_dishesInfo.values(), orderId, price);
         if(result)
         {
             QMessageBox::information(this, "提示", "操作成功");
@@ -153,7 +165,7 @@ void OrderWidget::on_comboBox_2_activated(int index)
 {
     for(int i = 0; i < m_dishesInfo.count(); i++)
     {
-        m_dishesInfo[i].type = ui->comboBox_2->itemData(index).toInt();
+        m_dishesInfo.values()[i].type = ui->comboBox_2->itemData(index).toInt();
     }
     showTotal();
 }
