@@ -181,12 +181,26 @@ void OrderHandler::handleCommand(const QStringList &cmdDetail, int index)
                                 QList<DishesInfo> dishesList;
                                 DishesInfo info;
 
+                                QString dissql = "";
+
                                 //Ìí¼Ó²ËÆ·
                                 for(int i = 2; i < cmdDetail.count(); i++)
                                 {
                                     info.id = cmdDetail[i].mid(8, 5).toInt();
                                     info.count = cmdDetail[i].mid(14, 4).toInt();
                                     info.type = 0;
+                                    dissql = tr("select dishesname,price,typeid from dishes where dishesid = '%1'").arg(info.id);
+                                    QSqlQuery *disquery = getSqlManager()->ExecQuery(dissql);
+                                    if(disquery != NULL)
+                                    {
+                                        if(disquery->next())
+                                        {
+                                            info.name = disquery->value(0).toString();
+                                            info.price = disquery->value(1).toDouble();
+                                            info.dishType = disquery->value(2).toInt();
+                                        }
+                                        qDebug()<<"dishid"<<info.id<<info.name<<info.dishType;
+                                    }
                                     dishesList.append(info);
                                 }
                                 QString orderId;

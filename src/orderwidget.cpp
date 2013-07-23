@@ -132,6 +132,7 @@ void OrderWidget::showTotal()
     for(int i = 0; i < m_dishesInfo.count(); i++)
     {
         total += m_dishesInfo.values().at(i).count * m_dishesInfo.values().at(i).price * (m_dishesInfo.values()[i].type ? -1 : 1);
+        qDebug()<<"type"<<m_dishesInfo.values().at(i).dishType<<m_dishesInfo.values().at(i).name;
     }
     QList<DishesInfo> tmpList = m_dishesInfo.values();
     double rest = orderHelperInstance()->discount(tmpList);

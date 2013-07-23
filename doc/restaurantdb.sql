@@ -88,6 +88,7 @@ INSERT INTO `dishes` VALUES ('1003', '地瓜丸', '8', null, 'dgw', '2');
 INSERT INTO `dishes` VALUES ('1004', '凉拌土豆丝', '8', null, 'lbtds', '2');
 INSERT INTO `dishes` VALUES ('1005', '深海小海带', '8', null, 'shxhd', '2');
 INSERT INTO `dishes` VALUES ('1006', '骨肉相连', '8', null, 'grxl', '2');
+INSERT INTO `dishes` VALUES ('1007', '云南豆腐皮', '8', null, 'yndfp', '2');
 INSERT INTO `dishes` VALUES ('2001', '红枣养颜豆浆', '8', null, 'hzyydj', '1');
 INSERT INTO `dishes` VALUES ('2002', '酸梅汁', '8', null, 'smz', '1');
 INSERT INTO `dishes` VALUES ('2003', '雀巢芒果C', '8', null, 'qcmgc', '1');
@@ -95,6 +96,10 @@ INSERT INTO `dishes` VALUES ('2004', '加多宝', '6', null, 'jdb', '1');
 INSERT INTO `dishes` VALUES ('2005', '可乐', '5', null, 'kl', '1');
 INSERT INTO `dishes` VALUES ('2006', '农夫山泉', '3', null, 'nfsq', '1');
 INSERT INTO `dishes` VALUES ('2007', '青岛啤酒', '8', null, 'qdpj', '1');
+INSERT INTO `dishes` VALUES ('2008', '葡萄汁', '8', null, 'ptz', '1');
+INSERT INTO `dishes` VALUES ('2009', '冰糖雪梨汁', '8', null, 'btxlz', '1');
+INSERT INTO `dishes` VALUES ('2010', '樱桃汁', '8', null, 'ytz', '1');
+INSERT INTO `dishes` VALUES ('2011', '菠萝汁', '8', null, 'blz', '1');
 
 -- ----------------------------
 -- Table structure for `dishestype`

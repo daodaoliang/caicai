@@ -7,7 +7,7 @@ OrderHelper::OrderHelper(QObject *parent) :
 {
     m_disOrangre.clear();
     m_disOrangre.enqueue("ÆÏÌÑÖ­");
-    m_disOrangre.enqueue("±ùÌÇÑ©ÀæÖ­Ö­");
+    m_disOrangre.enqueue("±ùÌÇÑ©ÀæÖ­");
     m_disOrangre.enqueue("Ó£ÌÒÖ­");
     m_disOrangre.enqueue("²¤ÂÜÖ­");
     m_disOrangre.enqueue("ºìÔæÑøÑÕ¶¹½¬");
