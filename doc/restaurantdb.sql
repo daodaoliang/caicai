@@ -49,13 +49,27 @@ CREATE TABLE `diningtable` (
 -- ----------------------------
 -- Records of diningtable
 -- ----------------------------
-INSERT INTO `diningtable` VALUES ('0001', '1号桌', '0', '1', '1', '2013-07-15 23:50:34', null);
-INSERT INTO `diningtable` VALUES ('0002', '2号桌', '0', '3', '1', null, null);
-INSERT INTO `diningtable` VALUES ('0003', '3号桌', '0', '2', '1111', null, null);
-INSERT INTO `diningtable` VALUES ('0004', '4号桌', '0', '3', '3', null, null);
+INSERT INTO `diningtable` VALUES ('0001', '1号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0002', '2号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0003', '3号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0004', '4号桌', '0', '0', null, null, null);
 INSERT INTO `diningtable` VALUES ('0005', '5号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0006', '包间1', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0007', '包间2', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0006', '6号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0007', '7号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0008', '8号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0009', '9号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0010', '10号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0011', '11号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0012', '12号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0013', '13号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0014', '14号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0015', '15号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0016', '16号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0017', '17号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0018', '18号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0019', '19号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0020', '20号桌', '0', '0', null, null, null);
+
 
 -- ----------------------------
 -- Table structure for `dishes`
@@ -186,7 +200,6 @@ CREATE TABLE `member` (
 -- ----------------------------
 -- Records of member
 -- ----------------------------
-INSERT INTO `member` VALUES ('1', '1', '1', '1', '1', '2013-07-07 15:23:57', null, '1', '1',0);
 
 -- ----------------------------
 -- Table structure for `membertype`
