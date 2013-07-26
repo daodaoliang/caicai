@@ -161,7 +161,14 @@ bool OrderHelper::isDiscount(const QString &name)
 bool OrderHelper::judgePackages(QList<DishesInfo> &dishes)
 {
     //套餐菜数量
-    int packagesCount = getCountByType(dishes, 4);
+    int packagesCount = 0;
+    for(int i = 0; i < dishes.count(); i++)
+    {
+        if(dishes.at(i).name.contains("套餐"))
+        {
+            packagesCount += dishes.at(i).count;
+        }
+    }
     //米线数量
     int mixianCount = getCountByType(dishes, 3);
     //小菜数量
@@ -179,7 +186,7 @@ int OrderHelper::getCountByType(QList<DishesInfo> &dishes, int type)
     {
         if(dishes.at(i).dishType == type)
         {
-            count++;
+            count += dishes.at(i).count;
         }
     }
     return count;
