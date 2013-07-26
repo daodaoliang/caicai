@@ -26,7 +26,10 @@ void TableDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     QFont font;
     font.setPixelSize(20);
     painter->setFont(font);
-    painter->drawText(nameRect, Qt::AlignCenter, index.sibling(index.row(), 1).data().toString());
+    QString showText = tr("%1(%2ÈË)")
+            .arg(index.sibling(index.row(), 1).data().toString())
+            .arg(index.sibling(index.row(), 3).data().toString());
+    painter->drawText(nameRect, Qt::AlignCenter, showText);
     //²Í×À×´Ì¬
     if(index.sibling(index.row(), 2).data().toInt() == 1)
     {
