@@ -56,30 +56,30 @@ bool frontprinter::print(const QString &tableId, const QList<DishesInfo> &dishes
     {
         qDebug()<<dish.name<<dish.count << dish.dishType <<orderHelperInstance()->isDiscount(dish.name);
         price = dish.price;
-        bz = "";
-        if(dish.dishType == 1 && orderHelperInstance()->isDiscount(dish.name) && cout < num)
-        {
-            qDebug()<<"taocan---------------------------------------------------";
-            if(dish.count <= num - cout)
-            {
-                price = price -6;
-                bz = tr("(套餐)");
-                cout = cout+dish.count;
-                cmd.append(dish.name+ QString::number(dish.count)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
-            }else
-            {
-                int ord = dish.count - (num - cout);
-                bz = tr("(套餐)");
-                cmd.append(dish.name+ QString::number(num-cout)+tr("份 单价%1元 %2").arg(price-6, 0, 'f', 2).arg(bz)+"<br>");
-                bz = "";
-                cmd.append(dish.name+ QString::number(ord)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
-                cout = num;
-            }
-        }else
-        {
-            cmd.append(dish.name+ QString::number(dish.count)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
-        }
-        money1 += dish.price * dish.count;
+        //        bz = "";
+        //        if(dish.dishType == 1 && orderHelperInstance()->isDiscount(dish.name) && cout < num)
+        //        {
+        //            qDebug()<<"taocan---------------------------------------------------";
+        //            if(dish.count <= num - cout)
+        //            {
+        //                price = price -6;
+        //                bz = tr("(套餐)");
+        //                cout = cout+dish.count;
+        //                cmd.append(dish.name+ QString::number(dish.count)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
+        //            }else
+        //            {
+        //                int ord = dish.count - (num - cout);
+        //                bz = tr("(套餐)");
+        //                cmd.append(dish.name+ QString::number(num-cout)+tr("份 单价%1元 %2").arg(price-6, 0, 'f', 2).arg(bz)+"<br>");
+        //                bz = "";
+        //                cmd.append(dish.name+ QString::number(ord)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
+        //                cout = num;
+        //            }
+        //        }else
+        //        {
+        //            cmd.append(dish.name+ QString::number(dish.count)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
+        //        }
+        cmd.append(dish.name+ QString::number(dish.count)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
     }
     //打印优惠金额
     QString restString1 = "优惠: " + QString::number(rest1, 'f', 2) + "元";
