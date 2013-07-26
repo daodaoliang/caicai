@@ -81,6 +81,7 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
     command.append(0x56);
     command.append(66);
     command.append(10);
+    command.append(0x1d2144);
     m_socket.write(command);
     return m_socket.waitForBytesWritten(1000);
 }

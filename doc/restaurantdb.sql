@@ -49,27 +49,34 @@ CREATE TABLE `diningtable` (
 -- ----------------------------
 -- Records of diningtable
 -- ----------------------------
-INSERT INTO `diningtable` VALUES ('0001', '1号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0002', '2号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0003', '3号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0004', '4号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0005', '5号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0006', '6号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0007', '7号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0008', '8号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0009', '9号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0010', '10号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0011', '11号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0012', '12号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0013', '13号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0014', '14号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0015', '15号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0016', '16号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0017', '17号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0018', '18号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0019', '19号桌', '0', '0', null, null, null);
-INSERT INTO `diningtable` VALUES ('0020', '20号桌', '0', '0', null, null, null);
-
+INSERT INTO `diningtable` VALUES ('0001', '201号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0002', '202号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0003', '203号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0004', '204号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0005', '205号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0006', '206号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0007', '207号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0008', '208号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0009', '209号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0010', '210号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0011', '211号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0012', '212号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0013', '213号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0014', '214号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0015', '215号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0016', '216号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0017', '217号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0018', '218号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0019', '219号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0020', '220号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0021', '221号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0022', '222号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0023', '223号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0024', '224号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0025', '225号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0026', '226号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0027', '227号桌', '0', '0', null, null, null);
+INSERT INTO `diningtable` VALUES ('0028', '228号桌', '0', '0', null, null, null);
 
 -- ----------------------------
 -- Table structure for `dishes`
@@ -88,32 +95,40 @@ CREATE TABLE `dishes` (
 -- ----------------------------
 -- Records of dishes
 -- ----------------------------
-INSERT INTO `dishes` VALUES ('1', '罐罐过桥米线', '22', './img/mixian.jpg', 'gggqmx', '3');
-INSERT INTO `dishes` VALUES ('2', '番茄过桥米线', '26', null, 'fqgqmx', '3');
-INSERT INTO `dishes` VALUES ('3', '麻辣过桥米线', '26', null, 'mlgqmx', '3');
-INSERT INTO `dishes` VALUES ('4', '老坛酸菜过桥米线', '26', null, 'ltscgqmx', '3');
-INSERT INTO `dishes` VALUES ('5', '麻辣鸡块过桥米线', '28', null, 'mljkgqmx', '3');
-INSERT INTO `dishes` VALUES ('6', '番茄大排过桥米线', '28', null, 'fqdpgqmx', '3');
-INSERT INTO `dishes` VALUES ('7', '麻辣鱼片过桥米线', '28', null, 'mlypgqmx', '3');
-INSERT INTO `dishes` VALUES ('8', '番茄贡丸过桥米线', '28', null, 'fqgwgqmx', '3');
-INSERT INTO `dishes` VALUES ('1001', '姜汁松花蛋', '9', null, 'jzshd', '2');
-INSERT INTO `dishes` VALUES ('1002', '老醋花生', '8', null, 'lchs', '2');
-INSERT INTO `dishes` VALUES ('1003', '地瓜丸', '8', null, 'dgw', '2');
-INSERT INTO `dishes` VALUES ('1004', '凉拌土豆丝', '8', null, 'lbtds', '2');
-INSERT INTO `dishes` VALUES ('1005', '深海小海带', '8', null, 'shxhd', '2');
-INSERT INTO `dishes` VALUES ('1006', '骨肉相连', '8', null, 'grxl', '2');
-INSERT INTO `dishes` VALUES ('1007', '云南豆腐皮', '8', null, 'yndfp', '2');
-INSERT INTO `dishes` VALUES ('2001', '红枣养颜豆浆', '8', null, 'hzyydj', '1');
-INSERT INTO `dishes` VALUES ('2002', '酸梅汁', '8', null, 'smz', '1');
-INSERT INTO `dishes` VALUES ('2003', '雀巢芒果C', '8', null, 'qcmgc', '1');
-INSERT INTO `dishes` VALUES ('2004', '加多宝', '6', null, 'jdb', '1');
-INSERT INTO `dishes` VALUES ('2005', '可乐', '5', null, 'kl', '1');
-INSERT INTO `dishes` VALUES ('2006', '农夫山泉', '3', null, 'nfsq', '1');
-INSERT INTO `dishes` VALUES ('2007', '青岛啤酒', '8', null, 'qdpj', '1');
-INSERT INTO `dishes` VALUES ('2008', '葡萄汁', '8', null, 'ptz', '1');
-INSERT INTO `dishes` VALUES ('2009', '冰糖雪梨汁', '8', null, 'btxlz', '1');
-INSERT INTO `dishes` VALUES ('2010', '樱桃汁', '8', null, 'ytz', '1');
-INSERT INTO `dishes` VALUES ('2011', '菠萝汁', '8', null, 'blz', '1');
+INSERT INTO `dishes` VALUES ('0100101', '罐罐过桥米线', '20', './img/mixian.jpg', 'gggqmx', '3');
+INSERT INTO `dishes` VALUES ('0100201', '麻辣过桥米线', '22', null, 'mlgqmx', '3');
+INSERT INTO `dishes` VALUES ('0100301', '番茄过桥米线', '22', null, 'fqgqmx', '3');
+INSERT INTO `dishes` VALUES ('0100401', '麻辣鸡块过桥米线', '26', null, 'mljkgqmx', '3');
+INSERT INTO `dishes` VALUES ('0100501', '麻辣鱼片米线 ', '26', null, 'mlypmx', '3');
+INSERT INTO `dishes` VALUES ('0100601', '番茄大排米线 ', '26', null, 'fqdpgqmx', '3');
+INSERT INTO `dishes` VALUES ('0100701', '老坛酸菜过桥米线', '24', null, 'ltscgqmx', '3');
+INSERT INTO `dishes` VALUES ('0100801', '韩国泡菜过桥米线', '24', null, 'hgpcgqmx', '3');
+INSERT INTO `dishes` VALUES ('0100904', '加米线', '2', null, 'jmx', '3');
+INSERT INTO `dishes` VALUES ('0200302', '骨肉相连', '6', null, 'grxl', '2');
+INSERT INTO `dishes` VALUES ('0200402', '蒜蓉海带丝', '6', null, 'srhds', '2');
+INSERT INTO `dishes` VALUES ('0200502', '云南豆腐皮', '6', null, 'yndfp', '2');
+INSERT INTO `dishes` VALUES ('0200602', '地瓜丸', '8', null, 'dgw', '2');
+INSERT INTO `dishes` VALUES ('0200702', '老醋花生', '8', null, 'lchs', '2');
+INSERT INTO `dishes` VALUES ('0201302', '凉拌土豆丝', '6', null, 'lbtds', '2');
+INSERT INTO `dishes` VALUES ('0201402', '松花皮蛋', '9', null, 'shpd', '2');
+INSERT INTO `dishes` VALUES ('0300103', '农夫山矿泉水', '2', null, 'nfskqs', '1');
+INSERT INTO `dishes` VALUES ('0300403', '酸梅汁', '6', null, 'smz', '1');
+INSERT INTO `dishes` VALUES ('0300603', '可乐', '4', null, 'kl', '1');
+INSERT INTO `dishes` VALUES ('0300703', '雪碧', '4', null, 'xb', '1');
+INSERT INTO `dishes` VALUES ('0301003', '鲜果粒橙', '4', null, 'xglc', '1');
+INSERT INTO `dishes` VALUES ('0301203', '王老吉', '6', null, 'wlj', '1');
+INSERT INTO `dishes` VALUES ('0301303', '青岛啤酒', '6', null, 'qdpj', '1');
+INSERT INTO `dishes` VALUES ('0301503', '(套餐)红枣豆浆', '2', null, 'tchzdj', '1');
+INSERT INTO `dishes` VALUES ('0301703', '芒果C ', '6', null, 'mgc', '1');
+INSERT INTO `dishes` VALUES ('0302603', '茉莉蜜茶', '4', null, 'mlmc', '1');
+INSERT INTO `dishes` VALUES ('0302703', '套餐(芒果C)', '2', null, 'tcmgc', '1');
+INSERT INTO `dishes` VALUES ('0302803', '套餐(酸梅汁)', '2', null, 'tcsmz', '1');
+INSERT INTO `dishes` VALUES ('0400204', '鹌鹑蛋', '1', null, 'acd', '4');
+INSERT INTO `dishes` VALUES ('0400304', '青菜', '1', null, 'qc', '4');
+INSERT INTO `dishes` VALUES ('0400404', '加汤', '2', null, 'jt', '4');
+INSERT INTO `dishes` VALUES ('0400504', '加鸡柳', '2', null, 'jjl', '4');
+INSERT INTO `dishes` VALUES ('0400604', '加肉卷', '2', null, 'jrk', '4');
+INSERT INTO `dishes` VALUES ('0400704', '加鸡柳', '5', null, 'jjk', '4');
 
 -- ----------------------------
 -- Table structure for `dishestype`
