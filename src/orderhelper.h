@@ -27,6 +27,9 @@ public:
     double discount(QList<DishesInfo> &dishes);
     bool isDiscount(const QString &name);
 private:
+    bool judgePackages(QList<DishesInfo> &dishes);
+    int getCountByType(QList<DishesInfo> &dishes, int type);
+private:
     QQueue<QString> m_disOrangre;
 };
 

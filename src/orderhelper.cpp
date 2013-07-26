@@ -20,21 +20,15 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
     //开始事务
     QSqlDatabase *db = getSqlManager()->getdb();
 
+    //套餐判断
+    if(!judgePackages(dishes))
+    {
+        return false;
+    }
+
     if(db->transaction())
     {
-        //        //插入桌号
-        //        QString sql = tr("insert into diningtable (id, tablename, state, guestnumber, waiterid) values ('%1', '%1', 1, 1, '0001')").arg(tableId);
         QSqlQuery query(*db);
-        //        if(!query.exec(sql))
-        //        {
-        //            //回滚
-        //            qDebug() << db->lastError();
-        //            db->rollback();
-        //            return false;
-        //        }
-        //获取总价
-        //QString sql = tr("select price, dishesname, typeid from dishes where dishesid in(%1").arg(dishes.first().id);
-        //QString sql = tr("select price, dishesname, typeid from dishes where dishesid in(%1) ORDER BY FIND_IN_SET(dishesid '%1')").arg(dishes.first().id);
         QString id = "";
         QString sql = "";
         if(dishes.count() > 0)
@@ -50,7 +44,6 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
             return false;
         }
         sql = tr("select price, dishesname, typeid from dishes where dishesid in(%1) ORDER BY FIND_IN_SET(dishesid, '%1')").arg(id);
-        //sql.append(")");
         qDebug() << sql;
         QSqlQuery *priceQuery = getSqlManager()->ExecQuery(sql);
         double paid = 0;
@@ -163,4 +156,39 @@ double OrderHelper::discount(QList<DishesInfo> &dishes)
 bool OrderHelper::isDiscount(const QString &name)
 {
     return m_disOrangre.contains(name);
+}
+
+bool OrderHelper::judgePackages(QList<DishesInfo> &dishes)
+{
+    //套餐菜数量
+    int packagesCount = 0;
+    for(int i = 0; i < dishes.count(); i++)
+    {
+        if(dishes.at(i).name.contains("套餐"))
+        {
+            packagesCount += dishes.at(i).count;
+        }
+    }
+    //米线数量
+    int mixianCount = getCountByType(dishes, 3);
+    //小菜数量
+    int xiaoCaiCount = getCountByType(dishes, 2);
+    //允许套餐数量
+    int allowCount = qMin(mixianCount, xiaoCaiCount);
+
+    return allowCount >= packagesCount;
+}
+
+int OrderHelper::getCountByType(QList<DishesInfo> &dishes, int type)
+{
+    int count = 0;
+    for(int i = 0; i < dishes.count(); i++)
+    {
+        if(dishes.at(i).dishType == type)
+        {
+            count += dishes.at(i).count;
+        }
+    }
+    return count;
+
 }
