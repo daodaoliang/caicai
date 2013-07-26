@@ -44,7 +44,7 @@ bool frontprinter::print(const QString &tableId, const QList<DishesInfo> &dishes
     double money1 = 0;
     double price = 0;
     QString bz = "";
-    int cout = 0;
+    int discount = 0;
     foreach(DishesInfo dish, dishes)
     {
         money1 += dish.price * dish.count;
@@ -80,9 +80,13 @@ bool frontprinter::print(const QString &tableId, const QList<DishesInfo> &dishes
         //            cmd.append(dish.name+ QString::number(dish.count)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
         //        }
         cmd.append(dish.name+ QString::number(dish.count)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
+        if(dish.name.contains("套餐"))
+        {
+            discount = discount+6;
+        }
     }
     //打印优惠金额
-    QString restString1 = "优惠: " + QString::number(rest1, 'f', 2) + "元";
+    QString restString1 = "优惠: " + QString::number(discount, 'f', 2) + "元";
     cmd.append(restString1+"<br>");
     cmd.append("金额: " + QString::number(paid, 'f', 2) + "元"+"<br>");
     cmd.append("谢谢惠顾！  已找零！<br>");

@@ -29,10 +29,15 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
         }
     }
     printDishes(tableId, drink, orderId, paid);
+    return true;
 }
 
 bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId, double paid)
 {
+    if(dishes.isEmpty())
+    {
+        return true;
+    }
     //连接打印机
     m_socket.connectToHost(getConfigerFileInstance()->printerIp(),
                            getConfigerFileInstance()->writerPort().toUInt());
@@ -46,15 +51,17 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
     //command.append(createLine(qApp->property("name").toString()));
     //打印订单号
     QString printOrderId = "订单号:" + orderId;
-    command.append(createLine(printOrderId));
+    command.append(createLine("订单号:"));
+    command.append(createLine(orderId));
     //订单类型
     QString orderType = tr("订单类型：%1").arg(dishes.first().type ? "退菜": "点菜");
     command.append(createLine(orderType));
     //打印时间
-    QString time = "时间:" + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-    command.append(createLine(time));
+    QString time = "时间:";
+    command.append(createLine("订单时间:"));
+    command.append(createLine(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")));
     //打印桌号
-    QString tableIdString = "桌号:" + tableId;
+    QString tableIdString = "订单桌号:" + tableId;
     command.append(createLine(tableIdString));
     //打印分割线
     createSplit();
@@ -76,14 +83,19 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
     //    command.append(createLine(paidString));
     //    //打印结束语
     //    command.append(createLine("谢谢惠顾！"));
+
+    command.append("\x1d\x21\x11");
+
     //切纸
     command.append(0x1d);
     command.append(0x56);
     command.append(66);
     command.append(10);
-    command.append(0x1d2144);
     m_socket.write(command);
-    return m_socket.waitForBytesWritten(1000);
+    bool ret = false;
+    ret = m_socket.waitForBytesWritten(1000);
+    qDebug()<<"result"<<ret;
+    return ret;
 }
 
 QByteArray BackPrinter::createLine(const QString &text)

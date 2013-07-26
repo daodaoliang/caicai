@@ -171,6 +171,7 @@ void OrderWidget::on_toolButton_3_clicked()
                                          m_dishesInfo.values(), orderId, price);
         getFrontPrinter()->print(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
                                  m_dishesInfo.values(), orderId, price);
+        qDebug() << "create order result" << result;
         if(result)
         {
             QMessageBox::information(this, "提示", "操作成功");
