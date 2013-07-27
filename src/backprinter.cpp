@@ -46,22 +46,24 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
         return false;
     }
     QByteArray command;
-
-    //打印公司抬头
-    //command.append(createLine(qApp->property("name").toString()));
     //打印订单号
-    QString printOrderId = "订单号:" + orderId;
-    command.append(createLine("订单号:"));
+    //    command.append("\x1c\x57\x00");
+    //    command.append("\x1d\x21\x00");
+    command.append(createLine(tr("订单号:")));
     command.append(createLine(orderId));
     //订单类型
     QString orderType = tr("订单类型：%1").arg(dishes.first().type ? "退菜": "点菜");
     command.append(createLine(orderType));
     //打印时间
-    QString time = "时间:";
-    command.append(createLine("订单时间:"));
+    command.append(createLine(tr("订单时间:")));
     command.append(createLine(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")));
-    //打印桌号
-    QString tableIdString = "订单桌号:" + tableId;
+
+    //    m_socket.write(command);
+    //    bool ret1 = m_socket.waitForBytesWritten(2000);
+
+    //打印桌号-----------------------字体大小不同
+    //command.clear();
+    QString tableIdString = tr("订单桌号:") + tableId;
     command.append(createLine(tableIdString));
     //打印分割线
     createSplit();
@@ -72,30 +74,17 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
         command.append(createDishes(dish));
         money += dish.price * dish.count;
     }
-    //    //打印分割线
-    //    createSplit();
-    //    //打印优惠金额
-    //    double rest = money - paid;
-    //    QString restString = "优惠:" + QString::number(rest, 'f', 2) + "元";
-    //    command.append(createLine(restString));
-    //    //打印总金额
-    //    QString paidString = "金额:" + QString::number(paid, 'f', 2) + "元";
-    //    command.append(createLine(paidString));
-    //    //打印结束语
-    //    command.append(createLine("谢谢惠顾！"));
-
+    //command.append("\x1c\x57\x00");
     command.append("\x1d\x21\x11");
-
     //切纸
     command.append(0x1d);
     command.append(0x56);
     command.append(66);
     command.append(10);
     m_socket.write(command);
-    bool ret = false;
-    ret = m_socket.waitForBytesWritten(1000);
-    qDebug()<<"result"<<ret;
-    return ret;
+    bool ret2 = false;
+    ret2 = m_socket.waitForBytesWritten(1000);
+    return ret2;
 }
 
 QByteArray BackPrinter::createLine(const QString &text)
