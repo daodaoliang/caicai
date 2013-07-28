@@ -17,6 +17,9 @@ OrderWidget::OrderWidget(QWidget *parent) :
     m_dishesTypeModel->setQuery("select * from dishestype", *getSqlManager()->getdb());
     ui->disheTypeList->setModel(m_dishesTypeModel);
     ui->disheTypeList->setItemDelegate(new DishesTypeDelegeate);
+
+    //设置不可编辑
+    ui->tableWidget_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
     //初始化菜品model
     m_dishesModel = new QSqlQueryModel(this);
     ui->dishesList->setModel(m_dishesModel);

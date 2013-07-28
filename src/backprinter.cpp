@@ -63,7 +63,7 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
     QString tableIdString = tr("订单桌号:") + tableId;
     command.append(createLine(tableIdString));
     //打印分割线
-    createSplit();
+    //command.append(createSplit());
     //打印菜品
     double money = 0;
     foreach(DishesInfo dish, dishes)
@@ -112,8 +112,9 @@ QByteArray BackPrinter::createDishes(const DishesInfo &dishes)
 QByteArray BackPrinter::createSplit()
 {
     QByteArray line;
-    char tmp[36];
-    memset(tmp, '-', 36);
-    line.append(tmp, 36);
+    char tmp[20];
+    memset(tmp, '-', 20);
+    line.append(tmp, 20);
+    line.append(0x0a);
     return line;
 }
