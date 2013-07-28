@@ -46,23 +46,20 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
         return false;
     }
     QByteArray command;
+    command.clear();
     //打印订单号
-    //    command.append("\x1c\x57\x00");
-    //    command.append("\x1d\x21\x00");
-    command.append(createLine(tr("订单号:")));
-    command.append(createLine(orderId));
+    //设置正常字号
+    command.append(29);
+    command.append(33);
+    command.append(QString::number(0).toInt());
+    command.append(createLine("订单号："+orderId));
     //订单类型
     QString orderType = tr("订单类型：%1").arg(dishes.first().type ? "退菜": "点菜");
     command.append(createLine(orderType));
     //打印时间
-    command.append(createLine(tr("订单时间:")));
-    command.append(createLine(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")));
-
-    //    m_socket.write(command);
-    //    bool ret1 = m_socket.waitForBytesWritten(2000);
-
-    //打印桌号-----------------------字体大小不同
-    //command.clear();
+    command.append("订单时间："+createLine(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")));
+    //设置加大字号
+    command.append("\x1d\x21\x11");
     QString tableIdString = tr("订单桌号:") + tableId;
     command.append(createLine(tableIdString));
     //打印分割线
@@ -74,8 +71,6 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
         command.append(createDishes(dish));
         money += dish.price * dish.count;
     }
-    //command.append("\x1c\x57\x00");
-    command.append("\x1d\x21\x11");
     //切纸
     command.append(0x1d);
     command.append(0x56);
@@ -92,7 +87,7 @@ QByteArray BackPrinter::createLine(const QString &text)
     QByteArray line;
     char tmp[36];
     memset(tmp, 0, 36);
-    strncpy(tmp, text.toLocal8Bit().data(), 36);
+    strncpy(tmp, text.toLocal8Bit().data(), qMin(36,text.toLocal8Bit().length()));
     line.append(tmp, 36);
     line.append(0x0a);
     return line;

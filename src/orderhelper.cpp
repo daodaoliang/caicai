@@ -150,7 +150,8 @@ double OrderHelper::discount(QList<DishesInfo> &dishes)
     //            }
     //        }
     //    }
-    return count * 6 * (dishes.first().type ? -1 : 1);
+    //return count * 6 * (dishes.first().type ? -1 : 1);
+    return 0;
 }
 
 bool OrderHelper::isDiscount(const QString &name)

@@ -135,7 +135,8 @@ void OrderWidget::showTotal()
         qDebug()<<"type"<<m_dishesInfo.values().at(i).dishType<<m_dishesInfo.values().at(i).name;
     }
     QList<DishesInfo> tmpList = m_dishesInfo.values();
-    double rest = orderHelperInstance()->discount(tmpList);
+    //double rest = orderHelperInstance()->discount(tmpList);
+    double rest = 0;
     qDebug()<<"money"<<total<<rest;
     QString text = tr("×Ü¼Æ:<font size='6' color='red'><b>%1Ôª</b></font>").arg(total - rest, 0, 'f', 2);
     ui->label->setText(text);
