@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui sql network
-
+CONFIG  += qaxcontainer
 TARGET = restaurant
 TEMPLATE = app
 
@@ -49,7 +49,8 @@ SOURCES += main.cpp\
     dishesinfobll.cpp \
     orderdata.cpp \
     dinnertablebll.cpp \
-    statiswidget.cpp
+    statiswidget.cpp \
+    excelengine.cpp
 
 
 HEADERS  += mainwidget.h \
@@ -91,7 +92,8 @@ HEADERS  += mainwidget.h \
     dishesinfobll.h \
     orderdata.h \
     dinnertablebll.h \
-    statiswidget.h
+    statiswidget.h \
+    excelengine.h
 
 RESOURCES += \
     src.qrc
