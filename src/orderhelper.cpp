@@ -2,6 +2,7 @@
 #include "sqlmanager.h"
 #include <QDebug>
 #include <QSqlError>
+#include "vipwidget.h"
 OrderHelper::OrderHelper(QObject *parent) :
     QObject(parent)
 {
@@ -67,6 +68,15 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         qDebug()<<"order"<<paid<<totalPrice;
         //如果使用卡片则在此处扣钱
         QString cardId = "";
+        if(payType != 0)
+        {
+            cardId = vipWidget()->payMoney(totalPrice);
+            if(cardId == "")
+            {
+                db->rollback();
+                return false;
+            }
+        }
         //判断是插入还是更新
         if(!query.exec(tr("select * from orderinfo where orderid = '%1'").arg(orderId) ))
         {
