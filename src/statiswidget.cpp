@@ -36,8 +36,15 @@ void StatisWidget::on_but_Search_clicked()
     //销售排名
     if(ui->box_SearchKind->currentIndex() == 0)
     {
-        sql = tr("select * from orderdetail");
+        sql = tr("select dishes.dishesname, SUM(orderdetail.dishescount) as total, dishes.price from orderdetail " \
+                 "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid " \
+                 "group by dishes.dishesname, dishes.price " \
+                 "order by total desc");
         ((QSqlQueryModel*)m_TableModel)->setQuery(sql,*getSqlManager()->getdb());
+        m_TableModel->setHeaderData(0,Qt::Horizontal,tr("菜名"));
+        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("销售数量"));
+        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("单价"));
+
     }
     //点菜汇总
     if(ui->box_SearchKind->currentIndex() == 1 )
@@ -51,7 +58,6 @@ void StatisWidget::on_but_Search_clicked()
         m_TableModel->setHeaderData(0, Qt::Horizontal, "菜品名称");
         m_TableModel->setHeaderData(1, Qt::Horizontal, "所点次数");
         m_TableModel->setHeaderData(2, Qt::Horizontal, "菜品单价");
-
     }
     //退菜
     if(ui->box_SearchKind->currentIndex() == 2)

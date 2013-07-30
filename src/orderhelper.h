@@ -23,7 +23,7 @@ signals:
 public slots:
     
 public:
-    bool createOrder(const QString &tableId, QList<DishesInfo> &dishes,const QString &wasteId,  int userid, double &totalPrice, QString &orderId,const QString &memberid = "");
+    bool createOrder(const QString &tableId, QList<DishesInfo> &dishes,const QString &wasteId,  int userid, double &totalPrice, QString &orderId,const QString &memberid = "", int payType = 0);
     double discount(QList<DishesInfo> &dishes);
     bool isDiscount(const QString &name);
 private:
