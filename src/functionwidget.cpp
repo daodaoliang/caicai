@@ -12,9 +12,9 @@ FunctionWidget::FunctionWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->stackedWidget->addWidget(tableWidget());
-    ui->stackedWidget->addWidget(orderWidget());
     ui->stackedWidget->addWidget(vipWidget());
     ui->stackedWidget->addWidget(checkWidget());
+    ui->stackedWidget->addWidget(orderWidget());
 }
 
 FunctionWidget::~FunctionWidget()
