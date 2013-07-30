@@ -359,6 +359,8 @@ void VipWidget::resetPageInfo()
     updateRecord(m_CurPage);
 }
 
+
+
 void VipWidget::on_pushButton_OpenCard_clicked()
 {
     unsigned int type = 0x0004;
@@ -545,18 +547,68 @@ void VipWidget::on_but_querenchong_clicked()
         balance = yue+chong;
         sql = tr("update member set balance = '%1' where cardid = '%2'").arg(balance).arg(ui->lineEdit_CardNum->text());
         message = tr("充值成功!");
+        m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
+        if(!m_QueryModel->lastError().isValid())
+        {
+            QMessageBox::warning(NULL, tr("提示"), message);
+            ui->label_yue->setText(tr("%1").arg(balance));
+            QPalette pe;
+            pe.setColor(QPalette::WindowText,Qt::red);
+            QFont font;
+            font.setPointSize(30);
+            ui->label_yue->setPalette(pe);
+            ui->label_yue->setFont(font);
+            ui->but_CancleCharge->setText("返回");
+            ui->lineEdit_chongzhi->clear();
+            ui->lineEdit_querenchong->clear();
+        }
+        else
+        {
+            qDebug()<<m_QueryModel->lastError().text();
+        }
     }
     else
         //if(ui->but_querenchong->text() == tr("扣款"))
     {
-        if(chong > yue)
-        {
-            return;
-        }
-        balance = yue-chong;
-        sql = tr("update member set balance = '%1' where cardid = '%2'").arg(balance).arg(ui->lineEdit_CardNum->text());
-        message = tr("扣款成功!");
+        //        if(chong > yue)
+        //        {
+        //            return;
+        //        }
+        //        balance = yue-chong;
+        //        sql = tr("update member set balance = '%1' where cardid = '%2'").arg(balance).arg(ui->lineEdit_CardNum->text());
+       QString num =  payMoney(chong);
+       qDebug()<<"----------------------"<<num;
     }
+    //    m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
+    //    if(!m_QueryModel->lastError().isValid())
+    //    {
+    //        QMessageBox::warning(NULL, tr("提示"), message);
+    //        ui->label_yue->setText(tr("%1").arg(balance));
+    //        QPalette pe;
+    //        pe.setColor(QPalette::WindowText,Qt::red);
+    //        QFont font;
+    //        font.setPointSize(30);
+    //        ui->label_yue->setPalette(pe);
+    //        ui->label_yue->setFont(font);
+    //        ui->but_CancleCharge->setText("返回");
+    //        ui->lineEdit_chongzhi->clear();
+    //        ui->lineEdit_querenchong->clear();
+    //    }
+    //    else
+    //    {
+    //        qDebug()<<m_QueryModel->lastError().text();
+    //    }
+}
+QString VipWidget::payMoney(const double &money)
+{
+    if(ui->label_yue->text().toDouble() < money)
+    {
+        return "";
+    }
+    QString message = tr("扣款成功!");
+
+    double balance = ui->label_yue->text().toDouble() - money;
+    QString sql = tr("update member set balance = '%1' where cardid = '%2'").arg(balance).arg(ui->lineEdit_CardNum->text());
     m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
     if(!m_QueryModel->lastError().isValid())
     {
@@ -571,13 +623,14 @@ void VipWidget::on_but_querenchong_clicked()
         ui->but_CancleCharge->setText("返回");
         ui->lineEdit_chongzhi->clear();
         ui->lineEdit_querenchong->clear();
+        return ui->lineEdit_CardNum->text();
     }
     else
     {
         qDebug()<<m_QueryModel->lastError().text();
+        return "";
     }
 }
-
 void VipWidget::on_but_pay_clicked()
 {
     ui->stackedWidget_2->setCurrentIndex(1);

@@ -61,6 +61,8 @@ private:
     QMultiMap<QString,int> m_BoxMap;
     //
     QString m_CurCardSnr;
+public:
+    QString payMoney(const double &money);
 };
 inline VipWidget *vipWidget()
 {
