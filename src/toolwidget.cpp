@@ -6,7 +6,6 @@ toolWidget::toolWidget(QWidget *parent) :
     QWidget(parent)
 {
     m_buttonList.append(new toolButton(":/img/toolWidget/tiJian.png",tr("首    页")));
-    m_buttonList.append(new toolButton(":/img/toolWidget/louDong.png",tr("点菜管理")));
     m_buttonList.append(new toolButton(":/img/toolWidget/muMa.png",tr("会员管理")));
     m_buttonList.append(new toolButton(":/img/toolWidget/louDong.png",tr("结算盘点")));
 

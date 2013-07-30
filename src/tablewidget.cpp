@@ -96,11 +96,10 @@ void TableWidget::enableFunction(bool state)
 
 void TableWidget::clearDishesList()
 {
-    for(int i = 0; i < ui->tableWidget->rowCount(); i++)
+    while(ui->tableWidget->rowCount() != 0)
     {
         ui->tableWidget->removeRow(0);
     }
-
 }
 
 void TableWidget::on_toolButton_3_clicked()
@@ -135,6 +134,7 @@ void TableWidget::on_toolButton_4_clicked()
         enableFunction(false);
         ui->lineEdit_2->clear();
         updateView();
+        clearDishesList();
     }
     else
     {
@@ -178,6 +178,22 @@ void TableWidget::on_toolButton_add_clicked()
         QString tableId = ui->listView->currentIndex().data().toString();
 
         orderWidget()->setHandleType(orderId, tableId, 0);
+        functionWidget()->changePage(1);
+    }
+}
+
+void TableWidget::on_toolButton_delete_clicked()
+{
+    if(!ui->listView->currentIndex().isValid())
+    {
+        return;
+    }
+    if(ui->listView->currentIndex().sibling(ui->listView->currentIndex().row(), 2).data().toInt() == 1)
+    {
+        QString orderId = ui->listView->currentIndex().sibling(ui->listView->currentIndex().row(), 6).data().toString();
+        QString tableId = ui->listView->currentIndex().data().toString();
+
+        orderWidget()->setHandleType(orderId, tableId, 1);
         functionWidget()->changePage(1);
     }
 }

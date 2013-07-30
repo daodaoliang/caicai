@@ -30,6 +30,8 @@ private slots:
 
     void on_toolButton_add_clicked();
 
+    void on_toolButton_delete_clicked();
+
 private:
     void showDishesInfo(const QString &orderId);
     void updateView();
