@@ -139,8 +139,79 @@ void OpenTableHandler::handleCommand(const QStringList &cmdDetail, int index)
 
 void ChangeTableHandler::handleCommand(const QStringList &cmdDetail, int index)
 {
-    qDebug() << cmdDetail;
-
+    qDebug() << cmdDetail<<cmdDetail.count();
+    QStringList replyList;
+    replyList.append(cmdDetail[0].trimmed());
+    if(cmdDetail.count() == 2)
+    {
+        QString oldTable = tr("%1").arg(cmdDetail[1].left(7).remove(" ").toInt(),4,10,QLatin1Char('0'));
+        QString newTable = tr("%1").arg(cmdDetail[1].right(7).remove(" ").toInt(),4,10,QLatin1Char('0'));
+        qDebug()<<oldTable<<newTable;
+        if(oldTable == newTable)
+        {
+            replyList.append("换台失败");
+            reply(replyList, index);
+            return;
+        }
+        QString sql = tr("select state from diningtable where id = '%1'").arg(oldTable);
+        QSqlQuery *query = getSqlManager()->ExecQuery(sql);
+        if(query != NULL)
+        {
+            if(query->next())
+            {
+                if(query->value(0).toInt() == 0)
+                {
+                    //原台号未开台
+                    replyList.append("原台号未开台");
+                    reply(replyList, index);
+                    return;
+                }
+                sql = tr("select state from diningtable where id = '%1'").arg(newTable);
+                query = getSqlManager()->ExecQuery(sql);
+                if(query != NULL)
+                {
+                    if(query->next())
+                    {
+                        //                        if(query->value(0).toInt() == 1)
+                        //                        {
+                        //                            //新台号已开台
+                        //                            replyList.append("该台已开台,请重新换台");
+                        //                            reply(replyList, index);
+                        //                            return;
+                        //                        }
+                        sql = tr("update diningtable set state = 0 where id = '%1';update diningtable set state = 1 where id = '%2'").arg(oldTable).arg(newTable);
+                        query = getSqlManager()->ExecQuery(sql);
+                        if(query != NULL)
+                        {
+                            dinnerWidget()->updateData();
+                            replyList.append("换台成功");
+                            reply(replyList, index);
+                            return;
+                        }
+                        else
+                        {
+                            qDebug()<<"-----------------------------------------------------";
+                            replyList.append("换台失败");
+                            reply(replyList, index);
+                            return;
+                        }
+                    }else
+                    {
+                        //新台号不存在
+                        replyList.append("新台号不存在");
+                        reply(replyList, index);
+                        return;
+                    }
+                }
+            }else
+            {
+                //不存在该原台号
+                replyList.append("原台号不存在");
+                reply(replyList, index);
+                return;
+            }
+        }
+    }
 
 }
 
