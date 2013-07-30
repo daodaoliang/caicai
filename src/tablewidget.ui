@@ -24,13 +24,6 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="3">
-    <widget class="QToolButton" name="toolButton_6">
-     <property name="text">
-      <string>换台</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0" colspan="2">
     <widget class="QListView" name="listView">
      <property name="viewMode">
@@ -45,14 +38,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="4">
-    <widget class="QToolButton" name="toolButton_4">
-     <property name="text">
-      <string>撤台</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2" colspan="3">
+   <item row="1" column="2" colspan="2">
     <widget class="QWidget" name="widget" native="true">
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="4" column="0" colspan="2">
@@ -177,6 +163,13 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QToolButton" name="toolButton_4">
+     <property name="text">
+      <string>撤台</string>
+     </property>
     </widget>
    </item>
   </layout>
