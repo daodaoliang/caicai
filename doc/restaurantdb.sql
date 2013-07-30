@@ -241,6 +241,7 @@ CREATE TABLE `membertype` (
 
 -- ----------------------------
 -- Records of membertype
+INSERT INTO `membertype` VALUES (1, '普通会员');
 -- ----------------------------
 
 -- ----------------------------

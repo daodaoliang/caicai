@@ -74,6 +74,21 @@ void StatisWidget::on_but_Search_clicked()
     //会员消费
     if(ui->box_SearchKind->currentIndex() == 4)
     {
+        if(!ui->line_Vip->text().isEmpty())
+        {
+            sql = tr("SELECT cardid,orderid, SUM(orderdetail.dishescount * dishes.price)  as price , handletime from orderdetail "\
+                    "LEFT JOIN dishes on dishes.dishesid = orderdetail.dishesid "\
+                    "where paytype = 1 and cardid = '%1' "\
+                     "GROUP BY handletime").arg(ui->line_Vip->text());
+        }
+        else
+        {
+            sql = tr("SELECT cardid,orderid, SUM(orderdetail.dishescount * dishes.price)  as price , handletime from orderdetail "\
+                    "LEFT JOIN dishes on dishes.dishesid = orderdetail.dishesid "\
+                    "where paytype = 1 "\
+                     "GROUP BY handletime");
+        }
+        ((QSqlQueryModel*)m_TableModel)->setQuery(sql,*getSqlManager()->getdb());
 
     }
 }
