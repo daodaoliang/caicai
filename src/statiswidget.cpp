@@ -23,6 +23,7 @@ StatisWidget::StatisWidget(QWidget *parent) :
         }
     }
     ui->comboBox->setCurrentIndex(0);
+
 }
 
 StatisWidget::~StatisWidget()
