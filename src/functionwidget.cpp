@@ -5,6 +5,7 @@
 #include "vipwidget.h"
 #include "checkwidget.h"
 #include "orderwidget.h"
+#include "statiswidget.h"
 FunctionWidget::FunctionWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FunctionWidget)
@@ -14,6 +15,7 @@ FunctionWidget::FunctionWidget(QWidget *parent) :
     ui->stackedWidget->addWidget(orderWidget());
     ui->stackedWidget->addWidget(vipWidget());
     ui->stackedWidget->addWidget(checkWidget());
+    ui->stackedWidget->addWidget(statisWidget());
 }
 
 FunctionWidget::~FunctionWidget()
