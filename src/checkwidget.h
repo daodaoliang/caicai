@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QCalendarWidget>
+#include <QTimeEdit>
 #include <QDate>
 #include <QSqlQueryModel>
 #include "detailwidget.h"

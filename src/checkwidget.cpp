@@ -15,6 +15,11 @@ CheckWidget::CheckWidget(QWidget *parent) :
     //设置表头
     ui->tableView->setModel(&m_model);
     setTableHeader();
+    //设置默认日期
+    ui->dateTimeEdit_Start->setDate(QDate::currentDate());
+    ui->dateTimeEdit_End->setDate(QDate::currentDate().addDays(1));
+    ui->lineEdit->setVisible(false);
+    m_calendar.setVisible(false);
 }
 
 CheckWidget::~CheckWidget()
@@ -69,7 +74,10 @@ void CheckWidget::calcTotal()
     {
         text.append(tr("服务员：<font size='6' color='red'><b>%1    </b></font>").arg(ui->comboBox->currentText()));
     }
-    text.append(tr("日期:<font size='6' color='red'><b>%1    </b></font>    ").arg(ui->lineEdit->text()));
+    //text.append(tr("日期:<font size='6' color='red'><b>%1    </b></font>    ").arg(ui->lineEdit->text()));
+    text.append(tr("日期:<font size='4' color='red'>%1<br>至%2</font>    ")
+                .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
+                .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss")));
     double paid = 0;
     for(int i = 0; i < m_model.rowCount(); i++)
     {
@@ -88,10 +96,16 @@ void CheckWidget::on_pushButton_clicked()
         date = QDate::currentDate();
     }
     QDate lastDate = date.addDays(1);
-
+    if(ui->dateTimeEdit_Start->dateTime().toTime_t() > ui->dateTimeEdit_End->dateTime().toTime_t())
+    {
+        return;
+    }
+//    QString sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
+//            "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
+//                     "where begintime > '%1' and begintime <= '%2' ").arg(date.toString("yyyy-MM-dd")).arg(lastDate.toString("yyyy-MM-dd"));
     QString sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
             "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
-                     "where begintime > '%1' and begintime <= '%2' ").arg(date.toString("yyyy-MM-dd")).arg(lastDate.toString("yyyy-MM-dd"));
+                     "where begintime > '%1' and begintime <= '%2' ").arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
     int userId = ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt();
     if(userId > 0)
     {
