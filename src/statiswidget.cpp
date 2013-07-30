@@ -33,6 +33,7 @@ StatisWidget::~StatisWidget()
 void StatisWidget::on_but_Search_clicked()
 {
     QString sql = "";
+    m_TableModel->clear();
     //ÏúÊÛÅÅÃû
     if(ui->box_SearchKind->currentIndex() == 0)
     {
