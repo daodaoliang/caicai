@@ -85,7 +85,15 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
         }
         else
         {
-            replyList.append("1 µÇÂ¼³É¹¦");
+            QString sql = tr("replace into login (machineid,userid) values ('%1','%2')").arg(cmdDetail[0].right(3)).arg(user);
+            QSqlQuery *query = getSqlManager()->ExecQuery(sql);
+            if(query != NULL)
+            {
+                replyList.append("1 µÇÂ¼³É¹¦");
+                reply(replyList, index);
+                return;
+            }
+            replyList.append("0 µÇÂ¼Ê§°Ü,Çë×¢ÏúÔÙµÇÂ¼ ");
             reply(replyList, index);
             return;
         }
@@ -276,6 +284,7 @@ void OrderHandler::handleCommand(const QStringList &cmdDetail, int index)
                                 }
                                 QString orderId;
                                 double money = 0;
+                                qDebug()<<"get userid------------------------"<<userid;
                                 bool result = orderHelperInstance()->createOrder(tableId,dishesList, wasteId, userid ,money, orderId);
                                 if(result)
                                 {
