@@ -20,6 +20,7 @@ CheckWidget::CheckWidget(QWidget *parent) :
     ui->dateTimeEdit_End->setDate(QDate::currentDate().addDays(1));
     ui->lineEdit->setVisible(false);
     m_calendar.setVisible(false);
+    ui->pushButton_2->setEnabled(false);
 }
 
 CheckWidget::~CheckWidget()
@@ -43,7 +44,8 @@ bool CheckWidget::eventFilter(QObject *obj, QEvent *event)
 void CheckWidget::getDate(const QDate &date)
 {
     m_calendar.hide();
-    ui->lineEdit->setText(date.toString("yyyy-MM-dd"));
+    m_Date=date.toString("yyyy-MM-dd");
+    ui->lineEdit->setText(m_Date);
 }
 
 void CheckWidget::loadMember()
@@ -90,6 +92,7 @@ void CheckWidget::calcTotal()
 
 void CheckWidget::on_pushButton_clicked()
 {
+    ui->pushButton_2->setEnabled(true);
     QDate date = QDate::fromString(ui->lineEdit->text(), "yyyy-MM-dd");
     if(!date.isValid())
     {
@@ -100,11 +103,11 @@ void CheckWidget::on_pushButton_clicked()
     {
         return;
     }
-//    QString sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
-//            "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
-//                     "where begintime > '%1' and begintime <= '%2' ").arg(date.toString("yyyy-MM-dd")).arg(lastDate.toString("yyyy-MM-dd"));
+    //    QString sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
+    //            "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
+    //                     "where begintime > '%1' and begintime <= '%2' ").arg(date.toString("yyyy-MM-dd")).arg(lastDate.toString("yyyy-MM-dd"));
     QString sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
-            "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
+                     "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
                      "where begintime > '%1' and begintime <= '%2' ").arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
     int userId = ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt();
     if(userId > 0)
@@ -129,4 +132,14 @@ void CheckWidget::on_tableView_doubleClicked(const QModelIndex &index)
     QString sql = tr("select dishes.dishesname, orderdetail.dishescount, dishes.price, orderdetail.dishestype from orderdetail " \
                      "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid where orderid = '%1'").arg(orderId);
     m_detail.showDetail(sql);
+}
+
+void CheckWidget::on_pushButton_2_clicked()
+{
+    if(m_Date.isEmpty())
+        m_Date=QDate::currentDate().toString("yyyyMMdd");
+    m_excelInstance.Open(QApplication::applicationDirPath()+"/"+m_Date+".xls");
+    m_excelInstance.SaveDataFrTable(ui->tableView);
+    m_excelInstance.Close();
+    ui->pushButton_2->setEnabled(false);
 }

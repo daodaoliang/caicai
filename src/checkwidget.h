@@ -7,7 +7,7 @@
 #include <QDate>
 #include <QSqlQueryModel>
 #include "detailwidget.h"
-
+#include "excelengine.h"
 namespace Ui {
 class CheckWidget;
 }
@@ -27,6 +27,8 @@ private slots:
 
     void on_tableView_doubleClicked(const QModelIndex &index);
 
+    void on_pushButton_2_clicked();
+
 private:
     void loadMember();
     void setTableHeader();
@@ -36,6 +38,8 @@ private:
     QCalendarWidget m_calendar;
     QSqlQueryModel m_model;
     DetailWidget m_detail;
+    ExcelEngine m_excelInstance;
+    QString m_Date;
 };
 inline CheckWidget *checkWidget()
 {
