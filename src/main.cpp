@@ -32,7 +32,9 @@ int main(int argc, char *argv[])
 //    palette.setColor(QPalette::WindowText,Qt::white);
 //    a.setPalette(palette);
     mainWidget w;
+
     w.show();
+    w.showMaximized();
     getCardReader()->LoadLibraty();
     getCardReader()->InitDevice(2,115200);
     //    PrinterWidget testWidget;

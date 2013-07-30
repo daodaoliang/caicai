@@ -20,5 +20,15 @@ protected:
 private:
     Ui::FunctionWidget *ui;
 };
+inline FunctionWidget *functionWidget()
+{
+    static FunctionWidget *w = NULL;
+    if(w == NULL)
+    {
+        w = new FunctionWidget();
+    }
+    return w;
+}
+
 
 #endif // FUNCTIONWIDGET_H

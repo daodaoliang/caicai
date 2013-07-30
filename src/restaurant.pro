@@ -43,7 +43,13 @@ SOURCES += main.cpp\
     loginwidget.cpp \
     backprinter.cpp \
     frontprinter.cpp \
-    adddiningtablewidget.cpp
+    adddiningtablewidget.cpp \
+    dinnertabledata.cpp \
+    tablewidget.cpp \
+    dishesinfobll.cpp \
+    orderdata.cpp \
+    dinnertablebll.cpp
+
 
 HEADERS  += mainwidget.h \
     sysbutton.h \
@@ -78,7 +84,12 @@ HEADERS  += mainwidget.h \
     loginwidget.h \
     backprinter.h \
     frontprinter.h \
-    adddiningtablewidget.h
+    adddiningtablewidget.h \
+    dinnertabledata.h \
+    tablewidget.h \
+    dishesinfobll.h \
+    orderdata.h \
+    dinnertablebll.h
 
 RESOURCES += \
     src.qrc
@@ -93,4 +104,5 @@ FORMS += \
     checkwidget.ui \
     orderwidget.ui \
     loginwidget.ui \
-    adddiningtablewidget.ui
+    adddiningtablewidget.ui \
+    tablewidget.ui
