@@ -178,7 +178,7 @@ void TableWidget::on_toolButton_add_clicked()
         QString tableId = ui->listView->currentIndex().data().toString();
 
         orderWidget()->setHandleType(orderId, tableId, 0);
-        functionWidget()->changePage(3);
+        functionWidget()->changePage(4);
     }
 }
 
@@ -194,6 +194,6 @@ void TableWidget::on_toolButton_delete_clicked()
         QString tableId = ui->listView->currentIndex().data().toString();
 
         orderWidget()->setHandleType(orderId, tableId, 1);
-        functionWidget()->changePage(3);
+        functionWidget()->changePage(4);
     }
 }

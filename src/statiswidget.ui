@@ -25,17 +25,7 @@
         <property name="title">
          <string/>
         </property>
-        <layout class="QGridLayout" name="gridLayout_3" columnstretch="2,1,2,1,2,1">
-         <item row="0" column="1">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>服务员号:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="line_Service"/>
-         </item>
+        <layout class="QGridLayout" name="gridLayout_3" columnstretch="2,0,0,0,0,0,0">
          <item row="0" column="5">
           <widget class="QPushButton" name="but_Search">
            <property name="text">
@@ -43,11 +33,21 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="4">
-          <widget class="QLineEdit" name="line_Vip"/>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>服务员号:</string>
+           </property>
+          </widget>
          </item>
          <item row="0" column="0">
           <widget class="QComboBox" name="box_SearchKind">
+           <property name="maximumSize">
+            <size>
+             <width>150</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <item>
             <property name="text">
              <string>菜例销售排名</string>
@@ -81,6 +81,25 @@
             <string>会员卡号:</string>
            </property>
           </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLineEdit" name="line_Vip"/>
+         </item>
+         <item row="0" column="2">
+          <widget class="QComboBox" name="comboBox"/>
+         </item>
+         <item row="0" column="6">
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>

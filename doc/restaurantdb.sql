@@ -175,7 +175,6 @@ CREATE TABLE `login` (
 -- ----------------------------
 -- Records of login
 -- ----------------------------
-INSERT INTO `login` VALUES ('001', '0');
 
 -- ----------------------------
 -- Table structure for `material`
