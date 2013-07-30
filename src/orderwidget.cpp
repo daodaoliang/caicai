@@ -123,7 +123,37 @@ void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
 
 void OrderWidget::on_toolButton_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    if(ui->tableWidget_2->rowCount() == 0)
+    {
+        return;
+    }
+    double price = 0;
+    QList<DishesInfo> tmpList = m_dishesInfo.values();
+    bool result = orderHelperInstance()->createOrder(m_tableId,
+                                                     tmpList,
+                                                     "",
+                                                     qApp->property("userId").toInt(), price, m_orderId, "", 1);
+    if(result)
+    {
+        result = getBackPrinter()->print(m_tableId,
+                                         m_dishesInfo.values(), m_orderId, price);
+        getFrontPrinter()->print(m_tableId,
+                                 m_dishesInfo.values(), m_orderId, price);
+        qDebug() << "create order result" << result;
+        if(result)
+        {
+            QMessageBox::information(this, "提示", "操作成功");
+            m_dishesInfo.clear();
+            while(ui->tableWidget_2->rowCount() > 0)
+            {
+                ui->tableWidget_2->removeRow(0);
+            }
+            ui->label->clear();
+            functionWidget()->changePage(0);
+            return;
+        }
+    }
+    QMessageBox::information(this, "提示", "操作失败");
 }
 
 void OrderWidget::on_toolButton_5_clicked()

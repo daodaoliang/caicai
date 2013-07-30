@@ -15,7 +15,7 @@ OrderHelper::OrderHelper(QObject *parent) :
     m_disOrangre.enqueue("雀巢芒果C");
 }
 
-bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,const QString &wasteId, int userid, double &totalPrice, QString &orderId, const QString &memberid)
+bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,const QString &wasteId, int userid, double &totalPrice, QString &orderId, const QString &memberid,  int payType)
 {
     //开始事务
     QSqlDatabase *db = getSqlManager()->getdb();
@@ -65,7 +65,8 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         double discountMoney = discount(dishes);
         totalPrice = paid - discountMoney;
         qDebug()<<"order"<<paid<<totalPrice;
-
+        //如果使用卡片则在此处扣钱
+        QString cardId = "";
         //判断是插入还是更新
         if(!query.exec(tr("select * from orderinfo where orderid = '%1'").arg(orderId) ))
         {
@@ -101,8 +102,8 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         //循环插入订单详情
         foreach(DishesInfo info, dishes)
         {
-            sql = tr("insert into orderdetail (orderid, dishesid, dishescount, dishestype, handletime) values ('%1', %2, %3, %5, '%4')")
-                    .arg(orderId).arg(info.id).arg(info.count).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(info.type);
+            sql = tr("insert into orderdetail (orderid, dishesid, dishescount, dishestype, handletime, paytype, cardid) values ('%1', %2, %3, %5, '%4', '%6', '%7')")
+                    .arg(orderId).arg(info.id).arg(info.count).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(info.type).arg(payType).arg(cardId);
             if(!query.exec(sql))
             {
                 //回滚

@@ -51,7 +51,6 @@ void StatisWidget::on_but_Search_clicked()
         m_TableModel->setHeaderData(0, Qt::Horizontal, "菜品名称");
         m_TableModel->setHeaderData(1, Qt::Horizontal, "所点次数");
         m_TableModel->setHeaderData(2, Qt::Horizontal, "菜品单价");
-
     }
     //退菜
     if(ui->box_SearchKind->currentIndex() == 2)

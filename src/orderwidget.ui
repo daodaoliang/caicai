@@ -77,7 +77,14 @@
          </widget>
         </widget>
        </item>
-       <item row="1" column="1" colspan="3">
+       <item row="3" column="2" colspan="2">
+        <widget class="QToolButton" name="toolButton_3">
+         <property name="text">
+          <string>现金收讫</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="5">
         <widget class="QTableWidget" name="tableWidget_2">
          <property name="minimumSize">
           <size>
@@ -107,10 +114,10 @@
          </column>
         </widget>
        </item>
-       <item row="3" column="2" colspan="2">
-        <widget class="QToolButton" name="toolButton_3">
+       <item row="3" column="4">
+        <widget class="QToolButton" name="toolButton">
          <property name="text">
-          <string>确定</string>
+          <string>会员卡支付</string>
          </property>
         </widget>
        </item>
