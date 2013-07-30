@@ -169,3 +169,9 @@ QSqlQuery *SqlManager::ExecQuery(QString sql)
     }
     return NULL;
 }
+
+QSqlQuery SqlManager::execQuery(const QString &sql)
+{
+    qDebug() << sql;
+    return m_DB.exec(sql);
+}

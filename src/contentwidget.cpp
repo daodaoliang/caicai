@@ -10,7 +10,7 @@ contentWidget::contentWidget(QWidget *parent) :
     setPalette(palette);
     setAutoFillBackground(true);
     QHBoxLayout *hLayout = new QHBoxLayout();
-    m_function = new FunctionWidget();
+    m_function = functionWidget();
     hLayout->addWidget(m_function);
     setLayout(hLayout);
 }

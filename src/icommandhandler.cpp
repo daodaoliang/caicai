@@ -11,6 +11,7 @@
 #include "orderhelper.h"
 #include "backprinter.h"
 #include "frontprinter.h"
+#include "dinnertablebll.h"
 ICommandHandler::ICommandHandler() :
     QObject()
 {
@@ -121,21 +122,15 @@ void OpenTableHandler::handleCommand(const QStringList &cmdDetail, int index)
         //人数
         int guestNumber = cmdDetail[1].mid(5, 2).toInt();
         QString waiterId = cmdDetail[1].right(5);
-        QString sql = tr("update diningtable set state = 1, guestnumber = %1, waiterid = %2, lastopentime = '%3' where id = '%4'")
-                .arg(guestNumber).arg(waiterId).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(tableId);
-        QSqlQuery *query = getSqlManager()->ExecQuery(sql);
-        if(query != NULL)
+        bool result = dinnerTableBllInstance()->openTable(tableId, guestNumber);
+        if(result)
         {
-            if(query->numRowsAffected() == 1)
-            {
-                //TODO:处理数据库添加订单
-                replyList.append(tableId + "开台成功！");
-                reply(replyList, index);
-                //界面显示
-                dinnerWidget()->updateData();
-                return;
-            }
-
+            //TODO:处理数据库添加订单
+            replyList.append(tableId + "开台成功！");
+            reply(replyList, index);
+            //界面显示
+            dinnerWidget()->updateData();
+            return;
         }
 
         replyList.append(tableId + "开台失败");
@@ -282,7 +277,7 @@ void OrderHandler::handleCommand(const QStringList &cmdDetail, int index)
                                     }
                                     dishesList.append(info);
                                 }
-                                QString orderId;
+                                QString orderId = dinnerTableDataInstance()->getOrderByTableId(tableId);
                                 double money = 0;
                                 qDebug()<<"get userid------------------------"<<userid;
                                 bool result = orderHelperInstance()->createOrder(tableId,dishesList, wasteId, userid ,money, orderId);

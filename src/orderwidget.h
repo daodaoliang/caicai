@@ -17,8 +17,10 @@ class OrderWidget : public QWidget
 public:
     explicit OrderWidget(QWidget *parent = 0);
     ~OrderWidget();
+    void setHandleType(const QString &orderId, const QString &tableId, int state);
 protected:
     void showEvent(QShowEvent *);
+    void hideEvent(QHideEvent *);
 private slots:
     void on_disheTypeList_doubleClicked(const QModelIndex &index);
 
@@ -31,8 +33,6 @@ private slots:
 
     void on_toolButton_3_clicked();
 
-    void on_comboBox_2_activated(int index);
-
 private:
     void showTotal();
 private:
@@ -41,6 +41,9 @@ private:
     QSqlQueryModel *m_dishesModel;
     DishesCountWidget m_countWidget;
     QMap<int, DishesInfo> m_dishesInfo;
+    int m_dishState;
+    QString m_tableId;
+    QString m_orderId;
 };
 
 inline OrderWidget *orderWidget()

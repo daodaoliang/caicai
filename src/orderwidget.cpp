@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include "backprinter.h"
 #include "frontprinter.h"
+#include "functionwidget.h"
 OrderWidget::OrderWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::OrderWidget)
@@ -24,20 +25,7 @@ OrderWidget::OrderWidget(QWidget *parent) :
     m_dishesModel = new QSqlQueryModel(this);
     ui->dishesList->setModel(m_dishesModel);
     ui->dishesList->setItemDelegate(new DishesDelegate);
-    //初始化桌号
-    QString sql = "select id, tablename from diningtable";
-    QSqlQuery *query = getSqlManager()->ExecQuery(sql);
-    if(query != NULL)
-    {
-        while(query->next())
-        {
-            ui->comboBox->insertItem(ui->comboBox->count(), query->value(1).toString(), query->value(0).toString());
-        }
-    }
-    //初始化点菜退菜
-    ui->comboBox_2->insertItem(0, "退菜", 1);
-    ui->comboBox_2->insertItem(0, "点菜", 0);
-    ui->comboBox_2->setCurrentIndex(0);
+
 }
 
 OrderWidget::~OrderWidget()
@@ -45,10 +33,24 @@ OrderWidget::~OrderWidget()
     delete ui;
 }
 
+void OrderWidget::setHandleType(const QString &orderId, const QString &tableId, int state)
+{
+    m_orderId = orderId;
+    m_tableId = tableId;
+    m_dishState = state;
+}
+
 void OrderWidget::showEvent(QShowEvent *)
 {
     ui->stackedWidget->setCurrentIndex(0);
     ui->stackedWidget_2->setCurrentIndex(0);
+}
+
+void OrderWidget::hideEvent(QHideEvent *)
+{
+    m_dishState = 0;
+    m_orderId.clear();
+    m_tableId.clear();
 }
 
 void OrderWidget::on_disheTypeList_doubleClicked(const QModelIndex &index)
@@ -82,7 +84,7 @@ void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
             dishesInfo.name = dishes;
             dishesInfo.count = count;
             dishesInfo.id = index.data().toInt();
-            dishesInfo.type = ui->comboBox_2->itemData(ui->comboBox_2->currentIndex()).toInt();
+            dishesInfo.type = m_dishState;//ui->comboBox_2->itemData(ui->comboBox_2->currentIndex()).toInt();
             dishesInfo.price = price;
             dishesInfo.dishType = dishType;
             qDebug() << "dish type" << dishType<<dishesInfo.name<<dishesInfo.count;
@@ -162,19 +164,18 @@ void OrderWidget::on_toolButton_3_clicked()
     {
         return;
     }
-    QString orderId;
     double price = 0;
     QList<DishesInfo> tmpList = m_dishesInfo.values();
-    bool result = orderHelperInstance()->createOrder(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
+    bool result = orderHelperInstance()->createOrder(m_tableId,
                                                      tmpList,
                                                      "",
-                                                     qApp->property("userId").toInt(), price, orderId);
+                                                     qApp->property("userId").toInt(), price, m_orderId);
     if(result)
     {
-        result = getBackPrinter()->print(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
-                                         m_dishesInfo.values(), orderId, price);
-        getFrontPrinter()->print(ui->comboBox->itemData(ui->comboBox->currentIndex()).toString(),
-                                 m_dishesInfo.values(), orderId, price);
+        result = getBackPrinter()->print(m_tableId,
+                                         m_dishesInfo.values(), m_orderId, price);
+        getFrontPrinter()->print(m_tableId,
+                                 m_dishesInfo.values(), m_orderId, price);
         qDebug() << "create order result" << result;
         if(result)
         {
@@ -185,17 +186,10 @@ void OrderWidget::on_toolButton_3_clicked()
                 ui->tableWidget_2->removeRow(0);
             }
             ui->label->clear();
+            functionWidget()->changePage(0);
             return;
         }
     }
     QMessageBox::information(this, "提示", "操作失败");
 }
 
-void OrderWidget::on_comboBox_2_activated(int index)
-{
-    for(int i = 0; i < m_dishesInfo.count(); i++)
-    {
-        m_dishesInfo.values()[i].type = ui->comboBox_2->itemData(index).toInt();
-    }
-    showTotal();
-}
