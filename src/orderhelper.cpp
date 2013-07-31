@@ -2,6 +2,7 @@
 #include "sqlmanager.h"
 #include <QDebug>
 #include <QSqlError>
+#include "vipwidget.h"
 OrderHelper::OrderHelper(QObject *parent) :
     QObject(parent)
 {
@@ -67,28 +68,43 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         qDebug()<<"order"<<paid<<totalPrice;
         //如果使用卡片则在此处扣钱
         QString cardId = "";
+        if(payType != 0)
+        {
+            cardId = vipWidget()->payMoney(totalPrice);
+            if(cardId == "")
+            {
+                db->rollback();
+                return false;
+            }
+        }
         //判断是插入还是更新
         if(!query.exec(tr("select * from orderinfo where orderid = '%1'").arg(orderId) ))
         {
             db->rollback();
             return false;
         }
-        if(query.next())
+        if(dishes.first().type == 1)
         {
-            double lastAccounts = query.value(4).toDouble();
-            double lastPaid = query.value(5).toDouble();
-            //更新操作
-            sql = tr("update orderinfo set accounts = %1, paid = %2 where orderid = '%3'").arg(paid + lastAccounts).arg(lastPaid + paid - discountMoney).arg(orderId);
-            if(!query.exec(sql))
+            if(query.next())
             {
-                //回滚
-                db->rollback();
-                return false;
+                //退菜操作 更新
+
+                double lastAccounts = query.value(4).toDouble();
+                double lastPaid = query.value(5).toDouble();
+                //更新操作
+                sql = tr("update orderinfo set accounts = %1, paid = %2 where orderid = '%3'").arg(paid + lastAccounts).arg(lastPaid + paid - discountMoney).arg(orderId);
+                if(!query.exec(sql))
+                {
+                    //回滚
+                    db->rollback();
+                    return false;
+                }
             }
         }
         else
         {
-            //插入订单
+            //不是退菜则插入订单
+            orderId = QDateTime::currentDateTime().toString("yyyyMMddhhmmss")+orderId.right(4);
             sql = tr("insert into orderinfo (orderid, orderstate, begintime, endtime, accounts, paid, tableid, memberid, wasteid, userid) values ('%1', 0, '%2', null, %7,%8, '%3', '%4', '%5', %6)")
                     .arg(orderId).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(tableId).arg(memberid).arg(wasteId).arg(userid).arg(paid).arg(paid - discountMoney);
             if(!query.exec(sql))

@@ -241,6 +241,7 @@ CREATE TABLE `membertype` (
 
 -- ----------------------------
 -- Records of membertype
+INSERT INTO `membertype` VALUES (1, '普通会员');
 -- ----------------------------
 
 -- ----------------------------
@@ -254,6 +255,8 @@ CREATE TABLE `orderdetail` (
   `dishescount` int(11) NOT NULL DEFAULT '1' COMMENT '所点菜品数量',
   `dishestype` int(11) NOT NULL DEFAULT '0' COMMENT '用于标示点菜或者退菜0-点菜，1-划菜，2-退菜',
   `handletime` datetime NOT NULL COMMENT '订单详细的操作时间',
+  `paytype` int not null,
+  `cardid` varchar(20),
   PRIMARY KEY (`detailid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=gbk;
 

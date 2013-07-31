@@ -21,6 +21,8 @@ CheckWidget::CheckWidget(QWidget *parent) :
     ui->lineEdit->setVisible(false);
     m_calendar.setVisible(false);
     ui->pushButton_2->setEnabled(false);
+    //ui->tableView->setEditTriggers(QAbstractItemView::EditKeyPressed);
+
 }
 
 CheckWidget::~CheckWidget()
@@ -78,7 +80,7 @@ void CheckWidget::calcTotal()
         text.append(tr("服务员：<font size='6' color='red'><b>%1    </b></font>").arg(ui->comboBox->currentText()));
     }
     //text.append(tr("日期:<font size='6' color='red'><b>%1    </b></font>    ").arg(ui->lineEdit->text()));
-    text.append(tr("日期:<font size='4' color='red'>%1<br>至%2</font>    ")
+    text.append(tr("日期:<font size='4' color='red'>%1至%2</font>    ")
                 .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
                 .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss")));
     double paid = 0;
@@ -130,7 +132,7 @@ void CheckWidget::on_pushButton_clicked()
 void CheckWidget::on_tableView_doubleClicked(const QModelIndex &index)
 {
     QString orderId = m_model.record(index.row()).value(0).toString();
-    QString sql = tr("select dishes.dishesname, orderdetail.dishescount, dishes.price, orderdetail.dishestype from orderdetail " \
+    QString sql = tr("select dishes.dishesname, orderdetail.dishescount, dishes.price, orderdetail.dishestype,orderdetail.orderid from orderdetail " \
                      "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid where orderid = '%1'").arg(orderId);
     m_detail.showDetail(sql);
 }
@@ -138,7 +140,7 @@ void CheckWidget::on_tableView_doubleClicked(const QModelIndex &index)
 void CheckWidget::on_pushButton_2_clicked()
 {
     if(m_Date.isEmpty())
-        m_Date=QDateTime::currentDateTime().toString("yyyyMMddhhmmss");
+        m_Date=QDateTime::currentDateTime().toString("yyyyMMddhhmmss");    }
     m_excelInstance.Open(QApplication::applicationDirPath()+"/"+m_Date+".xls");
     m_excelInstance.SaveDataFrTable(ui->tableView);
     m_excelInstance.Close();

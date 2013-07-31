@@ -548,67 +548,36 @@ void VipWidget::on_but_querenchong_clicked()
         sql = tr("update member set balance = '%1' where cardid = '%2'").arg(balance).arg(ui->lineEdit_CardNum->text());
         message = tr("充值成功!");
         m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
-        if(!m_QueryModel->lastError().isValid())
-        {
-            QMessageBox::warning(NULL, tr("提示"), message);
-            ui->label_yue->setText(tr("%1").arg(balance));
-            QPalette pe;
-            pe.setColor(QPalette::WindowText,Qt::red);
-            QFont font;
-            font.setPointSize(30);
-            ui->label_yue->setPalette(pe);
-            ui->label_yue->setFont(font);
-            ui->but_CancleCharge->setText("返回");
-            ui->lineEdit_chongzhi->clear();
-            ui->lineEdit_querenchong->clear();
-        }
-        else
-        {
-            qDebug()<<m_QueryModel->lastError().text();
-        }
+        //        if(!m_QueryModel->lastError().isValid())
+        //        {
+        //            QMessageBox::warning(NULL, tr("提示"), message);
+        //            ui->label_yue->setText(tr("%1").arg(balance));
+        //            QPalette pe;
+        //            pe.setColor(QPalette::WindowText,Qt::red);
+        //            QFont font;
+        //            font.setPointSize(30);
+        //            ui->label_yue->setPalette(pe);
+        //            ui->label_yue->setFont(font);
+        //            ui->but_CancleCharge->setText("返回");
+        //            ui->lineEdit_chongzhi->clear();
+        //            ui->lineEdit_querenchong->clear();
+        //        }
+        //        else
+        //        {
+        //            qDebug()<<m_QueryModel->lastError().text();
+        //        }
     }
     else
         //if(ui->but_querenchong->text() == tr("扣款"))
     {
-        //        if(chong > yue)
-        //        {
-        //            return;
-        //        }
-        //        balance = yue-chong;
-        //        sql = tr("update member set balance = '%1' where cardid = '%2'").arg(balance).arg(ui->lineEdit_CardNum->text());
-       QString num =  payMoney(chong);
-       qDebug()<<"----------------------"<<num;
+        message = tr("扣款成功!");
+        if(chong > yue)
+        {
+            return;
+        }
+        balance = yue-chong;
+        sql = tr("update member set balance = '%1' where cardid = '%2'").arg(balance).arg(ui->lineEdit_CardNum->text());
     }
-    //    m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
-    //    if(!m_QueryModel->lastError().isValid())
-    //    {
-    //        QMessageBox::warning(NULL, tr("提示"), message);
-    //        ui->label_yue->setText(tr("%1").arg(balance));
-    //        QPalette pe;
-    //        pe.setColor(QPalette::WindowText,Qt::red);
-    //        QFont font;
-    //        font.setPointSize(30);
-    //        ui->label_yue->setPalette(pe);
-    //        ui->label_yue->setFont(font);
-    //        ui->but_CancleCharge->setText("返回");
-    //        ui->lineEdit_chongzhi->clear();
-    //        ui->lineEdit_querenchong->clear();
-    //    }
-    //    else
-    //    {
-    //        qDebug()<<m_QueryModel->lastError().text();
-    //    }
-}
-QString VipWidget::payMoney(const double &money)
-{
-    if(ui->label_yue->text().toDouble() < money)
-    {
-        return "";
-    }
-    QString message = tr("扣款成功!");
-
-    double balance = ui->label_yue->text().toDouble() - money;
-    QString sql = tr("update member set balance = '%1' where cardid = '%2'").arg(balance).arg(ui->lineEdit_CardNum->text());
     m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
     if(!m_QueryModel->lastError().isValid())
     {
@@ -623,6 +592,38 @@ QString VipWidget::payMoney(const double &money)
         ui->but_CancleCharge->setText("返回");
         ui->lineEdit_chongzhi->clear();
         ui->lineEdit_querenchong->clear();
+    }
+    else
+    {
+        qDebug()<<m_QueryModel->lastError().text();
+    }
+}
+QString VipWidget::payMoney(const double &money)
+{
+    on_pushButton_OpenCard_clicked();
+    double yue = 0;
+    m_QueryModel->clear();
+    m_QueryModel->setQuery(tr("select balance from member where cardid = '%1'").arg(ui->lineEdit_CardNum->text()),*getSqlManager()->getdb());
+    qDebug()<<ui->lineEdit_CardNum->text();
+    if(m_QueryModel->query().next())
+    {
+        qDebug()<<"余额"<<m_QueryModel->query().value(0).toString();
+        yue = m_QueryModel->query().value(0).toDouble();
+    }
+    else
+    {
+        return "";
+    }
+    if(yue < money)
+    {
+        return "";
+    }
+    double balance = yue - money;
+    QString sql = tr("update member set balance = '%1' where cardid = '%2'").arg(balance).arg(ui->lineEdit_CardNum->text());
+    m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
+    if(!m_QueryModel->lastError().isValid())
+    {
+        //ui->label_yue->setText(tr("%1").arg(balance));
         return ui->lineEdit_CardNum->text();
     }
     else
