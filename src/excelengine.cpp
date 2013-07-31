@@ -1,6 +1,6 @@
 #include "excelengine.h"
 #include "qt_windows.h"
-
+#include <QHeaderView>
 ExcelEngine::ExcelEngine()
 {
     pExcel     = NULL;
@@ -231,13 +231,13 @@ bool ExcelEngine::SaveDataFrTable(QTableView *tableWidget)
     int tableC = tableWidget->model()->columnCount();
 
     //获取表头写做第一行
-//    for (int i=0; i<tableC; i++)
-//    {
-//        if ( tableWidget->horizontalHeaderItem(i) != NULL )
-//        {
-//            this->SetCellData(1,i+1,tableWidget->horizontalHeaderItem(i)->text());
-//        }
-//    }
+    for (int i=0; i<tableC; i++)
+    {
+        if ( tableWidget->horizontalHeader()!= NULL )
+        {
+            this->SetCellData(1,i+1,tableWidget->horizontalHeader()->model()->index(0,1).data().toString());
+        }
+    }
 
     //写数据
     for (int i=0; i<tableR; i++)

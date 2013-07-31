@@ -44,7 +44,8 @@ bool CheckWidget::eventFilter(QObject *obj, QEvent *event)
 void CheckWidget::getDate(const QDate &date)
 {
     m_calendar.hide();
-    m_Date=date.toString("yyyy-MM-dd");
+    m_Date=date.toString("yyyyMMdd");
+    m_Date.append(QTime::currentTime().toString("hhmm"));
     ui->lineEdit->setText(m_Date);
 }
 
@@ -137,7 +138,7 @@ void CheckWidget::on_tableView_doubleClicked(const QModelIndex &index)
 void CheckWidget::on_pushButton_2_clicked()
 {
     if(m_Date.isEmpty())
-        m_Date=QDate::currentDate().toString("yyyyMMdd");
+        m_Date=QDateTime::currentDateTime().toString("yyyyMMddhhmmss");
     m_excelInstance.Open(QApplication::applicationDirPath()+"/"+m_Date+".xls");
     m_excelInstance.SaveDataFrTable(ui->tableView);
     m_excelInstance.Close();
