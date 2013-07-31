@@ -9,7 +9,8 @@ DetailWidget::DetailWidget(QWidget *parent) :
     ui->setupUi(this);
 
     ui->tableView->setModel(&m_model);
-
+    ui->tableView->setEditTriggers(QAbstractItemView::DoubleClicked);
+    ui->tableView->setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
 DetailWidget::~DetailWidget()
@@ -24,7 +25,10 @@ void DetailWidget::showDetail(const QString &sql)
     m_model.setHeaderData(1, Qt::Horizontal, tr("数量"));
     m_model.setHeaderData(2, Qt::Horizontal, tr("单价"));
     m_model.setHeaderData(3, Qt::Horizontal, tr("状态"));
+    m_model.setHeaderData(4, Qt::Horizontal, tr("订单号"));
+
     this->show();
+    ui->tableView->setEditTriggers(QAbstractItemView::AllEditTriggers);
     //设置总金额
     double money = 0;
     double price = 0;
