@@ -15,6 +15,7 @@ class TableWidget : public QWidget
 public:
     explicit TableWidget(QWidget *parent = 0);
     ~TableWidget();
+    void updateView();
 protected:
     void resizeEvent(QResizeEvent *);
     void showEvent(QShowEvent *);
@@ -34,7 +35,6 @@ private slots:
 
 private:
     void showDishesInfo(const QString &orderId);
-    void updateView();
     void enableFunction(bool state);
     void clearDishesList();
 private:

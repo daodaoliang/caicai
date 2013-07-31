@@ -12,6 +12,7 @@
 #include "backprinter.h"
 #include "frontprinter.h"
 #include "dinnertablebll.h"
+#include "tablewidget.h"
 ICommandHandler::ICommandHandler() :
     QObject()
 {
@@ -130,6 +131,7 @@ void OpenTableHandler::handleCommand(const QStringList &cmdDetail, int index)
             reply(replyList, index);
             //界面显示
             dinnerWidget()->updateData();
+            tableWidget()->updateView();
             return;
         }
 
@@ -187,6 +189,7 @@ void ChangeTableHandler::handleCommand(const QStringList &cmdDetail, int index)
                         if(query != NULL)
                         {
                             dinnerWidget()->updateData();
+                            tableWidget()->updateView();
                             replyList.append("换台成功");
                             reply(replyList, index);
                             return;
