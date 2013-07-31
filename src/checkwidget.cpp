@@ -77,7 +77,7 @@ void CheckWidget::calcTotal()
         text.append(tr("服务员：<font size='6' color='red'><b>%1    </b></font>").arg(ui->comboBox->currentText()));
     }
     //text.append(tr("日期:<font size='6' color='red'><b>%1    </b></font>    ").arg(ui->lineEdit->text()));
-    text.append(tr("日期:<font size='4' color='red'>%1<br>至%2</font>    ")
+    text.append(tr("日期:<font size='4' color='red'>%1至%2</font>    ")
                 .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
                 .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss")));
     double paid = 0;
