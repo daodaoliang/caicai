@@ -23,6 +23,7 @@ StatisWidget::StatisWidget(QWidget *parent) :
         }
     }
     ui->comboBox->setCurrentIndex(0);
+    ui->but_ToExcel->setEnabled(false);
     ui->dateTimeEdit_Start->setDate(QDate::currentDate());
     ui->dateTimeEdit_End->setDate(QDate::currentDate().addDays(1));
 }
@@ -117,4 +118,13 @@ void StatisWidget::on_but_Search_clicked()
         m_TableModel->setHeaderData(2, Qt::Horizontal, "订单金额");
         m_TableModel->setHeaderData(3, Qt::Horizontal, "时间");
     }
+    ui->but_ToExcel->setEnabled(true);
+}
+
+void StatisWidget::on_but_ToExcel_clicked()
+{
+    m_excelInstance.Open(QApplication::applicationDirPath()+"/"+QDateTime::currentDateTime().date().toString("yyyyMMdd")+".xls");
+    m_excelInstance.SaveDataFrTable(ui->tableView);
+    m_excelInstance.Close();
+    ui->but_ToExcel->setEnabled(false);
 }

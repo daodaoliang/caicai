@@ -137,7 +137,9 @@ void CheckWidget::on_tableView_doubleClicked(const QModelIndex &index)
 void CheckWidget::on_pushButton_2_clicked()
 {
     if(m_Date.isEmpty())
+    {
         m_Date=QDate::currentDate().toString("yyyyMMdd");
+    }
     m_excelInstance.Open(QApplication::applicationDirPath()+"/"+m_Date+".xls");
     m_excelInstance.SaveDataFrTable(ui->tableView);
     m_excelInstance.Close();
