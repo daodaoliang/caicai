@@ -10,6 +10,8 @@
 #include "dishesinfobll.h"
 #include <QDebug>
 #include "loginwidget.h"
+#include <QMenu>
+#include <QAction>
 TableWidget::TableWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TableWidget)
@@ -23,6 +25,7 @@ TableWidget::TableWidget(QWidget *parent) :
     ui->toolButton_delete->setEnabled(false);
     ui->stackedWidget->setCurrentIndex(0);
     ui->tableWidget->hideColumn(4);
+    ui->listView->setContextMenuPolicy(Qt::CustomContextMenu);
 }
 
 TableWidget::~TableWidget()
@@ -141,6 +144,7 @@ void TableWidget::on_toolButton_4_clicked()
         ui->lineEdit_2->clear();
         updateView();
         clearDishesList();
+        ui->label_total->clear();
     }
     else
     {
@@ -227,7 +231,9 @@ void TableWidget::on_toolButton_delete_clicked()
     }
     count = m_countWidget.getDishesCount();
     QString orderId = ui->listView->currentIndex().sibling(ui->listView->currentIndex().row(), 6).data().toString();
-    bool result = dishesInfoBllInstance()->backDish(orderId, id, count, operatorId, 0, "");
+    QString tableId = ui->listView->currentIndex().data().toString();
+
+    bool result = dishesInfoBllInstance()->backDish(orderId, id, count, operatorId, 0, "", tableId);
     if(result)
     {
         QMessageBox::information(this, "提示", "退菜成功");
@@ -237,4 +243,25 @@ void TableWidget::on_toolButton_delete_clicked()
         QMessageBox::information(this, "提示", "退菜失败");
     }
     showDishesInfo(orderId);
+}
+
+void TableWidget::on_listView_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu* popMenu = new QMenu(this);
+    popMenu->addAction(new QAction("添加", this));
+    popMenu->addAction(new QAction("删除", this));
+    if(ui->listView->indexAt(QCursor::pos()).isValid()) //如果有item则添加"修改"菜单 [1]*
+    {
+        popMenu->addAction(new QAction("修改", this));
+    }
+
+    popMenu->exec(QCursor::pos()); // 菜单出现的位置为当前鼠标的位置
+}
+
+void TableWidget::combineTable()
+{
+}
+
+void TableWidget::splitTable()
+{
 }

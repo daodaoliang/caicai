@@ -51,10 +51,11 @@ void LoginWidget::on_pushButton_clicked()
         }
         else
         {
-            bool result = getSqlManager()->auth(user, password, m_authType);
-            if(result)
+            int result = getSqlManager()->auth(user, password, m_authType);
+            if(result != -1)
             {
                 indexCount = 0;
+                m_userId = result;
                 this->accept();
             }
             else

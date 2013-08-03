@@ -149,21 +149,21 @@ QString SqlManager::login(const QString &user, QString password, const QString &
     return "";
 }
 
-bool SqlManager::auth(const QString &user, QString password, int authType)
+int SqlManager::auth(const QString &user, QString password, int authType)
 {
     password = QCryptographicHash::hash(tr("%1%2").arg(user).arg(password).toLocal8Bit(), QCryptographicHash::Md5).toHex().data();
 
-    QString sql = tr("select purview from userinfo where username = '%1' and password = '%2'")
+    QString sql = tr("select purview, userid from userinfo where username = '%1' and password = '%2'")
             .arg(user).arg(password);
     QSqlQuery query = execQuery(sql);
     if(query.next())
     {
         if(query.value(0).toByteArray().at(authType) == 1)
         {
-            return true;
+            return query.value(1).toInt();
         }
     }
-    return false;
+    return -1;
 }
 
 void SqlManager::logOut(const QString &id)
