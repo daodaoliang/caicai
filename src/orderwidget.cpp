@@ -55,10 +55,7 @@ void OrderWidget::hideEvent(QHideEvent *)
 
 void OrderWidget::on_disheTypeList_doubleClicked(const QModelIndex &index)
 {
-    ui->stackedWidget_2->setCurrentIndex(1);
-    int dishesTypeId = index.data().toInt();
-    QString sql = tr("select * from dishes where typeid = %1").arg(dishesTypeId);
-    m_dishesModel->setQuery(sql, *getSqlManager()->getdb());
+
 }
 
 void OrderWidget::on_dishesList_doubleClicked(const QModelIndex &index)
@@ -228,3 +225,11 @@ void OrderWidget::on_toolButton_3_clicked()
     QMessageBox::information(this, "ÌáÊ¾", "²Ù×÷Ê§°Ü");
 }
 
+
+void OrderWidget::on_disheTypeList_clicked(const QModelIndex &index)
+{
+    ui->stackedWidget_2->setCurrentIndex(1);
+    int dishesTypeId = index.data().toInt();
+    QString sql = tr("select * from dishes where typeid = %1").arg(dishesTypeId);
+    m_dishesModel->setQuery(sql, *getSqlManager()->getdb());
+}
