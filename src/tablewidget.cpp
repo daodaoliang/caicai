@@ -227,7 +227,9 @@ void TableWidget::on_toolButton_delete_clicked()
     }
     count = m_countWidget.getDishesCount();
     QString orderId = ui->listView->currentIndex().sibling(ui->listView->currentIndex().row(), 6).data().toString();
-    bool result = dishesInfoBllInstance()->backDish(orderId, id, count, operatorId, 0, "");
+    QString tableId = ui->listView->currentIndex().data().toString();
+
+    bool result = dishesInfoBllInstance()->backDish(orderId, id, count, operatorId, 0, "", tableId);
     if(result)
     {
         QMessageBox::information(this, "提示", "退菜成功");

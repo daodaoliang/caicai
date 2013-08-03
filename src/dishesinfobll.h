@@ -2,15 +2,8 @@
 #define DISHESINFOBLL_H
 
 #include <QObject>
-struct Dishes
-{
-    int id;
-    int count;
-    int state;
-    double price;
-    int type;
-    QString name;
-};
+#include "dishesdata.h"
+
 class DishesInfoBll : public QObject
 {
     Q_OBJECT
@@ -23,7 +16,7 @@ public slots:
     QList<Dishes> getDishesInfo(const QString &orderId);
     bool backDish(const QString &orderId, int dishId,
                        int count, int operatorId,
-                       int payType, const QString &cardId);
+                       int payType, const QString &cardId, const QString &tableId);
 private:
     //ºÏ²¢¶©µ¥
     void combineDishes(QList<Dishes> &dishesInfo);

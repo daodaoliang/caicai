@@ -50,7 +50,8 @@ SOURCES += main.cpp\
     orderdata.cpp \
     dinnertablebll.cpp \
     statiswidget.cpp \
-    excelengine.cpp
+    excelengine.cpp \
+    dishesdata.cpp
 
 
 HEADERS  += mainwidget.h \
@@ -93,7 +94,8 @@ HEADERS  += mainwidget.h \
     orderdata.h \
     dinnertablebll.h \
     statiswidget.h \
-    excelengine.h
+    excelengine.h \
+    dishesdata.h
 
 RESOURCES += \
     src.qrc
