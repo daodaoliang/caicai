@@ -53,15 +53,22 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
     command.append(33);
     command.append(QString::number(0).toInt());
     command.append(createLine("订单号："+orderId));
-    //订单类型
-    QString orderType = tr("订单类型：%1").arg(dishes.first().type ? "退菜": "点菜");
-    command.append(createLine(orderType));
     //打印时间
     command.append("订单时间："+createLine(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")));
+    //订单类型
+    command.append(createLine(tr("订单类型：")));
     //设置加大字号
     command.append("\x1d\x21\x11");
-    QString tableIdString = tr("订单桌号:") + tableId;
-    command.append(createLine(tableIdString));
+    QString orderType = dishes.first().type ? "退菜": "点菜";
+    command.append(orderType);
+    //设置正常字号
+    command.append(29);
+    command.append(33);
+    command.append(QString::number(0).toInt());
+    command.append(tr("订单桌号:"));
+    //设置加大字号
+    command.append("\x1d\x21\x11");
+    command.append(tableId);
     //打印分割线
     //command.append(createSplit());
     //打印菜品
