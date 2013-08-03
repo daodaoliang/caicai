@@ -91,7 +91,13 @@
           </widget>
          </item>
          <item row="0" column="5">
-          <widget class="QComboBox" name="comboBox"/>
+          <widget class="QComboBox" name="comboBox">
+           <item>
+            <property name="text">
+             <string>全部</string>
+            </property>
+           </item>
+          </widget>
          </item>
          <item row="0" column="11">
           <spacer name="horizontalSpacer">
