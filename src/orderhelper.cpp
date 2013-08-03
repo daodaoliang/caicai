@@ -16,7 +16,7 @@ OrderHelper::OrderHelper(QObject *parent) :
     m_disOrangre.enqueue("雀巢芒果C");
 }
 
-bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,const QString &wasteId, int userid, double &totalPrice, QString &orderId, const QString &memberid,  int payType)
+bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,const QString &wasteId, int userid, double &totalPrice,const QString &orderId, const QString &memberid,  int payType)
 {
     //开始事务
     QSqlDatabase *db = getSqlManager()->getdb();

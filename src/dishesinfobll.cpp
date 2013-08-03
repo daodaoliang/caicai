@@ -35,27 +35,19 @@ QList<Dishes> DishesInfoBll::getDishesInfo(const QString &orderId)
 bool DishesInfoBll::backDish(const QString &orderId, int dishId, int count, int operatorId, int payType, const QString &cardId,
                              const QString &tableId)
 {
-    QSqlQuery query = orderDataInstance()->backDish(orderId, dishId, count, operatorId, payType, cardId);
-    if(query.numRowsAffected() == 1)
-    {
-        //´òÓ¡
-        Dishes dishes = dishesDataInstance()->dishInfo(dishId);
-        dishes.count = count;
-        QList<DishesInfo> dishesList;
-        DishesInfo dishesInfo;
-        dishesInfo.count = dishes.count;
-        dishesInfo.id = dishes.id;
-        dishesInfo.name = dishes.name;
-        dishesInfo.price = dishes.price;
-        dishesInfo.type = 1;
-        dishesList.append(dishesInfo);
-        getBackPrinter()->print(tableId, dishesList, orderId, 0);
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+
+    Dishes dishes = dishesDataInstance()->dishInfo(dishId);
+    dishes.count = count;
+    QList<DishesInfo> dishesList;
+    DishesInfo dishesInfo;
+    dishesInfo.count = dishes.count;
+    dishesInfo.id = dishes.id;
+    dishesInfo.name = dishes.name;
+    dishesInfo.price = dishes.price;
+    dishesInfo.type = 1;
+    dishesList.append(dishesInfo);
+    double price = 0;
+    return orderHelperInstance()->createOrder(tableId, dishesList, "", operatorId, price, orderId);
 }
 
 void DishesInfoBll::combineDishes(QList<Dishes> &dishesInfo)
