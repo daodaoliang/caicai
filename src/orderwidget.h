@@ -18,7 +18,6 @@ public:
     explicit OrderWidget(QWidget *parent = 0);
     ~OrderWidget();
     void setHandleType(const QString &orderId, const QString &tableId, int state);
-    void setLineEnable(bool ret);
 protected:
     void showEvent(QShowEvent *);
     void hideEvent(QHideEvent *);

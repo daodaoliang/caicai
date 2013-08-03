@@ -21,11 +21,41 @@
      </property>
      <widget class="QWidget" name="page_2">
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="3" column="1">
-        <widget class="QToolButton" name="toolButton_2">
+       <item row="3" column="4">
+        <widget class="QToolButton" name="toolButton">
          <property name="text">
-          <string>删除</string>
+          <string>会员卡支付</string>
          </property>
+        </widget>
+       </item>
+       <item row="1" column="1" colspan="5">
+        <widget class="QTableWidget" name="tableWidget_2">
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <column>
+          <property name="text">
+           <string>菜名</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>数量</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>单价</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>id</string>
+          </property>
+         </column>
         </widget>
        </item>
        <item row="2" column="1" colspan="2">
@@ -35,20 +65,10 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="2" colspan="3">
-        <widget class="QToolButton" name="toolButton_3">
+       <item row="3" column="1">
+        <widget class="QToolButton" name="toolButton_2">
          <property name="text">
-          <string>现金收讫</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="4">
-        <widget class="QLineEdit" name="lineEdit_OrderId">
-         <property name="maximumSize">
-          <size>
-           <width>120</width>
-           <height>16777215</height>
-          </size>
+          <string>删除</string>
          </property>
         </widget>
        </item>
@@ -94,47 +114,10 @@
          </widget>
         </widget>
        </item>
-       <item row="1" column="1" colspan="6">
-        <widget class="QTableWidget" name="tableWidget_2">
-         <property name="minimumSize">
-          <size>
-           <width>300</width>
-           <height>0</height>
-          </size>
-         </property>
-         <column>
-          <property name="text">
-           <string>菜名</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>数量</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>单价</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>id</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-       <item row="3" column="5">
-        <widget class="QToolButton" name="toolButton">
+       <item row="3" column="2" colspan="2">
+        <widget class="QToolButton" name="toolButton_3">
          <property name="text">
-          <string>会员卡支付</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>退单号:</string>
+          <string>现金收讫</string>
          </property>
         </widget>
        </item>
