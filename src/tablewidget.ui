@@ -26,6 +26,9 @@
    </item>
    <item row="1" column="0" colspan="2">
     <widget class="QListView" name="listView">
+     <property name="selectionMode">
+      <enum>QAbstractItemView::ExtendedSelection</enum>
+     </property>
      <property name="viewMode">
       <enum>QListView::IconMode</enum>
      </property>
