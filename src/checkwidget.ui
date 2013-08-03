@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>760</width>
+    <width>859</width>
     <height>406</height>
    </rect>
   </property>
@@ -41,37 +41,20 @@
          <property name="bottomMargin">
           <number>5</number>
          </property>
-         <item row="0" column="7">
-          <widget class="QPushButton" name="pushButton">
-           <property name="text">
-            <string>查询</string>
-           </property>
-          </widget>
+         <item row="0" column="4">
+          <widget class="QDateTimeEdit" name="dateTimeEdit_End"/>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>日期：</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="lineEdit"/>
-         </item>
-         <item row="0" column="9">
+         <item row="0" column="10">
           <widget class="QPushButton" name="pushButton_2">
            <property name="text">
             <string>导出</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <widget class="QDateTimeEdit" name="dateTimeEdit_Start"/>
-         </item>
-         <item row="0" column="5">
-          <widget class="QLabel" name="label_2">
+         <item row="0" column="8">
+          <widget class="QPushButton" name="pushButton">
            <property name="text">
-            <string>服务员：</string>
+            <string>查询</string>
            </property>
           </widget>
          </item>
@@ -82,10 +65,30 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="4">
-          <widget class="QDateTimeEdit" name="dateTimeEdit_End"/>
+         <item row="0" column="2">
+          <widget class="QDateTimeEdit" name="dateTimeEdit_Start"/>
          </item>
-         <item row="0" column="11">
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="lineEdit"/>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>类别：</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>日期：</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="6">
+          <widget class="QComboBox" name="comboBox"/>
+         </item>
+         <item row="0" column="12">
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -98,8 +101,8 @@
            </property>
           </spacer>
          </item>
-         <item row="0" column="6">
-          <widget class="QComboBox" name="comboBox"/>
+         <item row="0" column="7">
+          <widget class="QLineEdit" name="lineEdit_Orderid"/>
          </item>
         </layout>
        </widget>

@@ -18,6 +18,7 @@ CheckWidget::CheckWidget(QWidget *parent) :
     //设置默认日期
     ui->dateTimeEdit_Start->setDate(QDate::currentDate());
     ui->dateTimeEdit_End->setDate(QDate::currentDate().addDays(1));
+    ui->lineEdit_Orderid->setText(QDate::currentDate().toString("yyyyMMdd"));
     ui->lineEdit->setVisible(false);
     m_calendar.setVisible(false);
     ui->pushButton_2->setEnabled(false);
@@ -54,6 +55,7 @@ void CheckWidget::getDate(const QDate &date)
 void CheckWidget::loadMember()
 {
     ui->comboBox->insertItem(ui->comboBox->count(), "全部", 0);
+    ui->comboBox->insertItem(ui->comboBox->count(),"订单号",0);
     QString sql = tr("select userid, nickname from userinfo");
     QSqlQuery *query = getSqlManager()->ExecQuery(sql);
     if(query)
@@ -102,21 +104,32 @@ void CheckWidget::on_pushButton_clicked()
         date = QDate::currentDate();
     }
     QDate lastDate = date.addDays(1);
-    if(ui->dateTimeEdit_Start->dateTime().toTime_t() > ui->dateTimeEdit_End->dateTime().toTime_t())
+    QString sql = "";
+    if(ui->comboBox->currentText() == "订单号")
     {
-        return;
+        sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
+                 "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
+                 "where orderid = '%1' ").arg(ui->lineEdit_Orderid->text());
     }
-    //    QString sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
-    //            "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
-    //                     "where begintime > '%1' and begintime <= '%2' ").arg(date.toString("yyyy-MM-dd")).arg(lastDate.toString("yyyy-MM-dd"));
-    QString sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
-                     "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
-                     "where begintime > '%1' and begintime <= '%2' ").arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
-    int userId = ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt();
-    if(userId > 0)
+    else
     {
-        sql.append(tr(" and orderinfo.userid = %1").arg(userId));
+        if(ui->dateTimeEdit_Start->dateTime().toTime_t() > ui->dateTimeEdit_End->dateTime().toTime_t())
+        {
+            return;
+        }
+        //    QString sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
+        //            "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
+        //                     "where begintime > '%1' and begintime <= '%2' ").arg(date.toString("yyyy-MM-dd")).arg(lastDate.toString("yyyy-MM-dd"));
+        sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
+                 "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
+                 "where begintime > '%1' and begintime <= '%2' ").arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
+        int userId = ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt();
+        if(userId > 0)
+        {
+            sql.append(tr(" and orderinfo.userid = %1").arg(userId));
+        }
     }
+    qDebug()<<"account"<<sql;
     QSqlQuery query(sql, *getSqlManager()->getdb());
     m_model.setQuery(query);
     m_model.setHeaderData(0, Qt::Horizontal, tr("订单号"));
