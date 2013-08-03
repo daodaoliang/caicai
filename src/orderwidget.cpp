@@ -25,7 +25,7 @@ OrderWidget::OrderWidget(QWidget *parent) :
     m_dishesModel = new QSqlQueryModel(this);
     ui->dishesList->setModel(m_dishesModel);
     ui->dishesList->setItemDelegate(new DishesDelegate);
-    ui->lineEdit_OrderId->setEnabled(false);
+
 }
 
 OrderWidget::~OrderWidget()
@@ -38,11 +38,6 @@ void OrderWidget::setHandleType(const QString &orderId, const QString &tableId, 
     m_orderId = orderId;
     m_tableId = tableId;
     m_dishState = state;
-}
-
-void OrderWidget::setLineEnable(bool ret)
-{
-    ui->lineEdit_OrderId->setEnabled(ret);
 }
 
 void OrderWidget::showEvent(QShowEvent *)
@@ -202,41 +197,7 @@ void OrderWidget::on_toolButton_3_clicked()
 {
     if(ui->tableWidget_2->rowCount() == 0)
     {
-        ui->lineEdit_OrderId->setEnabled(false);
         return;
-    }
-    if(ui->lineEdit_OrderId->isEnabled())
-    {
-        if(ui->lineEdit_OrderId->text().isEmpty())
-        {
-            ui->lineEdit_OrderId->setEnabled(false);
-            return;
-        }
-        else
-        {
-            m_orderId = ui->lineEdit_OrderId->text();
-            QString sql = tr("select count(*) from orderinfo where orderid = '%1'").arg(m_orderId);
-            QSqlQuery* query = getSqlManager()->ExecQuery(sql);
-            if(query == NULL)
-            {
-                ui->lineEdit_OrderId->setEnabled(false);
-                return;
-            }else
-            {
-                if(!query->next())
-                {
-                    ui->lineEdit_OrderId->setEnabled(false);
-                    return;
-                }else
-                {
-                    if(query->value(0).toInt() <= 0)
-                    {
-                        ui->lineEdit_OrderId->setEnabled(false);
-                        return;
-                    }
-                }
-            }
-        }
     }
     double price = 0;
     QList<DishesInfo> tmpList = m_dishesInfo.values();
@@ -261,11 +222,9 @@ void OrderWidget::on_toolButton_3_clicked()
             }
             ui->label->clear();
             functionWidget()->changePage(0);
-            ui->lineEdit_OrderId->setEnabled(false);
             return;
         }
     }
-    ui->lineEdit_OrderId->setEnabled(false);
     QMessageBox::information(this, "ÌáÊ¾", "²Ù×÷Ê§°Ü");
 }
 

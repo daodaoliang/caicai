@@ -83,28 +83,22 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
             db->rollback();
             return false;
         }
-        if(dishes.first().type == 1)
+        if(query.next())
         {
-            if(query.next())
+            double lastAccounts = query.value(4).toDouble();
+            double lastPaid = query.value(5).toDouble();
+            //更新操作
+            sql = tr("update orderinfo set accounts = %1, paid = %2 where orderid = '%3'").arg(paid + lastAccounts).arg(lastPaid + paid - discountMoney).arg(orderId);
+            if(!query.exec(sql))
             {
-                //退菜操作 更新
-
-                double lastAccounts = query.value(4).toDouble();
-                double lastPaid = query.value(5).toDouble();
-                //更新操作
-                sql = tr("update orderinfo set accounts = %1, paid = %2 where orderid = '%3'").arg(paid + lastAccounts).arg(lastPaid + paid - discountMoney).arg(orderId);
-                if(!query.exec(sql))
-                {
-                    //回滚
-                    db->rollback();
-                    return false;
-                }
+                //回滚
+                db->rollback();
+                return false;
             }
         }
         else
         {
-            //不是退菜则插入订单
-            orderId = QDateTime::currentDateTime().toString("yyyyMMddhhmmss")+orderId.right(4);
+            //插入订单
             sql = tr("insert into orderinfo (orderid, orderstate, begintime, endtime, accounts, paid, tableid, memberid, wasteid, userid) values ('%1', 0, '%2', null, %7,%8, '%3', '%4', '%5', %6)")
                     .arg(orderId).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(tableId).arg(memberid).arg(wasteId).arg(userid).arg(paid).arg(paid - discountMoney);
             if(!query.exec(sql))
