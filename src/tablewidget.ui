@@ -101,6 +101,11 @@
           <string>类型</string>
          </property>
         </column>
+        <column>
+         <property name="text">
+          <string>id</string>
+         </property>
+        </column>
        </widget>
       </item>
       <item row="0" column="1">

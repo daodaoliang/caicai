@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QSqlQueryModel>
 #include "adddiningtablewidget.h"
+#include "dishescountwidget.h"
 namespace Ui {
 class TableWidget;
 }
@@ -41,6 +42,8 @@ private:
     Ui::TableWidget *ui;
     QSqlQueryModel *m_tableModel;
     AddDiningTableWidget m_addWidget;
+    DishesCountWidget m_countWidget;
+
 };
 
 inline TableWidget *tableWidget()

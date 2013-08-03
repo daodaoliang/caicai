@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     getConfigerFileInstance()->createInstance();
     //ÓÃ»§µÇÂ¼
     LoginWidget login;
+    login.setAuthType(LoginWidget::Login);
     if(!login.exec())
     {
         a.quit();

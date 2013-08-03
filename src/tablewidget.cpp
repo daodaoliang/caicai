@@ -8,6 +8,8 @@
 #include "functionwidget.h"
 #include "orderwidget.h"
 #include "dishesinfobll.h"
+#include <QDebug>
+#include "loginwidget.h"
 TableWidget::TableWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TableWidget)
@@ -20,6 +22,7 @@ TableWidget::TableWidget(QWidget *parent) :
     ui->toolButton_add->setEnabled(false);
     ui->toolButton_delete->setEnabled(false);
     ui->stackedWidget->setCurrentIndex(0);
+    ui->tableWidget->hideColumn(4);
 }
 
 TableWidget::~TableWidget()
@@ -60,12 +63,15 @@ void TableWidget::showDishesInfo(const QString &orderId)
     clearDishesList();
     foreach(Dishes dish, dishesList)
     {
-        ui->tableWidget->insertRow(ui->tableWidget->rowCount());
-        ui->tableWidget->setItem(ui->tableWidget->rowCount() -1, 0, new QTableWidgetItem(dish.name));
-        ui->tableWidget->setItem(ui->tableWidget->rowCount() -1, 1, new QTableWidgetItem(tr("%1份").arg(dish.count)));
-        ui->tableWidget->setItem(ui->tableWidget->rowCount() -1, 2, new QTableWidgetItem(tr("%1元").arg(dish.price, 0, 'f', 2)));
-        ui->tableWidget->setItem(ui->tableWidget->rowCount() -1, 3, new QTableWidgetItem(dish.state == 0 ? "点菜" : "退菜"));
-
+        if(dish.count > 0)
+        {
+            ui->tableWidget->insertRow(ui->tableWidget->rowCount());
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() -1, 0, new QTableWidgetItem(dish.name));
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() -1, 1, new QTableWidgetItem(tr("%1份").arg(dish.count)));
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() -1, 2, new QTableWidgetItem(tr("%1元").arg(dish.price, 0, 'f', 2)));
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() -1, 3, new QTableWidgetItem(dish.state == 0 ? "点菜" : "退菜"));
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 4, new QTableWidgetItem(QString::number(dish.id)));
+        }
     }
     double total = 0;
     for(int i = 0; i < dishesList.count(); i++)
@@ -184,16 +190,51 @@ void TableWidget::on_toolButton_add_clicked()
 
 void TableWidget::on_toolButton_delete_clicked()
 {
-    if(!ui->listView->currentIndex().isValid())
+    int row = ui->tableWidget->currentRow();
+
+
+    if(row == -1)
+    {
+        QMessageBox::information(this, "提示","请选择要退的菜品");
+        return;
+    }
+    LoginWidget w(this);
+    w.setAuthType(LoginWidget::BackDish);
+    if(!w.exec())
+    {
+        QMessageBox::information(this, "提示","验证失败");
+
+        return;
+    }
+    int operatorId = w.authId();
+    if(!m_countWidget.exec())
     {
         return;
     }
-    if(ui->listView->currentIndex().sibling(ui->listView->currentIndex().row(), 2).data().toInt() == 1)
-    {
-        QString orderId = ui->listView->currentIndex().sibling(ui->listView->currentIndex().row(), 6).data().toString();
-        QString tableId = ui->listView->currentIndex().data().toString();
 
-        orderWidget()->setHandleType(orderId, tableId, 1);
-        functionWidget()->changePage(4);
+    int id = ui->tableWidget->item(row, 4)->text().toInt();
+    QString tmpString = ui->tableWidget->item(row, 1)->text();
+    int count = tmpString.left(tmpString.length() - 1).toInt();
+    if(m_countWidget.getDishesCount() == 0)
+    {
+        QMessageBox::information(this, "提示","退菜数量不能为0");
+        return;
     }
+    if(count < m_countWidget.getDishesCount())
+    {
+        QMessageBox::information(this, "提示","退菜份数不能大于点菜份数");
+        return;
+    }
+    count = m_countWidget.getDishesCount();
+    QString orderId = ui->listView->currentIndex().sibling(ui->listView->currentIndex().row(), 6).data().toString();
+    bool result = dishesInfoBllInstance()->backDish(orderId, id, count, operatorId, 0, "");
+    if(result)
+    {
+        QMessageBox::information(this, "提示", "退菜成功");
+    }
+    else
+    {
+        QMessageBox::information(this, "提示", "退菜失败");
+    }
+    showDishesInfo(orderId);
 }

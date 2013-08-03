@@ -17,6 +17,7 @@ public:
     bool UpdateVipInfo(QString name,QString phone,QString idCard,QDateTime expireTime,int memTypeid,QString shopID);
     bool GetVipInfo();
     QString login(const QString &user, QString password, const QString &machineId, int &userId);
+    bool auth(const QString &user, QString password, int authType);
     void logOut(const QString &id);
     QSqlQuery* ExecQuery(QString sql);
     QSqlQuery execQuery(const QString &sql);

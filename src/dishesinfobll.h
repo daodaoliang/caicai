@@ -21,6 +21,12 @@ signals:
     
 public slots:
     QList<Dishes> getDishesInfo(const QString &orderId);
+    bool backDish(const QString &orderId, int dishId,
+                       int count, int operatorId,
+                       int payType, const QString &cardId);
+private:
+    //ºÏ²¢¶©µ¥
+    void combineDishes(QList<Dishes> &dishesInfo);
 };
 
 inline DishesInfoBll *dishesInfoBllInstance()
