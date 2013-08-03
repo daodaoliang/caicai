@@ -47,6 +47,7 @@ bool DishesInfoBll::backDish(const QString &orderId, int dishId, int count, int 
         dishesInfo.id = dishes.id;
         dishesInfo.name = dishes.name;
         dishesInfo.price = dishes.price;
+        dishesInfo.type = 1;
         dishesList.append(dishesInfo);
         getBackPrinter()->print(tableId, dishesList, orderId, 0);
         return true;
