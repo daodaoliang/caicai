@@ -195,6 +195,5 @@ void TableWidget::on_toolButton_delete_clicked()
 
         orderWidget()->setHandleType(orderId, tableId, 1);
         functionWidget()->changePage(4);
-        orderWidget()->setLineEnable(true);
     }
 }
