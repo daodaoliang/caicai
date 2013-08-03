@@ -80,6 +80,7 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         //判断是插入还是更新
         if(!query.exec(tr("select * from orderinfo where orderid = '%1'").arg(orderId) ))
         {
+            qDebug()<<"create order0";
             db->rollback();
             return false;
         }
@@ -89,6 +90,7 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
             double lastPaid = query.value(5).toDouble();
             //更新操作
             sql = tr("update orderinfo set accounts = %1, paid = %2 where orderid = '%3'").arg(paid + lastAccounts).arg(lastPaid + paid - discountMoney).arg(orderId);
+            qDebug()<<"create order1"<<sql;
             if(!query.exec(sql))
             {
                 //回滚
@@ -101,6 +103,8 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
             //插入订单
             sql = tr("insert into orderinfo (orderid, orderstate, begintime, endtime, accounts, paid, tableid, memberid, wasteid, userid) values ('%1', 0, '%2', null, %7,%8, '%3', '%4', '%5', %6)")
                     .arg(orderId).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(tableId).arg(memberid).arg(wasteId).arg(userid).arg(paid).arg(paid - discountMoney);
+            qDebug()<<"create order2"<<sql;
+
             if(!query.exec(sql))
             {
                 //回滚
@@ -112,8 +116,9 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         //循环插入订单详情
         foreach(DishesInfo info, dishes)
         {
-            sql = tr("insert into orderdetail (orderid, dishesid, dishescount, dishestype, handletime, paytype, cardid) values ('%1', %2, %3, %5, '%4', '%6', '%7')")
-                    .arg(orderId).arg(info.id).arg(info.count).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(info.type).arg(payType).arg(cardId);
+            sql = tr("insert into orderdetail (orderid, dishesid, dishescount, dishestype, handletime, paytype, cardid,operatorid) values ('%1', %2, %3, %5, '%4', '%6', '%7','%8')")
+                    .arg(orderId).arg(info.id).arg(info.count).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(info.type).arg(payType).arg(cardId).arg(userid);
+            qDebug()<<"create order3"<<sql;
             if(!query.exec(sql))
             {
                 //回滚
