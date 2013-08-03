@@ -22,8 +22,49 @@ QList<Dishes> DishesInfoBll::getDishesInfo(const QString &orderId)
             dishesInfo.count = query.value(1).toInt();
             dishesInfo.price = query.value(2).toDouble();
             dishesInfo.state = query.value(3).toInt();
+            dishesInfo.id = query.value(4).toInt();
             dishesList.append(dishesInfo);
         }
     }
+    combineDishes(dishesList);
     return dishesList;
 }
+
+bool DishesInfoBll::backDish(const QString &orderId, int dishId, int count, int operatorId, int payType, const QString &cardId)
+{
+    QSqlQuery query = orderDataInstance()->backDish(orderId, dishId, count, operatorId, payType, cardId);
+    if(query.numRowsAffected() == 1)
+    {
+
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+void DishesInfoBll::combineDishes(QList<Dishes> &dishesInfo)
+{
+    QMap<int, Dishes> dishesMap;
+    Dishes newDishes;
+    for(int i = 0; i < dishesInfo.count(); i++)
+    {
+        //数据已经存在
+        if(dishesMap.find(dishesInfo.at(i).id) != dishesMap.end())
+        {
+            int multiplier = dishesInfo.at(i).state == 1 ? -1 : 1;
+            newDishes = dishesMap.value(dishesInfo.at(i).id);
+            newDishes.count += multiplier * dishesInfo.at(i).count;
+            dishesMap[dishesInfo.at(i).id] = newDishes;
+        }
+        //数据不存在
+        else
+        {
+            dishesMap[dishesInfo.at(i).id] = dishesInfo.at(i);
+        }
+    }
+    dishesInfo.clear();
+    dishesInfo = dishesMap.values();
+}
+

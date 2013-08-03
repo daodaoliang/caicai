@@ -14,6 +14,11 @@ LoginWidget::~LoginWidget()
     delete ui;
 }
 
+int LoginWidget::authId()
+{
+    return m_userId;
+}
+
 void LoginWidget::on_pushButton_clicked()
 {
     if(ui->lineEdit->text().isEmpty() || ui->lineEdit->text().isEmpty())
@@ -22,16 +27,41 @@ void LoginWidget::on_pushButton_clicked()
     }
     QString user = ui->lineEdit->text();
     QString password = ui->lineEdit_2->text();
-    int userId = 0;
-    qDebug()<<"password "<<password;
-    QString nickName = getSqlManager()->login(user, password, "000", userId);
-    qApp->setProperty("userId", userId);
-    if(!nickName.isEmpty())
+    if(m_authType == Login)
     {
-        this->accept();
+        int userId = 0;
+        QString nickName = getSqlManager()->login(user, password, "000", userId);
+        qApp->setProperty("userId", userId);
+        if(!nickName.isEmpty())
+        {
+            this->accept();
+        }
+        else
+        {
+            ui->label_3->setText("登录失败或者已经登录");
+        }
     }
     else
     {
-        ui->label_3->setText("登录失败或者已经登录");
+        static int indexCount = 0;
+        if(indexCount == 3)
+        {
+            indexCount = 0;
+            this->reject();
+        }
+        else
+        {
+            bool result = getSqlManager()->auth(user, password, m_authType);
+            if(result)
+            {
+                indexCount = 0;
+                this->accept();
+            }
+            else
+            {
+                ui->label_3->setText("登录失败或者已经登录");
+                indexCount++;
+            }
+        }
     }
 }

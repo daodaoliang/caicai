@@ -13,6 +13,9 @@ signals:
     
 public slots:
     QSqlQuery getDishesInfo(const QString &orderId);
+    QSqlQuery backDish(const QString &orderId, int dishId,
+                       int count, int operatorId,
+                       int payType, const QString &cardId);
 };
 
 inline OrderData *orderDataInstance()
