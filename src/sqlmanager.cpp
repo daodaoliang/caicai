@@ -17,7 +17,6 @@ SqlManager::SqlManager(QObject *parent) :
 
 SqlManager::~SqlManager()
 {
-    qDebug()<<"log out---------------------------------------------";
     logOut("000");
     delete m_Query;
 }
