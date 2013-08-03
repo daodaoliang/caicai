@@ -12,6 +12,7 @@
 #include "loginwidget.h"
 #include <QMenu>
 #include <QAction>
+#include "dinnertablebll.h"
 TableWidget::TableWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TableWidget)
@@ -52,6 +53,22 @@ void TableWidget::on_listView_clicked(const QModelIndex &index)
     int state = index.sibling(index.row(), 2).data().toInt();
     enableFunction(state);
     showDishesInfo(ui->listView->currentIndex().sibling(ui->listView->currentIndex().row(), 6).data().toString());
+    if(ui->listView->selectionModel()->selectedIndexes().count() == 2)
+    {
+        ui->toolButton_5->setEnabled(true);
+    }
+    else
+    {
+        ui->toolButton_5->setEnabled(false);
+    }
+    if(ui->listView->selectionModel()->selectedIndexes().count() == 1)
+    {
+        ui->toolButton_6->setEnabled(true);
+    }
+    else
+    {
+        ui->toolButton_6->setEnabled(false);
+    }
 
 }
 
@@ -101,6 +118,7 @@ void TableWidget::enableFunction(bool state)
     ui->stackedWidget->setCurrentIndex(!state);
     ui->toolButton_add->setEnabled(state);
     ui->toolButton_delete->setEnabled(state);
+    ui->toolButton_4->setEnabled(state);
 }
 
 void TableWidget::clearDishesList()
@@ -245,23 +263,32 @@ void TableWidget::on_toolButton_delete_clicked()
     showDishesInfo(orderId);
 }
 
-void TableWidget::on_listView_customContextMenuRequested(const QPoint &pos)
+
+void TableWidget::on_toolButton_5_clicked()
 {
-    QMenu* popMenu = new QMenu(this);
-    popMenu->addAction(new QAction("添加", this));
-    popMenu->addAction(new QAction("删除", this));
-    if(ui->listView->indexAt(QCursor::pos()).isValid()) //如果有item则添加"修改"菜单 [1]*
+    QString tableId1 = ui->listView->selectionModel()->selectedIndexes().at(0).data().toString();
+    QString tableId2 = ui->listView->selectionModel()->selectedIndexes().at(1).data().toString();
+    if(dinnerTableBllInstance()->combineTable(tableId1, tableId2))
     {
-        popMenu->addAction(new QAction("修改", this));
+        updateView();
+        QMessageBox::information(this, "提示", "并台成功");
     }
-
-    popMenu->exec(QCursor::pos()); // 菜单出现的位置为当前鼠标的位置
+    else
+    {
+        QMessageBox::information(this, "提示", "并台失败");
+    }
 }
 
-void TableWidget::combineTable()
+void TableWidget::on_toolButton_6_clicked()
 {
-}
-
-void TableWidget::splitTable()
-{
+    QString tableId = ui->listView->currentIndex().data().toString();
+    if(dinnerTableBllInstance()->splitTable(tableId))
+    {
+        updateView();
+        QMessageBox::information(this, "提示", "拆台成功");
+    }
+    else
+    {
+        QMessageBox::information(this, "提示", "拆台失败");
+    }
 }

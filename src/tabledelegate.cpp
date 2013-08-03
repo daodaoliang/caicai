@@ -24,7 +24,7 @@ void TableDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     //ª≠≥ˆ◊¿√˚
     QRect nameRect(option.rect.left(), option.rect.top() + option.rect.height() - 25, option.rect.width(), 25);
     QFont font;
-    font.setPixelSize(20);
+    font.setPixelSize(18);
     painter->setFont(font);
     QString showText = tr("%1(%2»À)")
             .arg(index.sibling(index.row(), 1).data().toString())

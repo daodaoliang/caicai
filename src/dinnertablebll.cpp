@@ -13,7 +13,35 @@ bool DinnerTableBll::openTable(const QString &tableId, int guestNumber)
 
 bool DinnerTableBll::closeTable(const QString &tableId)
 {
-    return dinnerTableDataInstance()->closeTable(tableId);
+    int type = dinnerTableDataInstance()->tableType(tableId);
+    switch (type) {
+    case 0:
+        return dinnerTableDataInstance()->closeTable(tableId);
+    case 1:
+        return dinnerTableDataInstance()->restoreTable(tableId);
+    case 2:
+        return dinnerTableDataInstance()->deleteTable(tableId);
+    default:
+        break;
+    }
+    return false;
+}
+
+bool DinnerTableBll::combineTable(const QString &tableId1, const QString &tableId2)
+{
+    return dinnerTableDataInstance()->combineTable(tableId1, tableId2);
+}
+
+bool DinnerTableBll::splitTable(const QString &tableId)
+{
+    //判断是否是正常桌子
+    if(!dinnerTableDataInstance()->tableType(tableId) == 0)
+    {
+        return false;
+    }
+    QString newId = dinnerTableDataInstance()->getNewId();
+
+    return dinnerTableDataInstance()->splitTable(newId);
 }
 
 

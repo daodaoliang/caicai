@@ -14,6 +14,13 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="3">
+    <widget class="QToolButton" name="toolButton_4">
+     <property name="text">
+      <string>撤台</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QLineEdit" name="lineEdit"/>
    </item>
@@ -41,7 +48,24 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="2" colspan="2">
+   <item row="0" column="4">
+    <widget class="QToolButton" name="toolButton_5">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>并台</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QToolButton" name="toolButton_6">
+     <property name="text">
+      <string>拆台</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" colspan="4">
     <widget class="QWidget" name="widget" native="true">
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="4" column="0" colspan="2">
@@ -171,13 +195,6 @@
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QToolButton" name="toolButton_4">
-     <property name="text">
-      <string>撤台</string>
-     </property>
     </widget>
    </item>
   </layout>

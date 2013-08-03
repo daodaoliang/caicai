@@ -34,10 +34,9 @@ private slots:
 
     void on_toolButton_delete_clicked();
 
-    void on_listView_customContextMenuRequested(const QPoint &pos);
+    void on_toolButton_5_clicked();
 
-    void combineTable();
-    void splitTable();
+    void on_toolButton_6_clicked();
 
 private:
     void showDishesInfo(const QString &orderId);

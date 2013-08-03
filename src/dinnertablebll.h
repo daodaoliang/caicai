@@ -14,6 +14,9 @@ signals:
 public slots:
     bool openTable(const QString &tableId, int guestNumber);
     bool closeTable(const QString &tableId);
+    bool combineTable(const QString &tableId1, const QString &tableId2);
+    bool splitTable(const QString &tableId);
+
 private:
     QString createOrderId(const QString &tableId);
 };
