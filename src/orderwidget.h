@@ -33,6 +33,8 @@ private slots:
 
     void on_toolButton_3_clicked();
 
+    void on_disheTypeList_clicked(const QModelIndex &index);
+
 private:
     void showTotal();
 private:

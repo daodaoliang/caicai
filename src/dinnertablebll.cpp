@@ -29,6 +29,12 @@ bool DinnerTableBll::closeTable(const QString &tableId)
 
 bool DinnerTableBll::combineTable(const QString &tableId1, const QString &tableId2)
 {
+    int type = dinnerTableDataInstance()->tableType(tableId1);
+    int type1 = dinnerTableDataInstance()->tableType(tableId2);
+    if(type != 0 || type1 != 0)
+    {
+        return false;
+    }
     return dinnerTableDataInstance()->combineTable(tableId1, tableId2);
 }
 
