@@ -22,6 +22,7 @@ CheckWidget::CheckWidget(QWidget *parent) :
     ui->lineEdit->setVisible(false);
     m_calendar.setVisible(false);
     ui->pushButton_2->setEnabled(false);
+
     //ui->tableView->setEditTriggers(QAbstractItemView::EditKeyPressed);
 
 }
@@ -88,14 +89,11 @@ void CheckWidget::calcTotal()
     double paid = 0;
     double cash = 0;
     double card = 0;
-    for(int i = 0; i < m_model.rowCount(); i++)
-    {
-        paid += m_model.record(i).value(2).toDouble();
-    }
+
     QString sql = "";
-    sql = tr("select SUM(dishescount * dishes.price) from orderdetail"\
+    sql = tr("select SUM(dishescount * dishes.price * if(orderdetail.dishestype = 0,1,-1)) from orderdetail"\
              " LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid"\
-             " where paytype = 1 and (handletime between '%1' and '%2')")
+             " where orderdetail.paytype = 1 and (handletime between '%1' and '%2')")
             .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
             .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
     int operatorId = ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt();
@@ -103,6 +101,7 @@ void CheckWidget::calcTotal()
     {
         sql.append(tr(" and operatorId = '%1'").arg(operatorId));
     }
+    qDebug() << sql;
     QSqlQuery query(sql, *getSqlManager()->getdb());
     if(query.exec())
     {
@@ -115,9 +114,9 @@ void CheckWidget::calcTotal()
     {
         return;
     }
-    sql = tr("select SUM(dishescount * dishes.price) from orderdetail"\
+    sql = tr("select SUM(dishescount * dishes.price * if(orderdetail.dishestype = 0,1,-1)) from orderdetail"\
              " LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid"\
-             " where paytype = 0 and (handletime between '%1' and '%2')")
+             " where orderdetail.paytype = 0 and (handletime between '%1' and '%2')")
             .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
             .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
     if(operatorId > 0)
@@ -136,6 +135,7 @@ void CheckWidget::calcTotal()
     {
         return;
     }
+    paid = cash + card;
     text.append(tr("总营业额:<font size='6' color='red'><b>%1</b></font>元；").arg(paid));
     text.append(tr("现金：<font size='6' color='red'><b>%1</b></font>元；").arg(cash));
     text.append(tr("会员卡金额：<font size='6' color='red'><b>%1</b></font>元").arg(card));
@@ -168,9 +168,8 @@ void CheckWidget::on_pushButton_clicked()
         //            "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
         //                     "where begintime > '%1' and begintime <= '%2' ").arg(date.toString("yyyy-MM-dd")).arg(lastDate.toString("yyyy-MM-dd"));
         sql = tr("select orderdetail.orderid, dishes.dishesname, dishes.price, orderdetail.dishescount, orderdetail.handletime,"\
-                 "orderinfo.orderstate, orderdetail.paytype, orderdetail.cardid from orderdetail "\
+                 "orderdetail.dishestype, orderdetail.paytype, orderdetail.cardid from orderdetail "\
                  "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid "\
-                 "LEFT JOIN orderinfo on orderinfo.orderid = orderdetail.orderid "\
                  "where (handletime between '%1' and '%2')").arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
         int userId = ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt();
         if(userId > 0)
@@ -189,7 +188,8 @@ void CheckWidget::on_pushButton_clicked()
     m_model.setHeaderData(5, Qt::Horizontal, tr("订单类型"));
     m_model.setHeaderData(6, Qt::Horizontal, tr("支付类型"));
     m_model.setHeaderData(7, Qt::Horizontal, tr("支付卡号"));
-
+    ui->tableView->setColumnWidth(0, 200);
+    ui->tableView->setColumnWidth(4, 200);
     calcTotal();
 
 }
