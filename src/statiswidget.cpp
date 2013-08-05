@@ -12,6 +12,7 @@ StatisWidget::StatisWidget(QWidget *parent) :
     ui->tableView->setModel(m_TableModel);
     m_TableModel->select();
     m_TableModel->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->comboBox->insertItem(ui->comboBox->count(),"全部",0);
     QString sql = tr("select userid, nickname from userinfo");
     QSqlQuery *query = getSqlManager()->ExecQuery(sql);
@@ -44,10 +45,10 @@ void StatisWidget::on_but_Search_clicked()
     //销售排名
     if(ui->box_SearchKind->currentIndex() == 0)
     {
-        sql = tr("select * from (select dishes.dishesname, SUM(if(orderdetail.dishestype=0,orderdetail.dishescount,-1*orderdetail.dishescount)) as total, dishes.price from orderdetail " \
+        sql = tr("select tmp.dishesname,tmp.total,tmp.price from (select dishes.dishesname,orderdetail.handletime, SUM(if(orderdetail.dishestype=0,orderdetail.dishescount,-1*orderdetail.dishescount)) as total, dishes.price from orderdetail " \
                  "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid and orderdetail.handletime between '%1' and '%2'" \
                  "group by dishes.dishesname, dishes.price " \
-                 "order by total desc) as tmp where total != 0").arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
+                 "order by total desc) as tmp where total != 0 and tmp.handletime between '%1' and '%2'").arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
         qDebug()<<"排名"<<sql;
         ((QSqlQueryModel*)m_TableModel)->setQuery(sql,*getSqlManager()->getdb());
         m_TableModel->setHeaderData(0,Qt::Horizontal,tr("菜名"));
@@ -169,9 +170,9 @@ void StatisWidget::on_but_Search_clicked()
         }
         if(!ui->line_Vip->text().isEmpty())
         {
-            sql = tr("SELECT cardid,orderid, SUM(orderdetail.dishescount * dishes.price)  as price , operatorid,handletime from orderdetail "\
+            sql = tr("SELECT orderid,cardid, SUM(orderdetail.dishescount * dishes.price)  as price , operatorid,handletime from orderdetail "\
                      "LEFT JOIN dishes on dishes.dishesid = orderdetail.dishesid "\
-                     "where paytype = 1 and cardid = '%1' and orderdetail.handletime between '%2' and '%3' and %4"\
+                     "where paytype = 1 and cardid = '%1' and orderdetail.handletime between '%2' and '%3' and %4 "\
                      "GROUP BY handletime")
                     .arg(ui->line_Vip->text())
                     .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
@@ -180,17 +181,18 @@ void StatisWidget::on_but_Search_clicked()
         }
         else
         {
-            sql = tr("SELECT cardid,orderid, SUM(orderdetail.dishescount * dishes.price)  as price ,operatorid, handletime from orderdetail "\
+            sql = tr("SELECT orderid,cardid,SUM(orderdetail.dishescount * dishes.price)  as price ,operatorid, handletime from orderdetail "\
                      "LEFT JOIN dishes on dishes.dishesid = orderdetail.dishesid "\
-                     "where paytype = 1 and orderdetail.handletime between '%1' and '%2' and %3"\
+                     "where paytype = 1 and orderdetail.handletime between '%1' and '%2' and %3 "\
                      "GROUP BY handletime")
                     .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
                     .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
                     .arg(type);
         }
+        qDebug()<<"会员"<<sql;
         ((QSqlQueryModel*)m_TableModel)->setQuery(sql,*getSqlManager()->getdb());
-        m_TableModel->setHeaderData(0, Qt::Horizontal, "会员卡号");
-        m_TableModel->setHeaderData(1, Qt::Horizontal, "订单号");
+        m_TableModel->setHeaderData(0, Qt::Horizontal, "订单号");
+        m_TableModel->setHeaderData(1, Qt::Horizontal, "会员卡号");
         m_TableModel->setHeaderData(2, Qt::Horizontal, "订单金额");
         m_TableModel->setHeaderData(3, Qt::Horizontal, "操作员");
         m_TableModel->setHeaderData(4, Qt::Horizontal, "时间");
@@ -205,4 +207,19 @@ void StatisWidget::on_but_ToExcel_clicked()
     m_excelInstance.SaveDataFrTable(ui->tableView);
     m_excelInstance.Close();
     ui->but_ToExcel->setEnabled(false);
+}
+
+void StatisWidget::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    qDebug()<<"双击"<<ui->box_SearchKind->currentText();
+    if(ui->box_SearchKind->currentText() != "退菜查询" && ui->box_SearchKind->currentText() != "会员消费查询")
+    {
+        return;
+    }
+    //QString orderId =((QSqlQueryModel*)m_TableModel)->record(index.row()).value(0).toString();
+    QString orderId = ((QSqlQueryModel*)m_TableModel)->data(((QSqlQueryModel*)m_TableModel)->index(index.row(),0)).toString();
+    QString sql = tr("select dishes.dishesname, orderdetail.dishescount, dishes.price, orderdetail.dishestype,orderdetail.orderid from orderdetail " \
+                     "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid where orderid = '%1'").arg(orderId);
+    qDebug()<<"双击"<<sql;
+    m_detail.showDetail(sql);
 }

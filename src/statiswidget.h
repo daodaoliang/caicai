@@ -5,6 +5,7 @@
 #include <QSqlTableModel>
 #include <QSqlQueryModel>
 #include "excelengine.h"
+#include "detailwidget.h"
 namespace Ui {
 class StatisWidget;
 }
@@ -22,12 +23,15 @@ private slots:
 
     void on_but_ToExcel_clicked();
 
+    void on_tableView_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::StatisWidget *ui;
 private:
     QSqlTableModel *m_TableModel;
     QSqlQueryModel *m_QueryModel;
     ExcelEngine m_excelInstance;
+    DetailWidget m_detail;
 };
 inline StatisWidget *statisWidget()
 {

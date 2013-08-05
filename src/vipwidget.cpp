@@ -535,12 +535,14 @@ void VipWidget::on_but_querenchong_clicked()
     double yue = 0;
     double chong = 0;
     double balance = 0;
+    double more = 0;
     QString message = "";
     if((ui->lineEdit_querenchong->text() == ui->lineEdit_chongzhi->text()) && ui->lineEdit_chongzhi->text().length()!=0)
     {
 
         yue = ui->label_yue->text().toDouble();
         chong = ui->lineEdit_chongzhi->text().toDouble();
+        more = ui->Edit_MoreMoney->text().toDouble();
     }
     if(ui->but_querenchong->text() == tr("≥‰÷µ"))
     {

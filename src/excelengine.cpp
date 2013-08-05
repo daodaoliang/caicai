@@ -235,7 +235,7 @@ bool ExcelEngine::SaveDataFrTable(QTableView *tableWidget)
     {
         if ( tableWidget->horizontalHeader()!= NULL )
         {
-            this->SetCellData(1,i+1,tableWidget->horizontalHeader()->model()->index(0,1).data().toString());
+            this->SetCellData(1,i+1,tableWidget->horizontalHeader()->model()->headerData(i,Qt::Horizontal).toString());
         }
     }
 
@@ -246,7 +246,10 @@ bool ExcelEngine::SaveDataFrTable(QTableView *tableWidget)
         {
             if (!tableWidget->model()->index(i,j).data().toString().isEmpty())
             {
-                this->SetCellData(i+2,j+1,tableWidget->model()->index(i,j).data().toString());
+                QString tempItem=tableWidget->model()->index(i,j).data().toString();
+                if(tempItem.count()>=15 && j!=tableC-1)
+                    tempItem.push_front(QChar('\''));
+                this->SetCellData(i+2,j+1,tempItem);
             }
         }
     }
