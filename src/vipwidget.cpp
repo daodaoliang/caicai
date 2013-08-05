@@ -14,6 +14,7 @@
 #include <QStandardItemModel>
 #include <QList>
 #include <QSqlQuery>
+#include "loginwidget.h"
 VipWidget::VipWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::VipWidget)
@@ -67,6 +68,9 @@ VipWidget::VipWidget(QWidget *parent) :
     //默认充值消费不可用,只有打开卡片确认有该用户后充值按钮可用
     ui->but_Recharge->setEnabled(false);
     ui->but_pay->setEnabled(false);
+    //初始化操作员
+    m_nOperid = 0;
+    m_Sql = "";
 }
 
 VipWidget::~VipWidget()
@@ -115,6 +119,10 @@ void VipWidget::on_pushButton_Add_clicked()
         m_TableModel->setData(m_TableModel->index(rowCount,5),QDateTime::currentDateTime());
         m_TableModel->setData(m_TableModel->index(rowCount,7),memType);
         m_TableModel->setData(m_TableModel->index(rowCount,8),shopid);
+        m_Sql = tr("insert into memcarddetail(memcardid,handletype,operatorid,handletime) valuse "\
+                   "'%1','%2','%3','%4'")
+                .arg(ui->lineEdit_CardNum->text()).arg(6).arg(m_nOperid)
+                .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
     }
     if(ui->pushButton_Add->text() == "修改")
     {
@@ -158,26 +166,47 @@ void VipWidget::on_pushButton_2_clicked()
     m_TableModel->removeRow(curRow);
     resetText();
     setTextEnable(true);
+    m_Sql = tr("insert into memcarddetail(memcardid,handletype,operatorid,handletime) valuse "\
+               "'%1','%2','%3','%4'")
+            .arg(ui->lineEdit_CardNum->text()).arg(7).arg(m_nOperid)
+            .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
     //m_model->submitAll();
 }
 //每次保存都会重新获取界面会员信息写到卡中
 void VipWidget::on_pushButton_Save_clicked()
 {
     //TODO:如果顾客丢失会员卡进行卡注销(在会员类型中设置为0,丢失卡单独管理?)
-    if(!writeInfoToCard())
+    QSqlDatabase* db = getSqlManager()->getdb();
+    QSqlQuery query(*db);
+    if(db->transaction())
     {
-        qDebug()<<"保存信息到卡失败";
-        m_TableModel->revertAll();
-        return;
+        if(!writeInfoToCard())
+        {
+            qDebug()<<"保存信息到卡失败";
+            m_TableModel->revertAll();
+            m_Sql = "";
+            return;
+        }
+        if(!m_TableModel->submitAll())
+        {
+            db->rollback();
+            qDebug()<<"保存到数据库失败"<<m_TableModel->lastError().text();
+        }
+        if(!query.exec(m_Sql))
+        {
+            db->rollback();
+        }
+        if(!db->commit())
+        {
+            db->rollback();
+        }
+        resetText();
+        setTextEnable(true);
+        //添加或者删除后重新更新分页信息
+        resetPageInfo();
+        m_Sql = "";
     }
-    if(!m_TableModel->submitAll())
-    {
-        qDebug()<<"保存到数据库失败"<<m_TableModel->lastError().text();
-    }
-    resetText();
-    setTextEnable(true);
-    //添加或者删除后重新更新分页信息
-    resetPageInfo();
+
 }
 
 int VipWidget::selectVipInfoByCardID(const QString id)
@@ -363,6 +392,15 @@ void VipWidget::resetPageInfo()
 
 void VipWidget::on_pushButton_OpenCard_clicked()
 {
+    LoginWidget w(this);
+    w.setAuthType(LoginWidget::Login);
+    if(!w.exec())
+    {
+        QMessageBox::information(this, "提示","验证失败");
+
+        return;
+    }
+    m_nOperid = w.authId();
     unsigned int type = 0x0004;
     //返回卡序列号地址
     unsigned long snr;
@@ -456,6 +494,7 @@ void VipWidget::on_pushButton_Cancle_clicked()
     setTextEnable(true);
     //((QSqlQueryModel*)m_TableModel)->setQuery(tr("select * from member LIMIT 10"),*getSqlManager()->getdb());
     resetPageInfo();
+    m_Sql = "";
     //updateRecord(m_CurPage);
 }
 
@@ -532,6 +571,7 @@ void VipWidget::on_but_querenchong_clicked()
 {
     m_QueryModel->clear();
     QString sql = "";
+    QString sql2= "";
     double yue = 0;
     double chong = 0;
     double balance = 0;
@@ -544,34 +584,28 @@ void VipWidget::on_but_querenchong_clicked()
         chong = ui->lineEdit_chongzhi->text().toDouble();
         more = ui->Edit_MoreMoney->text().toDouble();
     }
+    else
+    {
+        return;
+    }
+    QSqlDatabase* db = getSqlManager()->getdb();
+    QSqlQuery query(*db);
     if(ui->but_querenchong->text() == tr("充值"))
     {
-        balance = yue+chong;
+
+        balance = yue+chong+more;
         sql = tr("update member set balance = '%1' where cardid = '%2'").arg(balance).arg(ui->lineEdit_CardNum->text());
         message = tr("充值成功!");
-        m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
-        //        if(!m_QueryModel->lastError().isValid())
-        //        {
-        //            QMessageBox::warning(NULL, tr("提示"), message);
-        //            ui->label_yue->setText(tr("%1").arg(balance));
-        //            QPalette pe;
-        //            pe.setColor(QPalette::WindowText,Qt::red);
-        //            QFont font;
-        //            font.setPointSize(30);
-        //            ui->label_yue->setPalette(pe);
-        //            ui->label_yue->setFont(font);
-        //            ui->but_CancleCharge->setText("返回");
-        //            ui->lineEdit_chongzhi->clear();
-        //            ui->lineEdit_querenchong->clear();
-        //        }
-        //        else
-        //        {
-        //            qDebug()<<m_QueryModel->lastError().text();
-        //        }
+        //m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
+        sql2 = tr("insert into memcarddetail(memcardid,handletype,handlemoney,moremoney,operatorid,handletime) "\
+                  "values '%1','%2','%3','%4','%5','%6'")
+                .arg(ui->lineEdit_CardNum->text()).arg(1).arg(chong).arg(more).arg(m_nOperid).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+
     }
     else
         //if(ui->but_querenchong->text() == tr("扣款"))
     {
+
         message = tr("扣款成功!");
         if(chong > yue)
         {
@@ -579,10 +613,25 @@ void VipWidget::on_but_querenchong_clicked()
         }
         balance = yue-chong;
         sql = tr("update member set balance = '%1' where cardid = '%2'").arg(balance).arg(ui->lineEdit_CardNum->text());
+        sql2 = tr("insert into memcarddetail(memcardid,handletype,handlemoney,operatorid,handletime) "\
+                  "values '%1','%2','%3','%4','%5','%6'")
+                .arg(ui->lineEdit_CardNum->text()).arg(1).arg(chong).arg(m_nOperid).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
     }
-    m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
-    if(!m_QueryModel->lastError().isValid())
+    if(db->transaction())
     {
+        m_QueryModel->setQuery(sql,*getSqlManager()->getdb());
+        //query = getSqlManager()->ExecQuery(sql2);
+        if(!query.exec(sql2))
+        {
+            db->rollback();
+            return;
+        }
+        if(!db->commit())
+        {
+            return;
+        }
+        //        if(!m_QueryModel->lastError().isValid())
+        //        {
         QMessageBox::warning(NULL, tr("提示"), message);
         ui->label_yue->setText(tr("%1").arg(balance));
         QPalette pe;
@@ -594,11 +643,14 @@ void VipWidget::on_but_querenchong_clicked()
         ui->but_CancleCharge->setText("返回");
         ui->lineEdit_chongzhi->clear();
         ui->lineEdit_querenchong->clear();
+        //}
     }
     else
     {
-        qDebug()<<m_QueryModel->lastError().text();
+        db->rollback();
+        return;
     }
+
 }
 QString VipWidget::payMoney(const double &money)
 {

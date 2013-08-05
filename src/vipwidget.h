@@ -61,6 +61,9 @@ private:
     QMultiMap<QString,int> m_BoxMap;
     //
     QString m_CurCardSnr;
+    //记录在保存时需要执行的sql
+    QString m_Sql;
+    int m_nOperid;
 public:
     QString payMoney(const double &money);
 };
