@@ -235,7 +235,7 @@ bool ExcelEngine::SaveDataFrTable(QTableView *tableWidget)
     {
         if ( tableWidget->horizontalHeader()!= NULL )
         {
-            this->SetCellData(1,i+1,tableWidget->horizontalHeader()->model()->index(0,1).data().toString());
+            this->SetCellData(1,i+1,tableWidget->horizontalHeader()->model()->index(0,i).data().toString());
         }
     }
 
