@@ -47,7 +47,12 @@ bool DishesInfoBll::backDish(const QString &orderId, int dishId, int count, int 
     dishesInfo.type = 1;
     dishesList.append(dishesInfo);
     double price = 0;
-    return orderHelperInstance()->createOrder(tableId, dishesList, "", operatorId, price, orderId);
+    bool result = orderHelperInstance()->createOrder(tableId, dishesList, "", operatorId, price, orderId);
+    if(result)
+    {
+        return getBackPrinter()->print(tableId, dishesList, orderId, 0);
+    }
+    return false;
 }
 
 void DishesInfoBll::combineDishes(QList<Dishes> &dishesInfo)

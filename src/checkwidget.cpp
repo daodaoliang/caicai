@@ -93,7 +93,7 @@ void CheckWidget::calcTotal()
         paid += m_model.record(i).value(2).toDouble();
     }
     QString sql = "";
-    sql = tr("select SUM(accounts) as money from orderinfo where paytype = 1 and begintime between '%1' and '%2'")
+    sql = tr("select SUM(accounts) as money from orderinfo where paytype = 1 and (begintime between '%1' and '%2')")
             .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
             .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
     QSqlQuery query(sql, *getSqlManager()->getdb());
@@ -108,7 +108,7 @@ void CheckWidget::calcTotal()
     {
         return;
     }
-    sql = tr("select SUM(accounts) as money from orderinfo where paytype = 0 and begintime between '%1' and '%2'")
+    sql = tr("select SUM(accounts) as money from orderinfo where paytype = 0 and (begintime between '%1' and '%2')")
             .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
             .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
     query.clear();
@@ -124,8 +124,8 @@ void CheckWidget::calcTotal()
         return;
     }
     text.append(tr("总营业额:<font size='6' color='red'><b>%1</b></font>元").arg(paid));
-    text.append(tr("现金:<font size='6' color='red'><b>%1</b></font>元").arg(cash));
-    text.append(tr("会员卡:<font size='6' color='red'><b>%1</b></font>元").arg(card));
+    text.append(tr("现金:<font size='6' color='red'><b>%1</b></font>元；").arg(cash));
+    text.append(tr("会员卡金额:<font size='6' color='red'><b>%1</b></font>元").arg(card));
     ui->label_3->setText(text);
 }
 
