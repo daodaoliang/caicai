@@ -19,6 +19,11 @@ TableWidget::TableWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     m_tableModel = new QSqlQueryModel(this);
+    ui->tableWidget->setColumnWidth(0, 100);
+    ui->tableWidget->setColumnWidth(1, 60);
+    ui->tableWidget->setColumnWidth(2, 60);
+    ui->tableWidget->setColumnWidth(3, 60);
+
     m_tableModel->setQuery("select * from diningtable", *getSqlManager()->getdb());
     ui->listView->setModel(m_tableModel);
     ui->listView->setItemDelegate(new TableDelegate);

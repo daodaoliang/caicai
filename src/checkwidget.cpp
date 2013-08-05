@@ -93,9 +93,16 @@ void CheckWidget::calcTotal()
         paid += m_model.record(i).value(2).toDouble();
     }
     QString sql = "";
-    sql = tr("select SUM(accounts) as money from orderinfo where paytype = 1 and (begintime between '%1' and '%2')")
+    sql = tr("select SUM(dishescount * dishes.price) from orderdetail"\
+             " LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid"\
+             " where paytype = 1 and (handletime between '%1' and '%2')")
             .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
             .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
+    int operatorId = ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt();
+    if(operatorId > 0)
+    {
+        sql.append(tr(" and operatorId = '%1'").arg(operatorId));
+    }
     QSqlQuery query(sql, *getSqlManager()->getdb());
     if(query.exec())
     {
@@ -108,9 +115,15 @@ void CheckWidget::calcTotal()
     {
         return;
     }
-    sql = tr("select SUM(accounts) as money from orderinfo where paytype = 0 and (begintime between '%1' and '%2')")
+    sql = tr("select SUM(dishescount * dishes.price) from orderdetail"\
+             " LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid"\
+             " where paytype = 0 and (handletime between '%1' and '%2')")
             .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
             .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
+    if(operatorId > 0)
+    {
+        sql.append(tr(" and operatorId = '%1'").arg(operatorId));
+    }
     query.clear();
     if(query.exec(sql))
     {
@@ -123,9 +136,9 @@ void CheckWidget::calcTotal()
     {
         return;
     }
-    text.append(tr("总营业额:<font size='6' color='red'><b>%1</b></font>元").arg(paid));
-    text.append(tr("现金:<font size='6' color='red'><b>%1</b></font>元；").arg(cash));
-    text.append(tr("会员卡金额:<font size='6' color='red'><b>%1</b></font>元").arg(card));
+    text.append(tr("总营业额:<font size='6' color='red'><b>%1</b></font>元；").arg(paid));
+    text.append(tr("现金：<font size='6' color='red'><b>%1</b></font>元；").arg(cash));
+    text.append(tr("会员卡金额：<font size='6' color='red'><b>%1</b></font>元").arg(card));
     ui->label_3->setText(text);
 }
 
@@ -154,24 +167,29 @@ void CheckWidget::on_pushButton_clicked()
         //    QString sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
         //            "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
         //                     "where begintime > '%1' and begintime <= '%2' ").arg(date.toString("yyyy-MM-dd")).arg(lastDate.toString("yyyy-MM-dd"));
-        sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
-                 "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
-                 "where begintime > '%1' and begintime <= '%2' ").arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
+        sql = tr("select orderdetail.orderid, dishes.dishesname, dishes.price, orderdetail.dishescount, orderdetail.handletime,"\
+                 "orderinfo.orderstate, orderdetail.paytype, orderdetail.cardid from orderdetail "\
+                 "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid "\
+                 "LEFT JOIN orderinfo on orderinfo.orderid = orderdetail.orderid "\
+                 "where (handletime between '%1' and '%2')").arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
         int userId = ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt();
         if(userId > 0)
         {
-            sql.append(tr(" and orderinfo.userid = %1").arg(userId));
+            sql.append(tr(" and operatorid = %1").arg(userId));
         }
     }
     qDebug()<<"account"<<sql;
     QSqlQuery query(sql, *getSqlManager()->getdb());
     m_model.setQuery(query);
     m_model.setHeaderData(0, Qt::Horizontal, tr("订单号"));
-    m_model.setHeaderData(1, Qt::Horizontal, tr("应收"));
-    m_model.setHeaderData(2, Qt::Horizontal, tr("实收"));
-    m_model.setHeaderData(3, Qt::Horizontal, tr("桌号"));
+    m_model.setHeaderData(1, Qt::Horizontal, tr("菜品名称"));
+    m_model.setHeaderData(2, Qt::Horizontal, tr("单价"));
+    m_model.setHeaderData(3, Qt::Horizontal, tr("数量"));
     m_model.setHeaderData(4, Qt::Horizontal, tr("下单时间"));
-    m_model.setHeaderData(5, Qt::Horizontal, tr("服务员"));
+    m_model.setHeaderData(5, Qt::Horizontal, tr("订单类型"));
+    m_model.setHeaderData(6, Qt::Horizontal, tr("支付类型"));
+    m_model.setHeaderData(7, Qt::Horizontal, tr("支付卡号"));
+
     calcTotal();
 
 }
@@ -194,4 +212,26 @@ void CheckWidget::on_pushButton_2_clicked()
     m_excelInstance.SaveDataFrTable(ui->tableView);
     m_excelInstance.Close();
     ui->pushButton_2->setEnabled(false);
+}
+
+
+DetailModel::DetailModel(QWidget *obj) : QSqlQueryModel(obj)
+{
+}
+
+QVariant DetailModel::data(const QModelIndex &item, int role) const
+{
+    QVariant value = QSqlQueryModel::data(item, role);
+    if (value.isValid() && role == Qt::DisplayRole)
+    {
+        if (item.column() == 2)
+            return value.toString().append("元");
+        else if (item.column() == 3)
+            return value.toString().append("份");
+        else if(item.column() == 5)
+            return value.toInt() == 0 ? "点菜" : "退菜";
+        else if(item.column() == 6)
+            return value.toInt() == 0 ? "现金" : "会员卡";
+    }
+    return value;
 }

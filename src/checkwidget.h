@@ -12,6 +12,14 @@ namespace Ui {
 class CheckWidget;
 }
 
+class DetailModel : public QSqlQueryModel
+{
+    Q_OBJECT
+public:
+    DetailModel(QWidget *obj = NULL);
+    QVariant data(const QModelIndex &item, int role) const;
+};
+
 class CheckWidget : public QWidget
 {
     Q_OBJECT
@@ -36,7 +44,7 @@ private:
 private:
     Ui::CheckWidget *ui;
     QCalendarWidget m_calendar;
-    QSqlQueryModel m_model;
+    DetailModel m_model;
     DetailWidget m_detail;
     ExcelEngine m_excelInstance;
     QString m_Date;
