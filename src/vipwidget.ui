@@ -129,7 +129,7 @@
           <item row="1" column="0">
            <widget class="QStackedWidget" name="stackedWidget_2">
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="page_3">
              <layout class="QGridLayout" name="gridLayout_5">
@@ -288,37 +288,36 @@
                  <string/>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_9">
-                 <item row="0" column="1">
-                  <widget class="QLabel" name="label_chong">
-                   <property name="text">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;充值金额：&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 <item row="0" column="0">
+                  <spacer name="horizontalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
                    </property>
-                  </widget>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                  <item row="0" column="3">
                   <widget class="QLineEdit" name="lineEdit_chongzhi"/>
                  </item>
-                 <item row="1" column="1">
-                  <widget class="QLabel" name="label_queren">
-                   <property name="text">
-                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;确认金额：&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="1" column="3">
                   <widget class="QLineEdit" name="lineEdit_querenchong"/>
                  </item>
-                 <item row="2" column="1">
-                  <widget class="QPushButton" name="but_querenchong">
-                   <property name="text">
-                    <string>确认</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="3">
+                 <item row="3" column="3">
                   <widget class="QPushButton" name="but_CancleCharge">
                    <property name="text">
                     <string>取消</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QLabel" name="label_chong">
+                   <property name="text">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;充值金额：&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                    </property>
                   </widget>
                  </item>
@@ -348,6 +347,13 @@
                    </property>
                   </spacer>
                  </item>
+                 <item row="1" column="1">
+                  <widget class="QLabel" name="label_queren">
+                   <property name="text">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;确认金额：&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="0" column="2">
                   <spacer name="horizontalSpacer">
                    <property name="orientation">
@@ -361,18 +367,25 @@
                    </property>
                   </spacer>
                  </item>
-                 <item row="0" column="0">
-                  <spacer name="horizontalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                 <item row="3" column="1">
+                  <widget class="QPushButton" name="but_querenchong">
+                   <property name="text">
+                    <string>确认</string>
                    </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
+                  </widget>
+                 </item>
+                 <item row="2" column="1">
+                  <widget class="QLabel" name="label_8">
+                   <property name="styleSheet">
+                    <string notr="true"/>
                    </property>
-                  </spacer>
+                   <property name="text">
+                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;优惠金额：&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="2" column="3">
+                  <widget class="QLineEdit" name="Edit_MoreMoney"/>
                  </item>
                 </layout>
                </widget>
