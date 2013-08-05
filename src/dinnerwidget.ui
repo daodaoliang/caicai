@@ -23,6 +23,9 @@
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
         <widget class="QListView" name="listView">
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
          <property name="viewMode">
           <enum>QListView::IconMode</enum>
          </property>

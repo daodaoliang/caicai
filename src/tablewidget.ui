@@ -36,6 +36,9 @@
      <property name="selectionMode">
       <enum>QAbstractItemView::ExtendedSelection</enum>
      </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
      <property name="viewMode">
       <enum>QListView::IconMode</enum>
      </property>
@@ -107,6 +110,9 @@
           <width>300</width>
           <height>0</height>
          </size>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
         </property>
         <column>
          <property name="text">
