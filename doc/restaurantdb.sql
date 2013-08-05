@@ -237,6 +237,26 @@ CREATE TABLE `member` (
 -- ----------------------------
 -- Records of member
 -- ----------------------------
+-- ----------------------------
+-- Table structure for `memcarddetail`
+-- ----------------------------
+DROP TABLE IF EXISTS `memcarddetail`;
+CREATE TABLE `memcarddetail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `memcardid` varchar(20) NOT NULL,
+  `handletype` int(11) NOT NULL,
+  `handlemoney` decimal(10,0) NOT NULL,
+  `moremoney` decimal(10,0) DEFAULT NULL,
+  `orderid` varchar(255) DEFAULT NULL,
+  `relatecardid` varchar(255) DEFAULT NULL,
+  `operatorid` int(11) NOT NULL,
+  `handletime` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=gbk;
+
+-- ----------------------------
+-- Records of memcarddetail
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `membertype`
