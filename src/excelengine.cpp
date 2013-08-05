@@ -247,7 +247,7 @@ bool ExcelEngine::SaveDataFrTable(QTableView *tableWidget)
             if (!tableWidget->model()->index(i,j).data().toString().isEmpty())
             {
                 QString tempItem=tableWidget->model()->index(i,j).data().toString();
-                if(tempItem.count()>=15)
+                if(tempItem.count()>=15 && j!=tableC-1)
                     tempItem.push_front(QChar('\''));
                 this->SetCellData(i+2,j+1,tempItem);
             }
