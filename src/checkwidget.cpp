@@ -110,7 +110,7 @@ void CheckWidget::calcTotal()
              " where orderdetail.paytype = 1 and (handletime between '%1' and '%2')")
             .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
             .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
-    int operatorId = ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt();
+    int operatorId = ui->comboBox->itemData(ui->comboBox->itemData(ui->comboBox->currentIndex())).toInt();
     if(operatorId > 0)
     {
         sql.append(tr(" and operatorId = '%1'").arg(operatorId));
