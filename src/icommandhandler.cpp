@@ -289,7 +289,7 @@ void OrderHandler::handleCommand(const QStringList &cmdDetail, int index)
                                     //减少库存
                                     //进行打印
                                     result = getBackPrinter()->print(tableId, dishesList, orderId, money);
-                                    getFrontPrinter()->print(tableId,dishesList,orderId,money);
+                                    getFrontPrinter()->print(tableId,dishesList,orderId,userid,money);
                                     if(result)
                                     {
                                         //回复正常

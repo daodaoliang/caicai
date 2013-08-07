@@ -5,6 +5,7 @@
 #include <QByteArray>
 #include <QVariant>
 #include <QDebug>
+#include "sqlmanager.h"
 QString gb2312ToUtf8(const char *szString, int nSize)
 {
     if(nSize == -1)
@@ -33,14 +34,26 @@ frontprinter::frontprinter(QObject *parent) :
     qDebug()<<"zi ti"<<font.family();
 }
 
-bool frontprinter::print(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId, double paid)
+bool frontprinter::print(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId,const int userid, double paid)
 {
     QString cmd = "";
-    cmd.append(tr("旗鼓村米线 ")+qApp->property("name").toString()+"<br>");
+    QString user  = "";
+    QString sql = tr("select nickname from userinfo where userid = '%1'").arg(userid);
+    QSqlQuery *query = getSqlManager()->ExecQuery(sql);
+    if(query != NULL)
+    {
+        if(query->next())
+        {
+            user = query->value(0).toString();
+        }
+    }
+    qDebug()<<"fornt printer:"<<sql;
+    //cmd.append(tr("旗鼓村米线 家乐福店")+qApp->property("name").toString()+"<br>");
+    cmd.append(tr("旗鼓村米线 家乐福店")+"<br>");
     cmd.append(tr("订单号: ")+ orderId+"<br>");
     cmd.append(tr("订单类型: %1").arg(dishes.first().type ? "退菜": "点菜")+"<br>");
     cmd.append(tr("时间: ")+QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+"<br>");
-    cmd.append(tr("桌号: ")+tableId+"<br>");
+    cmd.append(tr("桌号: ")+tableId+"  "+user+"<br>");
     double money1 = 0;
     double price = 0;
     QString bz = "";
@@ -56,33 +69,10 @@ bool frontprinter::print(const QString &tableId, const QList<DishesInfo> &dishes
     {
         qDebug()<<dish.name<<dish.count << dish.dishType <<orderHelperInstance()->isDiscount(dish.name);
         price = dish.price;
-        //        bz = "";
-        //        if(dish.dishType == 1 && orderHelperInstance()->isDiscount(dish.name) && cout < num)
-        //        {
-        //            qDebug()<<"taocan---------------------------------------------------";
-        //            if(dish.count <= num - cout)
-        //            {
-        //                price = price -6;
-        //                bz = tr("(套餐)");
-        //                cout = cout+dish.count;
-        //                cmd.append(dish.name+ QString::number(dish.count)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
-        //            }else
-        //            {
-        //                int ord = dish.count - (num - cout);
-        //                bz = tr("(套餐)");
-        //                cmd.append(dish.name+ QString::number(num-cout)+tr("份 单价%1元 %2").arg(price-6, 0, 'f', 2).arg(bz)+"<br>");
-        //                bz = "";
-        //                cmd.append(dish.name+ QString::number(ord)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
-        //                cout = num;
-        //            }
-        //        }else
-        //        {
-        //            cmd.append(dish.name+ QString::number(dish.count)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
-        //        }
         cmd.append(dish.name+ QString::number(dish.count)+tr("份 单价%1元 %2").arg(price, 0, 'f', 2).arg(bz)+"<br>");
         if(dish.name.contains("套餐"))
         {
-            discount = discount+6;
+            discount = discount+6*dish.count;
         }
     }
     //打印优惠金额
