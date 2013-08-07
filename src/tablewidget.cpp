@@ -32,6 +32,9 @@ TableWidget::TableWidget(QWidget *parent) :
     ui->stackedWidget->setCurrentIndex(0);
     ui->tableWidget->hideColumn(4);
     ui->listView->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    updateLoginInfo();
+    ui->tableView->setModel(&m_loginModel);
 }
 
 TableWidget::~TableWidget()
@@ -58,7 +61,7 @@ void TableWidget::on_listView_clicked(const QModelIndex &index)
     int state = index.sibling(index.row(), 2).data().toInt();
     enableFunction(state);
     showDishesInfo(ui->listView->currentIndex().sibling(ui->listView->currentIndex().row(), 6).data().toString());
-    if(ui->listView->selectionModel()->selectedIndexes().count() == 2)
+    if(ui->listView->selectionModel()->selectedRows().count() == 2)
     {
         ui->toolButton_5->setEnabled(true);
     }
@@ -66,7 +69,7 @@ void TableWidget::on_listView_clicked(const QModelIndex &index)
     {
         ui->toolButton_5->setEnabled(false);
     }
-    if(ui->listView->selectionModel()->selectedIndexes().count() == 1)
+    if(ui->listView->selectionModel()->selectedRows().count() == 1)
     {
         ui->toolButton_6->setEnabled(true);
     }
@@ -74,7 +77,6 @@ void TableWidget::on_listView_clicked(const QModelIndex &index)
     {
         ui->toolButton_6->setEnabled(false);
     }
-
 }
 
 void TableWidget::on_toolButton_clicked()
@@ -296,4 +298,15 @@ void TableWidget::on_toolButton_6_clicked()
     {
         QMessageBox::information(this, "提示", "拆台失败");
     }
+}
+
+
+void TableWidget::updateLoginInfo()
+{
+    //设置人员名称
+    m_loginModel.setQuery("select userinfo.username, login.machineid from login"\
+                          " LEFT JOIN userinfo ON"\
+                          " userinfo.userid = login.userid", *getSqlManager()->getdb());
+    m_loginModel.setHeaderData(0, Qt::Horizontal, "服务员");
+    m_loginModel.setHeaderData(1, Qt::Horizontal, "点菜宝机器号");
 }

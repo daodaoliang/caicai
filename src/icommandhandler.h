@@ -22,7 +22,9 @@ class LoginHandler : public ICommandHandler
 {
     Q_OBJECT
 public:
-    explicit LoginHandler(){}
+    explicit LoginHandler();
+signals:
+    void updateInfo();
 public:
     QString handlerName()
     {

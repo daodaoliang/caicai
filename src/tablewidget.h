@@ -12,7 +12,8 @@ class TableWidget;
 class TableWidget : public QWidget
 {
     Q_OBJECT
-    
+public slots:
+    void updateLoginInfo();
 public:
     explicit TableWidget(QWidget *parent = 0);
     ~TableWidget();
@@ -47,6 +48,7 @@ private:
     QSqlQueryModel *m_tableModel;
     AddDiningTableWidget m_addWidget;
     DishesCountWidget m_countWidget;
+    QSqlQueryModel m_loginModel;
 
 };
 

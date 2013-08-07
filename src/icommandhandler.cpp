@@ -51,7 +51,7 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
             {
                 replyList.append("0 ×¢ÏúÊ§°Ü");
                 reply(replyList, index);
-                qDebug()<<"user lenth 0";
+                emit updateInfo();
                 return;
             }else
             {
@@ -67,6 +67,7 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
                             getSqlManager()->logOut(cmdDetail[0].right(3));
                             replyList.append("1 ×¢Ïú³É¹¦");
                             reply(replyList, index);
+                            emit updateInfo();
                             return;
                         }
                     }
@@ -74,6 +75,7 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
                 qDebug()<<"select no";
                 replyList.append("0 ×¢ÏúÊ§°Ü");
                 reply(replyList, index);
+                emit updateInfo();
                 return;
             }
         }
@@ -84,6 +86,7 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
         {
             replyList.append("0 µÇÂ¼Ê§°Ü,Çë×¢ÏúÔÙµÇÂ¼ ");
             reply(replyList, index);
+            emit updateInfo();
             return;
         }
         else
@@ -94,15 +97,18 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
             {
                 replyList.append("1 µÇÂ¼³É¹¦");
                 reply(replyList, index);
+                emit updateInfo();
                 return;
             }
             replyList.append("0 µÇÂ¼Ê§°Ü,Çë×¢ÏúÔÙµÇÂ¼ ");
             reply(replyList, index);
+            emit updateInfo();
             return;
         }
     }
     replyList.append("0 ÑéÖ¤Ê§°Ü");
     reply(replyList, index);
+    emit updateInfo();
 }
 
 
@@ -416,4 +422,10 @@ void BackDishHandler::handleCommand(const QStringList &cmdDetail, int index)
     //        return;
     //    }
 
+}
+
+
+LoginHandler::LoginHandler()
+{
+    connect(this, SIGNAL(updateInfo()), tableWidget(), SLOT(updateLoginInfo()));
 }
