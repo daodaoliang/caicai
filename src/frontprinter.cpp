@@ -48,8 +48,8 @@ bool frontprinter::print(const QString &tableId, const QList<DishesInfo> &dishes
         }
     }
     qDebug()<<"fornt printer:"<<sql;
-    //cmd.append(tr("旗鼓村米线 家乐福店")+qApp->property("name").toString()+"<br>");
-    cmd.append(tr("旗鼓村米线 家乐福店")+"<br>");
+    cmd.append(tr("旗鼓村米线 ")+qApp->property("name").toString()+"<br>");
+    //cmd.append(tr("旗鼓村米线 家乐福店")+"<br>");
     cmd.append(tr("订单号: ")+ orderId+"<br>");
     cmd.append(tr("订单类型: %1").arg(dishes.first().type ? "退菜": "点菜")+"<br>");
     cmd.append(tr("时间: ")+QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+"<br>");
