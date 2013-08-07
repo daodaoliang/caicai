@@ -88,7 +88,7 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
         }
         else
         {
-            QString sql = tr("replace into login (machineid,userid) values ('%1','%2')").arg(cmdDetail[0].right(3)).arg(user);
+            QString sql = tr("replace into login (machineid,userid) values ('%1','%2')").arg(cmdDetail[0].right(3)).arg(userId);
             QSqlQuery *query = getSqlManager()->ExecQuery(sql);
             if(query != NULL)
             {
