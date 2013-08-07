@@ -1,10 +1,11 @@
 #include "backprinter.h"
-#include "configerfileprocesser.h"
 #include <QCoreApplication>
 #include <QDateTime>
-BackPrinter::BackPrinter(QObject *parent) :
+#include <QMessageBox>
+BackPrinter::BackPrinter(const QString &ip, QObject *parent) :
     QObject(parent)
 {
+    m_ip = ip;
 }
 
 bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId, double paid)
@@ -19,7 +20,7 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
             mixian.append(dish);
         }
     }
-    printDishes(tableId, mixian, orderId, paid);
+    printDishes(tableId, mixian, orderId, paid, "192.168.123.100");
     //获取非饮料
     foreach(DishesInfo dish, dishes)
     {
@@ -28,18 +29,19 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
             drink.append(dish);
         }
     }
-    printDishes(tableId, drink, orderId, paid);
+    printDishes(tableId, drink, orderId, paid, "192.168.123.101");
     return true;
 }
 
-bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId, double paid)
+bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId, double paid, const QString &ip)
 {
     if(dishes.isEmpty())
     {
         return true;
     }
     //连接打印机
-    m_socket.connectToHost(getConfigerFileInstance()->printerIp(),
+    QTcpSocket m_socket;
+    m_socket.connectToHost(ip,
                            getConfigerFileInstance()->writerPort().toUInt());
     if(!m_socket.waitForConnected(1000))
     {

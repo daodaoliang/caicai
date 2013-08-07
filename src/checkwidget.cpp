@@ -3,6 +3,9 @@
 #include <QDebug>
 #include "sqlmanager.h"
 #include <QSqlRecord>
+#include <QMessageBox>
+#include "functionwidget.h"
+#include "loginwidget.h"
 CheckWidget::CheckWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CheckWidget), m_calendar(this)
@@ -43,6 +46,17 @@ bool CheckWidget::eventFilter(QObject *obj, QEvent *event)
         return true;
     }
     return false;
+}
+
+void CheckWidget::showEvent(QShowEvent *)
+{
+    LoginWidget w(this);
+    w.setAuthType(LoginWidget::ShowReport);
+    if(!w.exec())
+    {
+        QMessageBox::information(this, "提示", "验证失败");
+        functionWidget()->changePage(0);
+    }
 }
 
 void CheckWidget::getDate(const QDate &date)

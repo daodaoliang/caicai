@@ -17,7 +17,8 @@ class StatisWidget : public QWidget
 public:
     explicit StatisWidget(QWidget *parent = 0);
     ~StatisWidget();
-    
+protected:
+    void showEvent(QShowEvent *);
 private slots:
     void on_but_Search_clicked();
 

@@ -29,6 +29,7 @@ public:
     ~CheckWidget();
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
+    void showEvent(QShowEvent *);
 private slots:
     void getDate(const QDate &date);
     void on_pushButton_clicked();

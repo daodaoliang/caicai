@@ -2,6 +2,9 @@
 #include "ui_statiswidget.h"
 #include "sqlmanager.h"
 #include <QDebug>
+#include "loginwidget.h"
+#include <QMessageBox>
+#include "functionwidget.h"
 StatisWidget::StatisWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StatisWidget)
@@ -32,6 +35,17 @@ StatisWidget::StatisWidget(QWidget *parent) :
 StatisWidget::~StatisWidget()
 {
     delete ui;
+}
+
+void StatisWidget::showEvent(QShowEvent *)
+{
+    LoginWidget w(this);
+    w.setAuthType(LoginWidget::ShowReport);
+    if(!w.exec())
+    {
+        QMessageBox::information(this, "提示", "验证失败");
+        functionWidget()->changePage(0);
+    }
 }
 
 void StatisWidget::on_but_Search_clicked()

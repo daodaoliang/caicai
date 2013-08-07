@@ -14,7 +14,8 @@ public:
     enum AuthType
     {
         Login = 0,          //登录
-        BackDish = 1
+        BackDish = 1,
+        ShowReport = 2      //查看报表
     };
 public:
     explicit LoginWidget(QWidget *parent = 0);

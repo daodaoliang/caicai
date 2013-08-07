@@ -7,6 +7,7 @@
 #include "sqlmanager.h"
 #include <windows.h>
 #include <QSqlResult>
+#include <QMessageBox>
 #include "dinnerwidget.h"
 #include "orderhelper.h"
 #include "backprinter.h"

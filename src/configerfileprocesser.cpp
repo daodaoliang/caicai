@@ -20,6 +20,8 @@ bool ConfigerFileProcesser::createInstance()
             QSettings tempSetting(tempPath,QSettings::IniFormat);
             QString tempGroup=tr("Printer");
             tempSetting.setValue(tempGroup+"/printerIp",tr("192.168.123.100"));
+            tempSetting.setValue(tempGroup+"/printerIp1",tr("192.168.123.101"));
+
             tempSetting.setValue(tempGroup+"/writerPort",tr("9100"));
             tempSetting.setValue(tempGroup+"/statePort",tr("4000"));
         }
@@ -28,6 +30,7 @@ bool ConfigerFileProcesser::createInstance()
 
     QString tempGroup=tr("Printer");
     setPrinterIp(tempSetting.value(tempGroup+"/printerIp",tr("192.168.123.100")).toString());
+    m_printerIp2 = (tempSetting.value(tempGroup+"/printerIp1",tr("192.168.123.101")).toString());
     setWriterPort(tempSetting.value(tempGroup+"/writerPort",tr("9100")).toString());
     setStatePort(tempSetting.value(tempGroup+"/statePort",tr("4000")).toString());
 }
@@ -35,6 +38,11 @@ bool ConfigerFileProcesser::createInstance()
 QString ConfigerFileProcesser::printerIp()
 {
     return m_printerIp;
+}
+
+QString ConfigerFileProcesser::printerIp2()
+{
+    return m_printerIp2;
 }
 
 QString ConfigerFileProcesser::writerPort()

@@ -13,6 +13,7 @@ private:
     //打印机标签（Printer）
     //打印机ＩＰ
     QString m_printerIp;
+    QString m_printerIp2;
     //打印机读写端口
     QString m_writerPort;
     //打印获取状态端口
@@ -21,6 +22,7 @@ public:
     bool createInstance();
 public:
     QString printerIp();
+    QString printerIp2();
     QString writerPort();
     QString statePort();
     void setPrinterIp(const QString &data);

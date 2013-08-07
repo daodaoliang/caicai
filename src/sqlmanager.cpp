@@ -5,6 +5,7 @@
 #include <QCryptographicHash>
 #include <QBitArray>
 #include <QMessageBox>
+#include <QFile>
 SqlManager::SqlManager(QObject *parent) :
     QObject(parent)
 {
@@ -106,10 +107,13 @@ QString SqlManager::login(const QString &user, QString password, const QString &
 {
     qDebug()<<"start log:"<<password;
     password = QCryptographicHash::hash(tr("%1%2").arg(user).arg(password).toLocal8Bit(), QCryptographicHash::Md5).toHex().data();
-    QString sql = tr("select nickname, userid, purview from userinfo where username = '%1' and password = '%2' and machineid = ''").arg(user).arg(password);
+    QString sql = tr("select nickname, userid, purview from userinfo where username = '%1' and password = '%2'").arg(user).arg(password);
     qDebug() << sql;
     QSqlQuery *query = getSqlManager()->ExecQuery(sql);
-
+    QFile file("A.TXT");
+    file.open(QIODevice::ReadWrite);
+    file.write(sql.toLocal8Bit());
+    file.close();
     if(query != NULL)
     {
         if(query->next())
