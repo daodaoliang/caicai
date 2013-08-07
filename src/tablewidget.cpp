@@ -58,7 +58,7 @@ void TableWidget::on_listView_clicked(const QModelIndex &index)
     int state = index.sibling(index.row(), 2).data().toInt();
     enableFunction(state);
     showDishesInfo(ui->listView->currentIndex().sibling(ui->listView->currentIndex().row(), 6).data().toString());
-    if(ui->listView->selectionModel()->selectedIndexes().count() == 2)
+    if(ui->listView->selectionModel()->selectedRows().count() == 2)
     {
         ui->toolButton_5->setEnabled(true);
     }
@@ -66,7 +66,7 @@ void TableWidget::on_listView_clicked(const QModelIndex &index)
     {
         ui->toolButton_5->setEnabled(false);
     }
-    if(ui->listView->selectionModel()->selectedIndexes().count() == 1)
+    if(ui->listView->selectionModel()->selectedRows().count() == 1)
     {
         ui->toolButton_6->setEnabled(true);
     }
@@ -74,7 +74,6 @@ void TableWidget::on_listView_clicked(const QModelIndex &index)
     {
         ui->toolButton_6->setEnabled(false);
     }
-
 }
 
 void TableWidget::on_toolButton_clicked()
