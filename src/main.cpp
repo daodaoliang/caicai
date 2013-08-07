@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("GBK"));
     QTextCodec::setCodecForTr(QTextCodec::codecForName("GBK"));
     getSqlManager()->Init();
-    qApp->setProperty("name", "ºéÂ¥µê");
+    qApp->setProperty("name", "¼ÒÀÖ¸£µê");
     getConfigerFileInstance()->createInstance();
     //ÓÃ»§µÇÂ¼
     LoginWidget login;
