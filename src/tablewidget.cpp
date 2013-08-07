@@ -32,6 +32,9 @@ TableWidget::TableWidget(QWidget *parent) :
     ui->stackedWidget->setCurrentIndex(0);
     ui->tableWidget->hideColumn(4);
     ui->listView->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    updateLoginInfo();
+    ui->tableView->setModel(&m_loginModel);
 }
 
 TableWidget::~TableWidget()
@@ -295,4 +298,15 @@ void TableWidget::on_toolButton_6_clicked()
     {
         QMessageBox::information(this, "提示", "拆台失败");
     }
+}
+
+
+void TableWidget::updateLoginInfo()
+{
+    //设置人员名称
+    m_loginModel.setQuery("select userinfo.username, login.machineid from login"\
+                          " LEFT JOIN userinfo ON"\
+                          " userinfo.userid = login.userid", *getSqlManager()->getdb());
+    m_loginModel.setHeaderData(0, Qt::Horizontal, "服务员");
+    m_loginModel.setHeaderData(1, Qt::Horizontal, "点菜宝机器号");
 }
