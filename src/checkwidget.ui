@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>859</width>
+    <width>922</width>
     <height>406</height>
    </rect>
   </property>
@@ -41,20 +41,27 @@
          <property name="bottomMargin">
           <number>5</number>
          </property>
+         <item row="0" column="10">
+          <widget class="QPushButton" name="pushButton">
+           <property name="text">
+            <string>查询</string>
+           </property>
+          </widget>
+         </item>
          <item row="0" column="4">
           <widget class="QDateTimeEdit" name="dateTimeEdit_End"/>
          </item>
-         <item row="0" column="10">
+         <item row="0" column="12">
           <widget class="QPushButton" name="pushButton_2">
            <property name="text">
             <string>导出</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="8">
-          <widget class="QPushButton" name="pushButton">
+         <item row="0" column="7">
+          <widget class="QLabel" name="label_5">
            <property name="text">
-            <string>查询</string>
+            <string>类别：</string>
            </property>
           </widget>
          </item>
@@ -74,7 +81,7 @@
          <item row="0" column="5">
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>类别：</string>
+            <string>服务员：</string>
            </property>
           </widget>
          </item>
@@ -88,7 +95,7 @@
          <item row="0" column="6">
           <widget class="QComboBox" name="comboBox"/>
          </item>
-         <item row="0" column="12">
+         <item row="0" column="14">
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -101,8 +108,27 @@
            </property>
           </spacer>
          </item>
-         <item row="0" column="7">
+         <item row="0" column="9">
           <widget class="QLineEdit" name="lineEdit_Orderid"/>
+         </item>
+         <item row="0" column="8">
+          <widget class="QComboBox" name="comboBox_2">
+           <item>
+            <property name="text">
+             <string>全部</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>订单号</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>桌号</string>
+            </property>
+           </item>
+          </widget>
          </item>
         </layout>
        </widget>

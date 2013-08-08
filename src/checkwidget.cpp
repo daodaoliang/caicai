@@ -70,7 +70,7 @@ void CheckWidget::getDate(const QDate &date)
 void CheckWidget::loadMember()
 {
     ui->comboBox->insertItem(ui->comboBox->count(), "È«²¿", 0);
-    ui->comboBox->insertItem(ui->comboBox->count(),"¶©µ¥ºÅ",0);
+    //ui->comboBox->insertItem(ui->comboBox->count(),"¶©µ¥ºÅ",0);
     QString sql = tr("select userid, nickname from userinfo");
     QSqlQuery *query = getSqlManager()->ExecQuery(sql);
     if(query)
@@ -115,6 +115,14 @@ void CheckWidget::calcTotal()
     {
         sql.append(tr(" and operatorId = '%1'").arg(operatorId));
     }
+    if(ui->comboBox_2->currentText() == "¶©µ¥ºÅ")
+    {
+        sql.append(tr(" and orderdetail.orderid = '%1'").arg(ui->lineEdit_Orderid->text()));
+    }
+    if(ui->comboBox_2->currentText() == "×ÀºÅ")
+    {
+        sql.append(tr(" and RIGHT(orderid,4)='%1'").arg(ui->lineEdit_Orderid->text().toInt(),4, 10, QLatin1Char('0')));
+    }
     qDebug() << sql;
     QSqlQuery query(sql, *getSqlManager()->getdb());
     if(query.exec())
@@ -136,6 +144,14 @@ void CheckWidget::calcTotal()
     if(operatorId > 0)
     {
         sql.append(tr(" and operatorId = '%1'").arg(operatorId));
+    }
+    if(ui->comboBox_2->currentText() == "¶©µ¥ºÅ")
+    {
+        sql.append(tr(" and orderdetail.orderid = '%1'").arg(ui->lineEdit_Orderid->text()));
+    }
+    if(ui->comboBox_2->currentText() == "×ÀºÅ")
+    {
+        sql.append(tr(" and RIGHT(orderid,4)='%1'").arg(ui->lineEdit_Orderid->text().toInt(),4, 10, QLatin1Char('0')));
     }
     query.clear();
     if(query.exec(sql))
@@ -166,13 +182,36 @@ void CheckWidget::on_pushButton_clicked()
     }
     QDate lastDate = date.addDays(1);
     QString sql = "";
-    if(ui->comboBox->currentText() == "¶©µ¥ºÅ")
-    {
-        sql = tr("select orderid, accounts, paid, tableid,  begintime, userinfo.nickname from orderinfo "\
-                 "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
-                 "where orderid = '%1' ").arg(ui->lineEdit_Orderid->text());
-    }
-    else
+    //    if(ui->comboBox_2->currentText() != "È«²¿")
+    //    {
+    //        if(ui->comboBox_2->currentText() == "¶©µ¥ºÅ")
+    //        {
+    //            //            sql = tr("select orderid, accounts, tableid,  begintime, userinfo.nickname from orderinfo "\
+    //            //                     "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
+    //            //                     "where orderid = '%1' ").arg(ui->lineEdit_Orderid->text());
+    //            sql = tr("select orderdetail.orderid, dishes.dishesname, dishes.price, orderdetail.dishescount, orderdetail.handletime,"\
+    //                     "orderdetail.dishestype, orderdetail.paytype, orderdetail.cardid from orderdetail "\
+    //                     "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid "\
+    //                     "where (handletime between '%1' and '%2' and orderid = '%3')")
+    //                    .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
+    //                    .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
+    //                    .arg(ui->lineEdit_Orderid->text());
+    //        }
+    //        if(ui->comboBox_2->currentText() == "×ÀºÅ")
+    //        {
+    //            //            sql = tr("select orderid, accounts, tableid,  begintime, userinfo.nickname from orderinfo "\
+    //            //                     "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
+    //            //                     "where tableid = '%1' ").arg(tr("%1").arg(ui->lineEdit_Orderid->text().toInt(),4, 10, QLatin1Char('0')));
+    //            sql = tr("select orderdetail.orderid, dishes.dishesname, dishes.price, orderdetail.dishescount, orderdetail.handletime,"\
+    //                     "orderdetail.dishestype, orderdetail.paytype, orderdetail.cardid from orderdetail "\
+    //                     "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid "\
+    //                     "where (handletime between '%1' and '%2' and RIGHT(orderid,4) = '%3')")
+    //                    .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
+    //                    .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
+    //                    .arg(ui->lineEdit_Orderid->text().toInt(),4, 10, QLatin1Char('0'));
+    //        }
+    //    }
+    //    else
     {
         if(ui->dateTimeEdit_Start->dateTime().toTime_t() > ui->dateTimeEdit_End->dateTime().toTime_t())
         {
@@ -189,6 +228,14 @@ void CheckWidget::on_pushButton_clicked()
         if(userId > 0)
         {
             sql.append(tr(" and operatorid = %1").arg(userId));
+        }
+        if(ui->comboBox_2->currentText() == "¶©µ¥ºÅ")
+        {
+            sql.append(tr(" and orderdetail.orderid = '%1'").arg(ui->lineEdit_Orderid->text()));
+        }
+        if(ui->comboBox_2->currentText() == "×ÀºÅ")
+        {
+            sql.append(tr(" and RIGHT(orderid,4)='%1'").arg(ui->lineEdit_Orderid->text().toInt(),4, 10, QLatin1Char('0')));
         }
     }
     qDebug()<<"account"<<sql;
