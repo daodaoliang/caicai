@@ -304,7 +304,7 @@ void TableWidget::on_toolButton_6_clicked()
 void TableWidget::updateLoginInfo()
 {
     //设置人员名称
-    m_loginModel.setQuery("select userinfo.username, login.machineid from login"\
+    m_loginModel.setQuery("select userinfo.nickname, login.machineid from login"\
                           " LEFT JOIN userinfo ON"\
                           " userinfo.userid = login.userid", *getSqlManager()->getdb());
     m_loginModel.setHeaderData(0, Qt::Horizontal, "服务员");
