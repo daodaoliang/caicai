@@ -105,9 +105,9 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
     m_socket.write(command);
     bool ret2 = false;
     ret2 = m_socket.waitForBytesWritten(1000);
-    m_socket.waitForDisconnected(1000);
-    m_socket.abort();
-    m_socket.close();
+    //    m_socket.waitForDisconnected(1000);
+    //    m_socket.abort();
+    //    m_socket.close();
     return ret2;
 }
 

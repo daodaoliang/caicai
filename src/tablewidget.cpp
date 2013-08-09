@@ -88,6 +88,12 @@ void TableWidget::showDishesInfo(const QString &orderId)
 {
     QList<Dishes> dishesList = dishesInfoBllInstance()->getDishesInfo(orderId);
     clearDishesList();
+    QString sql = "";
+    QString user = "";
+    sql = tr("SELECT userinfo.username from userinfo left join orderdetail "\
+             "on orderdetail.operatorid = userinfo.userid "\
+             "where orderdetail.orderid = '%1' and orderdetail.dishes.id = ").arg(orderId);
+    QSqlQuery* query = NULL;
     foreach(Dishes dish, dishesList)
     {
         if(dish.count > 0)
@@ -98,6 +104,18 @@ void TableWidget::showDishesInfo(const QString &orderId)
             ui->tableWidget->setItem(ui->tableWidget->rowCount() -1, 2, new QTableWidgetItem(tr("%1Ôª").arg(dish.price, 0, 'f', 2)));
             ui->tableWidget->setItem(ui->tableWidget->rowCount() -1, 3, new QTableWidgetItem(dish.state == 0 ? "µã²Ë" : "ÍË²Ë"));
             ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 4, new QTableWidgetItem(QString::number(dish.id)));
+            sql = tr("SELECT userinfo.nickname from userinfo left join orderdetail "\
+                     "on orderdetail.operatorid = userinfo.userid "\
+                     "where orderdetail.orderid = '%1' and orderdetail.dishesid = '%2' and dishestype = 0 order by orderdetail.handletime desc").arg(orderId).arg(dish.id);
+            query = getSqlManager()->ExecQuery(sql);
+            if(query != NULL)
+            {
+                if(query->next())
+                {
+                    user = query->value(0).toString();
+                }
+            }
+            ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 5, new QTableWidgetItem(user));
         }
     }
     double total = 0;
