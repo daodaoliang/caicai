@@ -15,9 +15,9 @@ public:
 signals:
     
 public slots:
-    bool print(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId, double paid);
+    bool print(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId,const int userid, double paid);
     bool printDishes(const QString &tableId, const QList<DishesInfo> &dishes,
-                     const QString &orderId, double paid, const QString &ip);
+                     const QString &orderId,const QString userid, double paid, const QString &ip);
     QByteArray createLine(const QString &text);
     QByteArray createDishes(const DishesInfo &dishes);
     QByteArray createSplit();

@@ -138,7 +138,7 @@ void OrderWidget::on_toolButton_clicked()
     if(result)
     {
         result = getBackPrinter()->print(m_tableId,
-                                         m_dishesInfo.values(), m_orderId, price);
+                                         m_dishesInfo.values(), m_orderId,qApp->property("userId").toInt(), price);
         getFrontPrinter()->print(m_tableId,
                                  m_dishesInfo.values(), m_orderId,qApp->property("userId").toInt(), price);
         qDebug() << "create order result" << result;
@@ -205,7 +205,7 @@ void OrderWidget::on_toolButton_3_clicked()
     if(result)
     {
         result = getBackPrinter()->print(m_tableId,
-                                         m_dishesInfo.values(), m_orderId, price);
+                                         m_dishesInfo.values(), m_orderId,qApp->property("userId").toInt(), price);
         getFrontPrinter()->print(m_tableId,
                                  m_dishesInfo.values(), m_orderId,qApp->property("userId").toInt(), price);
         qDebug() << "create order result" << result;

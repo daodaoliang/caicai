@@ -50,7 +50,7 @@ bool DishesInfoBll::backDish(const QString &orderId, int dishId, int count, int 
     bool result = orderHelperInstance()->createOrder(tableId, dishesList, "", operatorId, price, orderId);
     if(result)
     {
-        return getBackPrinter()->print(tableId, dishesList, orderId, 0);
+        return getBackPrinter()->print(tableId, dishesList,orderId,operatorId,0);
     }
     return false;
 }

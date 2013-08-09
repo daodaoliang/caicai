@@ -2,16 +2,28 @@
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QMessageBox>
+#include "sqlmanager.h"
 BackPrinter::BackPrinter(const QString &ip, QObject *parent) :
     QObject(parent)
 {
     m_ip = ip;
 }
 
-bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId, double paid)
+bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId,const int userid, double paid)
 {
+    qDebug()<<"--------------------------print start";
     QList<DishesInfo> mixian;
     QList<DishesInfo> drink;
+    QString user  = "";
+    QString sql = tr("select nickname from userinfo where userid = '%1'").arg(userid);
+    QSqlQuery *query = getSqlManager()->ExecQuery(sql);
+    if(query != NULL)
+    {
+        if(query->next())
+        {
+            user = query->value(0).toString();
+        }
+    }
     //获取米线
     foreach(DishesInfo dish, dishes)
     {
@@ -20,7 +32,7 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
             mixian.append(dish);
         }
     }
-    printDishes(tableId, mixian, orderId, paid, "192.168.123.100");
+    printDishes(tableId, mixian, orderId,user, paid, "192.168.123.100");
     //获取非饮料
     foreach(DishesInfo dish, dishes)
     {
@@ -29,12 +41,13 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
             drink.append(dish);
         }
     }
-    printDishes(tableId, drink, orderId, paid, "192.168.123.101");
+    printDishes(tableId, drink, orderId, user,paid, "192.168.123.101");
     return true;
 }
 
-bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId, double paid, const QString &ip)
+bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId,const QString user, double paid, const QString &ip)
 {
+    qDebug()<<"--------------------------dish print start";
     if(dishes.isEmpty())
     {
         return true;
@@ -45,6 +58,7 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
                            getConfigerFileInstance()->writerPort().toUInt());
     if(!m_socket.waitForConnected(1000))
     {
+        qDebug()<<"connect wait false-----------------------------"<<m_socket.errorString()<<m_socket.state();
         return false;
     }
     QByteArray command;
@@ -71,7 +85,7 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
     command.append(tr("订单桌号:"));
     //设置加大字号
     command.append("\x1d\x21\x11");
-    command.append(createLine(tableId+"  "+orderType));
+    command.append(createLine(tableId+"  "+orderType+"  "+user));
     command.append(0x0a);
     //打印分割线
     //command.append(createSplit());

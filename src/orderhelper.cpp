@@ -95,7 +95,7 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
             double lastPaid = query.value(5).toDouble();
             //更新操作
             sql = tr("update orderinfo set accounts = %1, paid = %2 where orderid = '%3'").arg(paid + lastAccounts).arg(lastPaid + paid - discountMoney).arg(orderId);
-            qDebug()<<"create order1"<<sql;
+            //qDebug()<<"create order1"<<sql;
             if(!query.exec(sql))
             {
                 //回滚
