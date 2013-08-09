@@ -5,6 +5,7 @@
 #include <QVariant>
 #include "dishesdata.h"
 #include "backprinter.h"
+#include "frontprinter.h"
 DishesInfoBll::DishesInfoBll(QObject *parent) :
     QObject(parent)
 {
@@ -45,11 +46,15 @@ bool DishesInfoBll::backDish(const QString &orderId, int dishId, int count, int 
     dishesInfo.name = dishes.name;
     dishesInfo.price = dishes.price;
     dishesInfo.type = 1;
+    dishesInfo.dishType = dishes.type;
     dishesList.append(dishesInfo);
     double price = 0;
     bool result = orderHelperInstance()->createOrder(tableId, dishesList, "", operatorId, price, orderId);
+    qDebug()<<"creater ret"<<result;
     if(result)
     {
+        qDebug()<<"´òÓ¡ÍË²Ë¿ªÊ¼-----------------------";
+        getFrontPrinter()->print(tableId,dishesList,orderId,operatorId,price);
         return getBackPrinter()->print(tableId, dishesList,orderId,operatorId,0);
     }
     return false;

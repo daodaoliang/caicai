@@ -11,7 +11,6 @@ BackPrinter::BackPrinter(const QString &ip, QObject *parent) :
 
 bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId,const int userid, double paid)
 {
-    qDebug()<<"--------------------------print start";
     QList<DishesInfo> mixian;
     QList<DishesInfo> drink;
     QString user  = "";
@@ -25,8 +24,10 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
         }
     }
     //获取米线
+    qDebug()<<"mixian---";
     foreach(DishesInfo dish, dishes)
     {
+        qDebug()<<dish.dishType;
         if(dish.dishType == 3)
         {
             mixian.append(dish);
@@ -34,6 +35,7 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
     }
     printDishes(tableId, mixian, orderId,user, paid, "192.168.123.100");
     //获取非饮料
+    qDebug()<<"yinliao---";
     foreach(DishesInfo dish, dishes)
     {
         if(dish.dishType != 3)
@@ -47,7 +49,7 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
 
 bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &dishes, const QString &orderId,const QString user, double paid, const QString &ip)
 {
-    qDebug()<<"--------------------------dish print start";
+    qDebug()<<"print "<<dishes.isEmpty();
     if(dishes.isEmpty())
     {
         return true;
@@ -58,7 +60,6 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
                            getConfigerFileInstance()->writerPort().toUInt());
     if(!m_socket.waitForConnected(1000))
     {
-        qDebug()<<"connect wait false-----------------------------"<<m_socket.errorString()<<m_socket.state();
         return false;
     }
     QByteArray command;
@@ -85,7 +86,7 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
     command.append(tr("订单桌号:"));
     //设置加大字号
     command.append("\x1d\x21\x11");
-    command.append(createLine(tableId+"  "+orderType+"  "+user));
+    command.append(createLine(tableId+" "+orderType+" "+user));
     command.append(0x0a);
     //打印分割线
     //command.append(createSplit());
@@ -104,6 +105,9 @@ bool BackPrinter::printDishes(const QString &tableId, const QList<DishesInfo> &d
     m_socket.write(command);
     bool ret2 = false;
     ret2 = m_socket.waitForBytesWritten(1000);
+    m_socket.waitForDisconnected(1000);
+    m_socket.abort();
+    m_socket.close();
     return ret2;
 }
 

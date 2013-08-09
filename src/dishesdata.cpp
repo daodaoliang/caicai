@@ -15,6 +15,7 @@ Dishes DishesData::dishInfo(int dishId)
         dishes.id = dishId;
         dishes.name = query.value(1).toString();
         dishes.price = query.value(2).toDouble();
+        dishes.type = query.value(5).toInt();
     }
     else
     {

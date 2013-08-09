@@ -21,12 +21,14 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
     //¿ªÊ¼ÊÂÎñ
     QSqlDatabase *db = getSqlManager()->getdb();
 
-    //Ì×²ÍÅÐ¶Ï
-    if(!judgePackages(dishes))
+    // ²»ÍË²ÍÊ±Ì×²ÍÅÐ¶Ï
+    if(dishes.first().type != 1)
     {
-        return false;
+        if(!judgePackages(dishes))
+        {
+            return false;
+        }
     }
-
     if(db->transaction())
     {
         QSqlQuery query(*db);
