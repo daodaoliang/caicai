@@ -174,6 +174,8 @@ void SqlManager::logOut(const QString &id)
 {
     QString sql = tr("update userinfo set machineid = '' where machineid = '%1'").arg(id);
     ExecQuery(sql);
+    sql = tr("delete from login where machineid = '%1'").arg(id);
+    ExecQuery(sql);
 }
 
 QSqlQuery *SqlManager::ExecQuery(QString sql)

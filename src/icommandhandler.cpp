@@ -84,7 +84,7 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
         QString nickName = getSqlManager()->login(user, password, cmdDetail[0].right(3), userId);
         if(nickName.isEmpty())
         {
-            replyList.append("0 µÇÂ¼Ê§°Ü,Çë×¢ÏúÔÙµÇÂ¼ ");
+            replyList.append(tr("0 µÇÂ¼Ê§°Ü,Çë×¢ÏúÔÙµÇÂ¼ "));
             reply(replyList, index);
             emit updateInfo();
             return;
@@ -95,7 +95,7 @@ void LoginHandler::handleCommand(const QStringList &cmdDetail, int index)
             QSqlQuery *query = getSqlManager()->ExecQuery(sql);
             if(query != NULL)
             {
-                replyList.append("1 µÇÂ¼³É¹¦");
+                replyList.append(tr("1 '%1'").arg(nickName));
                 reply(replyList, index);
                 emit updateInfo();
                 return;
