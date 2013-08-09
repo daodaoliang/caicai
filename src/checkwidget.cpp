@@ -221,7 +221,7 @@ void CheckWidget::on_pushButton_clicked()
         //            "LEFT JOIN userinfo on userinfo.userid = orderinfo.userid "\
         //                     "where begintime > '%1' and begintime <= '%2' ").arg(date.toString("yyyy-MM-dd")).arg(lastDate.toString("yyyy-MM-dd"));
         sql = tr("select orderdetail.orderid, dishes.dishesname, dishes.price, orderdetail.dishescount, orderdetail.handletime,"\
-                 "orderdetail.dishestype, orderdetail.paytype, orderdetail.cardid from orderdetail "\
+                 "orderdetail.dishestype, orderdetail.paytype, orderdetail.cardid,operatorid from orderdetail "\
                  "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid "\
                  "where (handletime between '%1' and '%2')").arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
         int userId = ui->comboBox->itemData(ui->comboBox->currentIndex()).toInt();
@@ -249,6 +249,7 @@ void CheckWidget::on_pushButton_clicked()
     m_model.setHeaderData(5, Qt::Horizontal, tr("订单类型"));
     m_model.setHeaderData(6, Qt::Horizontal, tr("支付类型"));
     m_model.setHeaderData(7, Qt::Horizontal, tr("支付卡号"));
+    m_model.setHeaderData(8, Qt::Horizontal, tr("服务员"));
     ui->tableView->setColumnWidth(0, 200);
     ui->tableView->setColumnWidth(4, 200);
     calcTotal();
@@ -282,6 +283,8 @@ DetailModel::DetailModel(QWidget *obj) : QSqlQueryModel(obj)
 
 QVariant DetailModel::data(const QModelIndex &item, int role) const
 {
+    QString sql = "";
+    QSqlQuery *query = NULL;
     QVariant value = QSqlQueryModel::data(item, role);
     if (value.isValid() && role == Qt::DisplayRole)
     {
@@ -293,6 +296,18 @@ QVariant DetailModel::data(const QModelIndex &item, int role) const
             return value.toInt() == 0 ? "点菜" : "退菜";
         else if(item.column() == 6)
             return value.toInt() == 0 ? "现金" : "会员卡";
+        else if(item.column() == 8)
+        {
+            sql = tr("select nickname from userinfo where userid = '%1'").arg(value.toInt());
+            query = getSqlManager()->ExecQuery(sql);
+            if(query != NULL)
+            {
+                if(query->next())
+                {
+                    return query->value(0).toString();
+                }
+            }
+        }
     }
     return value;
 }
