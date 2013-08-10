@@ -77,7 +77,7 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         QString cardId = "";
         if(payType != 0)
         {
-            cardId = vipWidget()->payMoney(totalPrice);
+            cardId = vipWidget()->payMoney(totalPrice,orderId);
             if(cardId == "")
             {
                 db->rollback();

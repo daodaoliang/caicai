@@ -11,6 +11,8 @@
 #include "vipwidget.h"
 #include "loginwidget.h"
 #include "configerfileprocesser.h"
+#include "logmsg.h"
+#include <QDir>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -21,6 +23,9 @@ int main(int argc, char *argv[])
     getSqlManager()->Init();
     qApp->setProperty("name", "¼ÒÀÖ¸£µê");
     getConfigerFileInstance()->createInstance();
+    QString path = QDir::currentPath() + "/log";
+    getLogMsg()->SetLogPath(path);
+    getLogMsg()->InitLog("restaurant");
     //ÓÃ»§µÇÂ¼
     LoginWidget login;
     login.setAuthType(LoginWidget::Login);
@@ -37,7 +42,7 @@ int main(int argc, char *argv[])
     w.show();
     w.showMaximized();
     getCardReader()->LoadLibraty();
-    getCardReader()->InitDevice(2,115200);
+    getCardReader()->InitDevice(getConfigerFileInstance()->cardReaderPort().toInt(),getConfigerFileInstance()->cardReaderRate().toLong());
     //    PrinterWidget testWidget;
     //    testWidget.EnterWidget(&testWidget);
     //    testWidget.show();

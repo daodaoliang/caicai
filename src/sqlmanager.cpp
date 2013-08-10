@@ -6,6 +6,7 @@
 #include <QBitArray>
 #include <QMessageBox>
 #include <QFile>
+#include "logmsg.h"
 SqlManager::SqlManager(QObject *parent) :
     QObject(parent)
 {
@@ -173,8 +174,10 @@ int SqlManager::auth(const QString &user, QString password, int authType)
 void SqlManager::logOut(const QString &id)
 {
     QString sql = tr("update userinfo set machineid = '' where machineid = '%1'").arg(id);
+    getLogMsg()->iLogMsg(sql);
     ExecQuery(sql);
     sql = tr("delete from login where machineid = '%1'").arg(id);
+    //getLogMsg()->iLogMsg(sql);
     ExecQuery(sql);
 }
 

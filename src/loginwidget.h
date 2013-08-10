@@ -15,7 +15,8 @@ public:
     {
         Login = 0,          //登录
         BackDish = 1,
-        ShowReport = 2      //查看报表
+        ShowReport = 2,      //查看报表
+        OperViPCard          //操作会员卡,只需要查看是否有该操作员
     };
 public:
     explicit LoginWidget(QWidget *parent = 0);

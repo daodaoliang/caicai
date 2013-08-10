@@ -9,6 +9,7 @@ toolWidget::toolWidget(QWidget *parent) :
     m_buttonList.append(new toolButton(":/img/toolWidget/muMa.png",tr("会员管理")));
     m_buttonList.append(new toolButton(":/img/toolWidget/louDong.png",tr("结算盘点")));
     m_buttonList.append(new toolButton(":/img/toolWidget/xiTong.png",tr("数据统计")));
+    m_buttonList.append(new toolButton(":/img/toolWidget/menZhen.png",tr("会员卡记录")));
 
     QLabel *logoLabel=new QLabel;
     QPixmap pixmap(":/img/logo.png");

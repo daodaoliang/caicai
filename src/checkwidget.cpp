@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include "functionwidget.h"
 #include "loginwidget.h"
+#include "logmsg.h"
 CheckWidget::CheckWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CheckWidget), m_calendar(this)
@@ -72,6 +73,7 @@ void CheckWidget::loadMember()
     ui->comboBox->insertItem(ui->comboBox->count(), "全部", 0);
     //ui->comboBox->insertItem(ui->comboBox->count(),"订单号",0);
     QString sql = tr("select userid, nickname from userinfo");
+    getLogMsg()->iLogMsg(sql);
     QSqlQuery *query = getSqlManager()->ExecQuery(sql);
     if(query)
     {
@@ -124,6 +126,7 @@ void CheckWidget::calcTotal()
         sql.append(tr(" and RIGHT(orderid,4)='%1'").arg(ui->lineEdit_Orderid->text().toInt(),4, 10, QLatin1Char('0')));
     }
     qDebug() << sql;
+    getLogMsg()->iLogMsg(sql);
     QSqlQuery query(sql, *getSqlManager()->getdb());
     if(query.exec())
     {
@@ -154,6 +157,7 @@ void CheckWidget::calcTotal()
         sql.append(tr(" and RIGHT(orderid,4)='%1'").arg(ui->lineEdit_Orderid->text().toInt(),4, 10, QLatin1Char('0')));
     }
     query.clear();
+    getLogMsg()->iLogMsg(sql);
     if(query.exec(sql))
     {
         if(query.next())
@@ -239,6 +243,7 @@ void CheckWidget::on_pushButton_clicked()
         }
     }
     qDebug()<<"account"<<sql;
+    getLogMsg()->iLogMsg(sql);
     QSqlQuery query(sql, *getSqlManager()->getdb());
     m_model.setQuery(query);
     m_model.setHeaderData(0, Qt::Horizontal, tr("订单号"));
@@ -261,6 +266,7 @@ void CheckWidget::on_tableView_doubleClicked(const QModelIndex &index)
     QString orderId = m_model.record(index.row()).value(0).toString();
     QString sql = tr("select dishes.dishesname, orderdetail.dishescount, dishes.price, orderdetail.dishestype,orderdetail.orderid from orderdetail " \
                      "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid where orderid = '%1'").arg(orderId);
+    getLogMsg()->iLogMsg(sql);
     m_detail.showDetail(sql);
 }
 
@@ -299,6 +305,7 @@ QVariant DetailModel::data(const QModelIndex &item, int role) const
         else if(item.column() == 8)
         {
             sql = tr("select nickname from userinfo where userid = '%1'").arg(value.toInt());
+            getLogMsg()->iLogMsg(sql);
             query = getSqlManager()->ExecQuery(sql);
             if(query != NULL)
             {

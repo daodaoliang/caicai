@@ -51,7 +51,10 @@ SOURCES += main.cpp\
     dinnertablebll.cpp \
     statiswidget.cpp \
     excelengine.cpp \
-    dishesdata.cpp
+    dishesdata.cpp \
+    logmsg.cpp \
+    fileoperate.cpp \
+    carddetailwidget.cpp
 
 
 HEADERS  += mainwidget.h \
@@ -95,7 +98,10 @@ HEADERS  += mainwidget.h \
     dinnertablebll.h \
     statiswidget.h \
     excelengine.h \
-    dishesdata.h
+    dishesdata.h \
+    logmsg.h \
+    fileoperate.h \
+    carddetailwidget.h
 
 RESOURCES += \
     src.qrc
@@ -112,4 +118,5 @@ FORMS += \
     loginwidget.ui \
     adddiningtablewidget.ui \
     tablewidget.ui \
-    statiswidget.ui
+    statiswidget.ui \
+    carddetailwidget.ui

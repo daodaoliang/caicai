@@ -65,7 +65,7 @@ private:
     QString m_Sql;
     int m_nOperid;
 public:
-    QString payMoney(const double &money);
+    QString payMoney(const double &money, const QString &orderid);
 };
 inline VipWidget *vipWidget()
 {

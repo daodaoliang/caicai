@@ -5,6 +5,7 @@
 #include "loginwidget.h"
 #include <QMessageBox>
 #include "functionwidget.h"
+#include "logmsg.h"
 StatisWidget::StatisWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StatisWidget)
@@ -212,6 +213,7 @@ void StatisWidget::on_but_Search_clicked()
         m_TableModel->setHeaderData(4, Qt::Horizontal, "Ê±¼ä");
 
     }
+    getLogMsg()->iLogMsg(sql);
     ui->but_ToExcel->setEnabled(true);
 }
 

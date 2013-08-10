@@ -18,6 +18,9 @@ private:
     QString m_writerPort;
     //´òÓ¡»ñÈ¡×´Ì¬¶Ë¿Ú
     QString m_statePort;
+    //¿¨¶ÁÐ´Æ÷¶Ë¿Ú
+    QString m_cardReaderPort;
+    QString m_cardReaderRate;
 public:
     bool createInstance();
 public:
@@ -25,9 +28,13 @@ public:
     QString printerIp2();
     QString writerPort();
     QString statePort();
+    QString cardReaderPort();
+    QString cardReaderRate();
     void setPrinterIp(const QString &data);
     void setWriterPort(const QString &data);
     void setStatePort(const QString &data);
+    void setcardReaderPort(const QString &data);
+    void setcardReaderRate(const QString &data);
 };
 ConfigerFileProcesser *getConfigerFileInstance();
 #endif // CONFIGERFILEPROCESSER_H

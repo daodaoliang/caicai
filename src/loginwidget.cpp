@@ -2,6 +2,8 @@
 #include "ui_loginwidget.h"
 #include "sqlmanager.h"
 #include <QDebug>
+#include <QSqlRecord>
+#include <QCryptographicHash>
 LoginWidget::LoginWidget(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LoginWidget)
@@ -43,25 +45,51 @@ void LoginWidget::on_pushButton_clicked()
     }
     else
     {
-        static int indexCount = 0;
-        if(indexCount == 3)
+        if(m_authType == OperViPCard)
         {
-            indexCount = 0;
-            this->reject();
+            password = QCryptographicHash::hash(tr("%1%2").arg(user).arg(password).toLocal8Bit(), QCryptographicHash::Md5).toHex().data();
+            QString nickname = "";
+            QString sql = tr("select userid,nickname from userinfo where username = '%1' and password = '%2'").arg(user).arg(password);
+            QSqlQuery* query = getSqlManager()->ExecQuery(sql);
+            if(query != NULL)
+            {
+                if(query->next())
+                {
+                    if(query->record().count() > 0)
+                    {
+                        m_userId = query->value(0).toInt();
+                        nickname = query->value(1).toString();
+                        this->accept();
+                    }
+                }
+            }
+            if(nickname.isEmpty())
+            {
+                ui->label_3->setText("登录失败或者已经登录");
+            }
         }
         else
         {
-            int result = getSqlManager()->auth(user, password, m_authType);
-            if(result != -1)
+            static int indexCount = 0;
+            if(indexCount == 3)
             {
                 indexCount = 0;
-                m_userId = result;
-                this->accept();
+                this->reject();
             }
             else
             {
-                ui->label_3->setText("登录失败或者已经登录");
-                indexCount++;
+                int result = getSqlManager()->auth(user, password, m_authType);
+                if(result != -1)
+                {
+                    indexCount = 0;
+                    m_userId = result;
+                    this->accept();
+                }
+                else
+                {
+                    ui->label_3->setText("登录失败或者已经登录");
+                    indexCount++;
+                }
             }
         }
     }

@@ -33,6 +33,9 @@ bool ConfigerFileProcesser::createInstance()
     m_printerIp2 = (tempSetting.value(tempGroup+"/printerIp1",tr("192.168.123.101")).toString());
     setWriterPort(tempSetting.value(tempGroup+"/writerPort",tr("9100")).toString());
     setStatePort(tempSetting.value(tempGroup+"/statePort",tr("4000")).toString());
+    tempGroup = tr("CardReader");
+    setcardReaderPort(tempSetting.value(tempGroup+"/Port",tr("2")).toString());
+    setcardReaderRate(tempSetting.value(tempGroup+"/Rate",tr("115200")).toString());
 }
 
 QString ConfigerFileProcesser::printerIp()
@@ -55,6 +58,16 @@ QString ConfigerFileProcesser::statePort()
     return m_statePort;
 }
 
+QString ConfigerFileProcesser::cardReaderPort()
+{
+    return m_cardReaderPort;
+}
+
+QString ConfigerFileProcesser::cardReaderRate()
+{
+    return m_cardReaderRate;
+}
+
 void ConfigerFileProcesser::setPrinterIp(const QString &data)
 {
     m_printerIp=data;
@@ -68,6 +81,16 @@ void ConfigerFileProcesser::setWriterPort(const QString &data)
 void ConfigerFileProcesser::setStatePort(const QString &data)
 {
     m_statePort=data;
+}
+
+void ConfigerFileProcesser::setcardReaderPort(const QString &data)
+{
+    m_cardReaderPort = data;
+}
+
+void ConfigerFileProcesser::setcardReaderRate(const QString &data)
+{
+    m_cardReaderRate = data;
 }
 
 ConfigerFileProcesser *getConfigerFileInstance()
