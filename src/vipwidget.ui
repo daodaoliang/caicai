@@ -33,6 +33,30 @@
           <string>会员信息</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>分店编码：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="lineEdit_Phone"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>会员卡号：</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>会员电话：</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="1">
            <widget class="QLineEdit" name="lineEdit_ShopID"/>
           </item>
@@ -80,34 +104,17 @@
           <item row="5" column="1">
            <widget class="QComboBox" name="Box_MemType"/>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>会员电话：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>分店编码：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>会员卡号：</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="lineEdit_Phone"/>
-          </item>
-          <item row="6" column="1">
+          <item row="7" column="0">
            <widget class="QPushButton" name="but_pay">
             <property name="text">
              <string>消费</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QPushButton" name="but_ChangeMoeny">
+            <property name="text">
+             <string>调整额度</string>
             </property>
            </widget>
           </item>
@@ -375,7 +382,7 @@
                   </widget>
                  </item>
                  <item row="2" column="1">
-                  <widget class="QLabel" name="label_8">
+                  <widget class="QLabel" name="label_MoreMoney">
                    <property name="styleSheet">
                     <string notr="true"/>
                    </property>

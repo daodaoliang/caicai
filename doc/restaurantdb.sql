@@ -245,7 +245,7 @@ CREATE TABLE `memcarddetail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `memcardid` varchar(20) NOT NULL,
   `handletype` int(11) NOT NULL,
-  `handlemoney` decimal(10,0) NOT NULL,
+  `handlemoney` decimal(10,0) DEFAULT NULL,
   `moremoney` decimal(10,0) DEFAULT NULL,
   `orderid` varchar(255) DEFAULT NULL,
   `relatecardid` varchar(255) DEFAULT NULL,

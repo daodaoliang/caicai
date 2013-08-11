@@ -43,6 +43,8 @@ private slots:
 
     void on_but_pay_clicked();
 
+    void on_but_ChangeMoeny_clicked();
+
 private:
     Ui::VipWidget *ui;
     QSqlTableModel *m_TableModel;
@@ -66,6 +68,7 @@ private:
     int m_nOperid;
 public:
     QString payMoney(const double &money, const QString &orderid);
+    bool backMoney(const QString &cardid,const double &money,const QString &orderid);
 };
 inline VipWidget *vipWidget()
 {
