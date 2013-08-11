@@ -232,9 +232,12 @@ bool CardReaderManager::ReadCard(unsigned char Adr, unsigned char *Data)
 {
     if(m_rf_read == NULL)
     {
+        qDebug()<<"read false null----------";
         return false;
     }
+    qDebug()<<"read false null----------1"<<m_DeviceID;
     int ret = m_rf_read(m_DeviceID,Adr,Data);
+    qDebug()<<"read false null----------2";
     if( ret!= 0)
     {
         qDebug()<<"ReadCard 0"<<ret;

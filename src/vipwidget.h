@@ -44,7 +44,8 @@ private slots:
     void on_but_pay_clicked();
 
     void on_but_ChangeMoeny_clicked();
-
+protected:
+    void showEvent(QShowEvent *);
 private:
     Ui::VipWidget *ui;
     QSqlTableModel *m_TableModel;

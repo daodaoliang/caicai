@@ -105,7 +105,7 @@ void VipWidget::on_pushButton_Add_clicked()
     QString idCard = ui->lineEdit_IDCard->text();
     QString phone = ui->lineEdit_Phone->text();
     QString cardNum = ui->lineEdit_CardNum->text();
-    if(shopid.length()==0||memName.length()==0||nmemType.length()==0||idCard.length()==0||phone.length()==0||ui->lineEdit_CardNum->text().length()==0)
+    if(shopid.length()==0||memName.length()==0||nmemType.length()==0||idCard.length()<9||phone.length()==0||ui->lineEdit_CardNum->text().length()==0)
     {
         return;
     }
@@ -125,6 +125,7 @@ void VipWidget::on_pushButton_Add_clicked()
         m_TableModel->setData(m_TableModel->index(rowCount,5),QDateTime::currentDateTime());
         m_TableModel->setData(m_TableModel->index(rowCount,7),memType);
         m_TableModel->setData(m_TableModel->index(rowCount,8),shopid);
+        m_TableModel->setData(m_TableModel->index(rowCount,9),0);
         m_Sql = tr("insert into memcarddetail(memcardid,handletype,operatorid,handletime) values "\
                    "('%1','%2','%3','%4')")
                 .arg(ui->lineEdit_CardNum->text()).arg(6).arg(m_nOperid)
@@ -309,7 +310,7 @@ bool VipWidget::writeInfoToCard()
         qDebug()<<"»áÔ±±àºÅÐ´¿¨Ê§°Ü";
         return false;
     }
-    //getCardReader()->DevBeep(10);
+    getCardReader()->DevBeep(10);
     getCardReader()->Halt();
     return true;
 }
@@ -343,7 +344,7 @@ void VipWidget::setTextEnable(bool enable)
 void VipWidget::updateRecord(int startPage)
 {
     QString filer = tr("1=1 LIMIT %1,%2").arg((startPage-1)*m_Interval).arg(m_Interval);
-    qDebug()<<tr("start:%1end:%2").arg((startPage-1)*m_Interval).arg(startPage*m_Interval);
+    //qDebug()<<tr("start:%1end:%2").arg((startPage-1)*m_Interval).arg(startPage*m_Interval);
     m_TableModel->setFilter(filer);
     ui->label_PageInfo->setText(tr("µÚ%2Ò³/¹²%1Ò³/%3Ìõ").arg(m_PageCount).arg(startPage).arg(m_RecordCount));
     if(m_CurPage == 1)
@@ -492,6 +493,16 @@ void VipWidget::on_pushButton_OpenCard_clicked()
         ui->but_Recharge->setEnabled(true);
         ui->but_ChangeMoeny->setEnabled(true);
         ui->but_pay->setEnabled(true);
+    }
+    else
+    {
+        //m_TableModel->setFilter(tr("1 = 1"));
+        resetPageInfo();
+        ui->lineEdit_ShopID->setText(tr("¼ÒÀÖ¸£µê"));
+        ui->pushButton_Add->setText("Ìí¼Ó");
+        ui->but_Recharge->setEnabled(false);
+        ui->but_ChangeMoeny->setEnabled(false);
+        ui->but_pay->setEnabled(false);
     }
     //getCardReader()->Halt();
     getCardReader()->DevBeep(10);
@@ -860,4 +871,10 @@ void VipWidget::on_but_ChangeMoeny_clicked()
     ui->but_Recharge->setEnabled(false);
     ui->but_pay->setEnabled(false);
     ui->but_ChangeMoeny->setEnabled(false);
+}
+
+void VipWidget::showEvent(QShowEvent *)
+{
+    resetText();
+    resetPageInfo();
 }
