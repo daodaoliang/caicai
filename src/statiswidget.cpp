@@ -234,7 +234,7 @@ void StatisWidget::on_tableView_doubleClicked(const QModelIndex &index)
     }
     //QString orderId =((QSqlQueryModel*)m_TableModel)->record(index.row()).value(0).toString();
     QString orderId = ((QSqlQueryModel*)m_TableModel)->data(((QSqlQueryModel*)m_TableModel)->index(index.row(),0)).toString();
-    QString sql = tr("select dishes.dishesname, orderdetail.dishescount, dishes.price, orderdetail.dishestype,orderdetail.orderid from orderdetail " \
+    QString sql = tr("select dishes.dishesname, orderdetail.dishescount, dishes.price, orderdetail.dishestype,orderdetail.orderid,orderdetail.handletime from orderdetail " \
                      "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid where orderid = '%1'").arg(orderId);
     qDebug()<<"Ë«»÷"<<sql;
     m_detail.showDetail(sql);
