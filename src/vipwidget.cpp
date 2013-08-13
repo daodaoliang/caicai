@@ -714,6 +714,7 @@ QString VipWidget::payMoney(const double &money,const QString& orderid)
     }
     if(yue < money)
     {
+        QMessageBox::information(this, "提示", "余额不足,请充值后刷卡");
         return "";
     }
     double balance = yue - money;
