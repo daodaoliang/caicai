@@ -123,8 +123,8 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         //循环插入订单详情
         foreach(DishesInfo info, dishes)
         {
-            sql = tr("insert into orderdetail (orderid, dishesid, dishescount, dishestype, handletime, paytype, cardid,operatorid) values ('%1', %2, %3, %5, '%4', '%6', '%7'/*,'%8'*/)")
-                    .arg(orderId).arg(info.id).arg(info.count).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(info.type).arg(payType)/*.arg(cardId)*/.arg(userid);
+            sql = tr("insert into orderdetail (orderid, dishesid, dishescount, dishestype, handletime, paytype,operatorid) values ('%1', %2, %3, %5, '%4', '%6', '%7')")
+                    .arg(orderId).arg(info.id).arg(info.count).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(info.type).arg(payType).arg(userid);
             qDebug()<<"create order3"<<sql;
             if(!query.exec(sql))
             {

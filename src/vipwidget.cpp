@@ -423,20 +423,24 @@ void VipWidget::on_pushButton_OpenCard_clicked()
     if(!getCardReader()->Reset(10))
     {
         qDebug()<<tr("reset false");
+        QMessageBox::information(this, "提示", "打开卡片失败,请重新打开");
         return;
     }
     if(!getCardReader()->RequestCard(1,&type))
     {
+        QMessageBox::information(this, "提示", "打开卡片失败,请重新打开");
         qDebug()<<tr("requestcard false");
         return;
     }
     if(!getCardReader()->AnticollCard(0,&snr))
     {
+        QMessageBox::information(this, "提示", "打开卡片失败,请重新打开");
         qDebug()<<tr("anticollcard false");
         return;
     }
     if(!getCardReader()->SelectCard(snr,&size))
     {
+        QMessageBox::information(this, "提示", "打开卡片失败,请重新打开");
         qDebug()<<tr("selectcard false");
         return;
     }
@@ -448,20 +452,40 @@ void VipWidget::on_pushButton_OpenCard_clicked()
         m_CurCardSnr = cardID;
         ui->lineEdit_MemName->setText(QString::fromLocal8Bit(rdata));
     }
+    else
+    {
+        QMessageBox::information(this, "提示", "打开卡片失败,请重新打开");
+        return;
+    }
     memset(rdata,0,16);
     if(getCardReader()->ReadCard(key,9,rdata,16,cardID))
     {
         ui->lineEdit_Phone->setText(QString::fromLocal8Bit(rdata));
+    }
+    else
+    {
+        QMessageBox::information(this, "提示", "打开卡片失败,请重新打开");
+        return;
     }
     memset(rdata,0,16);
     if(getCardReader()->ReadCard(key,10,rdata,16,cardID))
     {
         qDebug()<<QString::fromLocal8Bit(rdata);
     }
+    else
+    {
+        QMessageBox::information(this, "提示", "打开卡片失败,请重新打开");
+        return;
+    }
     memset(rdata,0,16);
     if(getCardReader()->ReadCard(key,12,rdata,16,cardID))
     {
         ui->lineEdit_IDCard->setText(QString::fromLocal8Bit(rdata));
+    }
+    else
+    {
+        QMessageBox::information(this, "提示", "打开卡片失败,请重新打开");
+        return;
     }
     memset(rdata,0,16);
     if(getCardReader()->ReadCard(key,13,rdata,16,cardID))
@@ -477,10 +501,20 @@ void VipWidget::on_pushButton_OpenCard_clicked()
             ui->Box_MemType->setCurrentIndex(m_BoxMap.values(QString::fromLocal8Bit(rdata)).at(1));
         }
     }
+    else
+    {
+        QMessageBox::information(this, "提示", "打开卡片失败,请重新打开");
+        return;
+    }
     memset(rdata,0,16);
     if(getCardReader()->ReadCard(key,16,rdata,16,cardID))
     {
         ui->lineEdit_ShopID->setText(QString::fromLocal8Bit(rdata));
+    }
+    else
+    {
+        QMessageBox::information(this, "提示", "打开卡片失败,请重新打开");
+        return;
     }
     if(selectVipInfoByCardID(cardID) > 0)
     {

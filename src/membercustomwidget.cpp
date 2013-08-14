@@ -54,4 +54,18 @@ void MemberCustomWidget::on_pushButton_2_clicked()
     {
         QMessageBox::information(this, "提示", "支付失败");
     }
+    else
+    {
+        QMessageBox::information(this, "提示", "支付成功");
+    }
+}
+
+void MemberCustomWidget::on_tableView_doubleClicked(const QModelIndex &index)
+{
+    QString orderId = m_model.data(m_model.index(index.row(),0)).toString();
+    QString orderTime = m_model.data(m_model.index(index.row(),1)).toString();
+    QString sql = tr("select dishes.dishesname, orderdetail.dishescount, dishes.price, orderdetail.dishestype,orderdetail.orderid,orderdetail.handletime from orderdetail " \
+                     "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid where orderid = '%1' and handletime = '%2'").arg(orderId).arg(orderTime);
+    qDebug()<<"双击"<<sql;
+    m_detail.showDetail(sql);
 }

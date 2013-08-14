@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QSqlQueryModel>
-
+#include "detailwidget.h"
 namespace Ui {
 class MemberCustomWidget;
 }
@@ -21,9 +21,12 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_tableView_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::MemberCustomWidget *ui;
     QSqlQueryModel m_model;
+    DetailWidget m_detail;
 };
 
 inline MemberCustomWidget *memberCustomWidgetInstance()

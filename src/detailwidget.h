@@ -15,7 +15,7 @@ class MyTableModel : public QSqlQueryModel
 public:
     MyTableModel(QWidget *obj = NULL);
     QVariant data(const QModelIndex &item, int role) const;
-    Qt::ItemFlags flags(const QModelIndex &index) const;
+    //Qt::ItemFlags flags(const QModelIndex &index) const;
 private:
     int colNumberWithCheckBox;
     QMap<int, Qt::CheckState> rowCheckStateMap;
@@ -40,7 +40,6 @@ public:
 
 protected:
 private slots:
-    void on_tableView_doubleClicked(const QModelIndex &index);
 
     void on_tableView_clicked(const QModelIndex &index);
 
