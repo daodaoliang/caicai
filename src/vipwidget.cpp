@@ -696,7 +696,7 @@ void VipWidget::on_but_querenchong_clicked()
     }
 
 }
-QString VipWidget::payMoney(const double &money,const QString& orderid)
+QString VipWidget::payMoney(const double &money,const QString& orderid,QDateTime orderItme)
 {
     on_pushButton_OpenCard_clicked();
     double yue = 0;
@@ -724,6 +724,8 @@ QString VipWidget::payMoney(const double &money,const QString& orderid)
                       "values ('%1','%2','%3','%4','%5','%6')")
             .arg(ui->lineEdit_CardNum->text()).arg(2).arg(money).arg(orderid)
             .arg(m_nOperid).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+    QString sql3 = tr("update orderdetail set paytype = 1,cardId = '%1' where orderid = '%2' and handletime = '%3'")
+            .arg(ui->lineEdit_CardNum->text()).arg(orderid).arg(orderItme.toString("yyyy-MM-dd hh:mm:ss"));
     QSqlDatabase* db = getSqlManager()->getdb();
     QSqlQuery query(*db);
     if(db->transaction())
@@ -736,6 +738,11 @@ QString VipWidget::payMoney(const double &money,const QString& orderid)
             return "";
         }
         if(!query.exec(sql2))
+        {
+            db->rollback();
+            return "";
+        }
+        if(!query.exec(sql3))
         {
             db->rollback();
             return "";

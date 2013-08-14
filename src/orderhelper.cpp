@@ -46,20 +46,20 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         {
             return false;
         }
-//        sql = tr("select price, dishesname, typeid from dishes where dishesid in(%1) ORDER BY FIND_IN_SET(dishesid, '%1')").arg(id);
-//        qDebug() << sql;
-//        QSqlQuery *priceQuery = getSqlManager()->ExecQuery(sql);
-//        double paid = 0;
-//        int index = 0;
-//        while(priceQuery->next())
-//        {
-//            paid += priceQuery->value(0).toDouble() * dishes[index].count;
-//            qDebug()<<priceQuery->value(0).toDouble()<<dishes[index].count<<QString::number(paid);
-//            dishes[index].name = priceQuery->value(1).toString();
-//            dishes[index].dishType = priceQuery->value(2).toInt();
-//            qDebug()<<"sql-----"<<dishes[index].name<<dishes[index].count;
-//            index++;
-//        }
+        //        sql = tr("select price, dishesname, typeid from dishes where dishesid in(%1) ORDER BY FIND_IN_SET(dishesid, '%1')").arg(id);
+        //        qDebug() << sql;
+        //        QSqlQuery *priceQuery = getSqlManager()->ExecQuery(sql);
+        //        double paid = 0;
+        //        int index = 0;
+        //        while(priceQuery->next())
+        //        {
+        //            paid += priceQuery->value(0).toDouble() * dishes[index].count;
+        //            qDebug()<<priceQuery->value(0).toDouble()<<dishes[index].count<<QString::number(paid);
+        //            dishes[index].name = priceQuery->value(1).toString();
+        //            dishes[index].dishType = priceQuery->value(2).toInt();
+        //            qDebug()<<"sql-----"<<dishes[index].name<<dishes[index].count;
+        //            index++;
+        //        }
         double paid = 0;
         for(int i = 0; i < dishes.count(); i++)
         {
@@ -73,17 +73,17 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         double discountMoney = discount(dishes);
         totalPrice = paid - discountMoney;
         qDebug()<<"order"<<paid<<totalPrice;
-        //如果使用卡片则在此处扣钱
-        QString cardId = "";
-        if(payType != 0)
-        {
-            cardId = vipWidget()->payMoney(totalPrice,orderId);
-            if(cardId == "")
-            {
-                db->rollback();
-                return false;
-            }
-        }
+                //如果使用卡片则在此处扣钱
+        //        QString cardId = "";
+        //        if(payType != 0)
+        //        {
+        //            cardId = vipWidget()->payMoney(totalPrice,orderId,QDateTime::currentDateTime());
+        //            if(cardId == "")
+        //            {
+        //                db->rollback();
+        //                return false;
+        //            }
+        //        }
         //判断是插入还是更新
         if(!query.exec(tr("select * from orderinfo where orderid = '%1'").arg(orderId) ))
         {
@@ -123,12 +123,23 @@ bool OrderHelper::createOrder(const QString &tableId, QList<DishesInfo> &dishes,
         //循环插入订单详情
         foreach(DishesInfo info, dishes)
         {
-            sql = tr("insert into orderdetail (orderid, dishesid, dishescount, dishestype, handletime, paytype, cardid,operatorid) values ('%1', %2, %3, %5, '%4', '%6', '%7','%8')")
-                    .arg(orderId).arg(info.id).arg(info.count).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(info.type).arg(payType).arg(cardId).arg(userid);
+            sql = tr("insert into orderdetail (orderid, dishesid, dishescount, dishestype, handletime, paytype, cardid,operatorid) values ('%1', %2, %3, %5, '%4', '%6', '%7'/*,'%8'*/)")
+                    .arg(orderId).arg(info.id).arg(info.count).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")).arg(info.type).arg(payType)/*.arg(cardId)*/.arg(userid);
             qDebug()<<"create order3"<<sql;
             if(!query.exec(sql))
             {
                 //回滚
+                db->rollback();
+                return false;
+            }
+        }
+        //如果使用卡片则在此处扣钱
+        QString cardId = "";
+        if(payType != 0)
+        {
+            cardId = vipWidget()->payMoney(totalPrice,orderId,QDateTime::currentDateTime());
+            if(cardId == "")
+            {
                 db->rollback();
                 return false;
             }
