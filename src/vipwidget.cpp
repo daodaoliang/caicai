@@ -696,7 +696,7 @@ void VipWidget::on_but_querenchong_clicked()
     }
 
 }
-QString VipWidget::payMoney(const double &money,const QString& orderid,QDateTime orderItme)
+QString VipWidget::payMoney(const double &money,const QString& orderid,const QDateTime &orderItme)
 {
     on_pushButton_OpenCard_clicked();
     double yue = 0;

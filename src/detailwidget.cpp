@@ -85,11 +85,11 @@ QVariant MyTableModel::data(const QModelIndex &item, int role) const
     {
         return tr("已选");
     }
-    if (role == Qt::CheckStateRole && item.column() == 6)
-    {
-        qDebug()<<"int -----------------------------------";
-        return (QSqlQueryModel::data(item).toInt() != 0) ? Qt::Checked : Qt::Unchecked;
-    }
+//    if (role == Qt::CheckStateRole && item.column() == 6)
+//    {
+//        qDebug()<<"int -----------------------------------";
+//        return item.data(Qt::CheckStateRole).toInt() == Qt::Unchecked ? Qt::Checked : Qt::Unchecked;
+//    }
 
     return value;
 }
@@ -135,4 +135,9 @@ void DetailWidget::on_tableView_doubleClicked(const QModelIndex &index)
     //    }
     //    ui->label_2->text().append(tr("选择支付：%1元").arg(m_CurMoney));
     //    qDebug()<<"money"<<"select data--------"<<m_CurOrderid<<m_CurMoney;
+}
+
+void DetailWidget::on_tableView_clicked(const QModelIndex &index)
+{
+    qDebug() << index.row();
 }

@@ -8,6 +8,7 @@
 #include "tablewidget.h"
 #include "statiswidget.h"
 #include "carddetailwidget.h"
+#include "membercustomwidget.h"
 FunctionWidget::FunctionWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FunctionWidget)
@@ -18,6 +19,7 @@ FunctionWidget::FunctionWidget(QWidget *parent) :
     ui->stackedWidget->addWidget(checkWidget());
     ui->stackedWidget->addWidget(statisWidget());
     ui->stackedWidget->addWidget(cardDetailWidget());
+    ui->stackedWidget->addWidget(memberCustomWidgetInstance());
     ui->stackedWidget->addWidget(orderWidget());
 }
 

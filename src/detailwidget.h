@@ -42,6 +42,8 @@ protected:
 private slots:
     void on_tableView_doubleClicked(const QModelIndex &index);
 
+    void on_tableView_clicked(const QModelIndex &index);
+
 private:
     Ui::DetailWidget *ui;
     MyTableModel m_model;

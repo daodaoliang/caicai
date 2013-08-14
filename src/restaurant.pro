@@ -54,7 +54,8 @@ SOURCES += main.cpp\
     dishesdata.cpp \
     logmsg.cpp \
     fileoperate.cpp \
-    carddetailwidget.cpp
+    carddetailwidget.cpp \
+    membercustomwidget.cpp
 
 
 HEADERS  += mainwidget.h \
@@ -101,7 +102,8 @@ HEADERS  += mainwidget.h \
     dishesdata.h \
     logmsg.h \
     fileoperate.h \
-    carddetailwidget.h
+    carddetailwidget.h \
+    membercustomwidget.h
 
 RESOURCES += \
     src.qrc
@@ -119,4 +121,5 @@ FORMS += \
     adddiningtablewidget.ui \
     tablewidget.ui \
     statiswidget.ui \
-    carddetailwidget.ui
+    carddetailwidget.ui \
+    membercustomwidget.ui

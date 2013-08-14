@@ -6,8 +6,8 @@ Logger::Logger(QObject *parent) :
 }
 Logger* getLogMsg()
 {
-    static QMutex mutexn;
-    QMutexLocker lock(&mutexn);
+//    static QMutex mutexn;
+//    QMutexLocker lock(&mutexn);
     static Logger* log = NULL;
     if(log == NULL)
     {
@@ -40,7 +40,7 @@ bool Logger::InitLog(QString fileName)
 
 void Logger::iLogMsg(QString msg)
 {
-    QMutexLocker lock(&mutex);
+//    QMutexLocker lock(&mutex);
     //::LogMsg(msg, LOG);
     m_Log.LogMsg(msg);
 }
