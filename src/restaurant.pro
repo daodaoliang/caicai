@@ -55,7 +55,8 @@ SOURCES += main.cpp\
     logmsg.cpp \
     fileoperate.cpp \
     carddetailwidget.cpp \
-    membercustomwidget.cpp
+    membercustomwidget.cpp \
+    backwidget.cpp
 
 
 HEADERS  += mainwidget.h \
@@ -103,7 +104,8 @@ HEADERS  += mainwidget.h \
     logmsg.h \
     fileoperate.h \
     carddetailwidget.h \
-    membercustomwidget.h
+    membercustomwidget.h \
+    backwidget.h
 
 RESOURCES += \
     src.qrc
@@ -122,4 +124,5 @@ FORMS += \
     tablewidget.ui \
     statiswidget.ui \
     carddetailwidget.ui \
-    membercustomwidget.ui
+    membercustomwidget.ui \
+    backwidget.ui
