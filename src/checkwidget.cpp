@@ -29,8 +29,8 @@ CheckWidget::CheckWidget(QWidget *parent) :
 
     //ui->tableView->setEditTriggers(QAbstractItemView::EditKeyPressed);
     ui->lineEdit_BackCnt->setText("1");
-    ui->lineEdit_BackCnt->setVisible(false);
-    ui->but_backdish->setVisible(false);
+    //ui->lineEdit_BackCnt->setVisible(false);
+    //ui->but_backdish->setVisible(false);
 }
 
 CheckWidget::~CheckWidget()
