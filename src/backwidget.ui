@@ -33,7 +33,7 @@
    <item row="1" column="1">
     <widget class="QPushButton" name="pushButton_2">
      <property name="text">
-      <string>现金退菜</string>
+      <string>退菜</string>
      </property>
     </widget>
    </item>

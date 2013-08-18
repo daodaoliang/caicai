@@ -143,7 +143,7 @@ void TableWidget::enableFunction(bool state)
 {
     ui->stackedWidget->setCurrentIndex(!state);
     ui->toolButton_add->setEnabled(state);
-    ui->toolButton_delete->setEnabled(state);
+    ui->toolButton_delete->setEnabled(true);
     ui->toolButton_4->setEnabled(state);
 }
 
