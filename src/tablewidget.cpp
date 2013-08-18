@@ -243,45 +243,7 @@ void TableWidget::on_toolButton_delete_clicked()
 
     backWidget()->showData(tableId);
 
-//    LoginWidget w(this);
-//    w.setAuthType(LoginWidget::BackDish);
-//    if(!w.exec())
-//    {
-//        QMessageBox::information(this, "提示","验证失败");
 
-//        return;
-//    }
-//    int operatorId = w.authId();
-//    if(!m_countWidget.exec())
-//    {
-//        return;
-//    }
-
-//    int id = ui->tableWidget->item(row, 4)->text().toInt();
-//    QString tmpString = ui->tableWidget->item(row, 1)->text();
-//    int count = tmpString.left(tmpString.length() - 1).toInt();
-//    if(m_countWidget.getDishesCount() == 0)
-//    {
-//        QMessageBox::information(this, "提示","退菜数量不能为0");
-//        return;
-//    }
-//    if(count < m_countWidget.getDishesCount())
-//    {
-//        QMessageBox::information(this, "提示","退菜份数不能大于点菜份数");
-//        return;
-//    }
-//    count = m_countWidget.getDishesCount();
-//    QString orderId = ui->listView->currentIndex().sibling(ui->listView->currentIndex().row(), 6).data().toString();
-
-//    bool result = dishesInfoBllInstance()->backDish(orderId, id, count, operatorId, 0, "", tableId);
-//    if(result)
-//    {
-//        QMessageBox::information(this, "提示", "退菜成功");
-//    }
-//    else
-//    {
-//        QMessageBox::information(this, "提示", "退菜失败");
-//    }
 //    showDishesInfo(orderId);
 }
 

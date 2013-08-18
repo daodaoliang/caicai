@@ -3,6 +3,10 @@
 
 #include <QWidget>
 #include <QSqlQueryModel>
+#include <QMessageBox>
+#include "dishescountwidget.h"
+#include "dishesinfobll.h"
+#include "loginwidget.h"
 namespace Ui {
 class BackWidget;
 }
@@ -23,6 +27,8 @@ private slots:
 private:
     Ui::BackWidget *ui;
     QSqlQueryModel m_model;
+    DishesCountWidget m_countWidget;
+    QString m_tableId;
 };
 
 
