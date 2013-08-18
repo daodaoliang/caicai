@@ -76,7 +76,7 @@ VipWidget::VipWidget(QWidget *parent) :
     //初始化操作员
     m_nOperid = 0;
     m_Sql = "";
-
+    m_nOpenType = 0;
 }
 
 VipWidget::~VipWidget()
@@ -402,15 +402,19 @@ void VipWidget::resetPageInfo()
 
 void VipWidget::on_pushButton_OpenCard_clicked()
 {
-    LoginWidget w(this);
-    w.setAuthType(LoginWidget::OperViPCard);
-    if(!w.exec())
+    if(m_nOpenType == 0)
     {
-        QMessageBox::information(this, "提示","验证失败");
+        LoginWidget w(this);
+        w.setAuthType(LoginWidget::OperViPCard);
+        if(!w.exec())
+        {
+            QMessageBox::information(this, "提示","验证失败");
 
-        return;
+            return;
+        }
+        m_nOperid = w.authId();
     }
-    m_nOperid = w.authId();
+    m_nOpenType = 0;
     qDebug()<<"操作员为："<<m_nOperid;
     unsigned int type = 0x0004;
     //返回卡序列号地址
@@ -796,9 +800,10 @@ QString VipWidget::payMoney(const double &money,const QString& orderid,const QDa
     }
 }
 
-bool VipWidget::backMoney(const QString &cardid, const double &money, const QString &orderid)
+bool VipWidget::backMoney(const QString &cardid, const double &money, const QString &orderid,const int operid)
 {
     //打开卡片
+    m_nOpenType = 1;
     on_pushButton_OpenCard_clicked();
     if(cardid != ui->lineEdit_CardNum->text())
     {
@@ -826,7 +831,7 @@ bool VipWidget::backMoney(const QString &cardid, const double &money, const QStr
     QString sql2 = tr("insert into memcarddetail(memcardid,handletype,handlemoney,orderid,operatorid,handletime) "\
                       "values ('%1','%2','%3','%4','%5','%6')")
             .arg(ui->lineEdit_CardNum->text()).arg(8).arg(money).arg(orderid)
-            .arg(m_nOperid).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+            .arg(operid).arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
     QSqlDatabase* db = getSqlManager()->getdb();
     QSqlQuery query(*db);
     if(db->transaction())
