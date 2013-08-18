@@ -29,10 +29,10 @@ void MemberCustomWidget::on_pushButton_clicked()
     QString sql = tr("SELECT orderdetail.orderid, orderdetail.handletime, orderinfo.tableid,  SUM(orderdetail.dishescount * dishes.price)  from orderdetail "\
                      "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid "\
                      "LEFT JOIN orderinfo on orderdetail.orderid  = orderinfo.orderid "\
-                     "where orderdetail.dishestype = 0 and orderdetail.orderid like '%%1' and (handletime between '%2' and '%3')"\
-                     "GROUP BY orderdetail.orderid, orderdetail.handletime, orderinfo.tableid").arg(ui->lineEdit->text())
+                     "where orderdetail.dishestype = 0 and orderdetail.orderid like '%") + ui->lineEdit->text() + tr("' and (handletime between '%1' and '%2')"\
+                     "GROUP BY orderdetail.orderid, orderdetail.handletime, orderinfo.tableid")
             .arg(QDate::currentDate().toString("yyyy-MM-dd")).arg(to.toString("yyyy-MM-dd"));
-
+    qDebug() << sql;
     m_model.setQuery(sql, *getSqlManager()->getdb());
     m_model.setHeaderData(0, Qt::Horizontal, "订单号");
     m_model.setHeaderData(1, Qt::Horizontal, "订单时间");
