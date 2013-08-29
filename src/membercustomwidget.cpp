@@ -26,9 +26,10 @@ void MemberCustomWidget::on_pushButton_clicked()
         return;
     }
     QDate to = QDate::currentDate().addDays(1);
-    QString sql = tr("SELECT orderdetail.orderid, orderdetail.handletime, orderinfo.tableid,  SUM(orderdetail.dishescount * dishes.price)  from orderdetail "\
+    QString sql = tr("SELECT orderdetail.orderid, orderdetail.handletime, orderinfo.tableid,  SUM(orderdetail.dishescount * dishes.price), userinfo.nickname  from orderdetail "\
                      "LEFT JOIN dishes on orderdetail.dishesid = dishes.dishesid "\
                      "LEFT JOIN orderinfo on orderdetail.orderid  = orderinfo.orderid "\
+                     "LEFT JOIN userinfo on orderdetail.operatorid = userinfo.userid "\
                      "where orderdetail.dishestype = 0 and orderdetail.orderid like '%") + ui->lineEdit->text() + tr("' and (handletime between '%1' and '%2')"\
                      "GROUP BY orderdetail.orderid, orderdetail.handletime, orderinfo.tableid")
             .arg(QDate::currentDate().toString("yyyy-MM-dd")).arg(to.toString("yyyy-MM-dd"));
@@ -38,6 +39,8 @@ void MemberCustomWidget::on_pushButton_clicked()
     m_model.setHeaderData(1, Qt::Horizontal, "订单时间");
     m_model.setHeaderData(2, Qt::Horizontal, "桌号");
     m_model.setHeaderData(3, Qt::Horizontal, "总金额");
+    m_model.setHeaderData(4, Qt::Horizontal, "操作员");
+
 }
 
 void MemberCustomWidget::on_pushButton_2_clicked()

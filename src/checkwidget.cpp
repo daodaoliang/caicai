@@ -28,7 +28,6 @@ CheckWidget::CheckWidget(QWidget *parent) :
     ui->pushButton_2->setEnabled(false);
 
     //ui->tableView->setEditTriggers(QAbstractItemView::EditKeyPressed);
-    ui->lineEdit_BackCnt->setText("1");
     //ui->lineEdit_BackCnt->setVisible(false);
     //ui->but_backdish->setVisible(false);
 }
@@ -321,30 +320,3 @@ QVariant DetailModel::data(const QModelIndex &item, int role) const
     return value;
 }
 
-void CheckWidget::on_but_backdish_clicked()
-{
-    if(!ui->tableView->currentIndex().isValid())
-    {
-        qDebug()<<"请选择要删除的行";
-        return;
-    }
-    int curRow = ui->tableView->currentIndex().row();
-    int curCol = ui->tableView->currentIndex().column();
-    if(ui->tableView->model()->data(ui->tableView->model()->index(curRow,1)).toString().remove("份").toInt() < ui->lineEdit_BackCnt->text().toInt())
-    {
-        qDebug()<<"请填写正确的退菜数量";
-        return;
-    }
-    QString orderId = ui->tableView->model()->data(ui->tableView->model()->index(curRow,0)).toString();
-    QString dishName = ui->tableView->model()->data(ui->tableView->model()->index(curRow,1)).toString();
-    int dishesId = 0;
-    QString sql = tr("select dishesid from dishes where dishesname = '%1'").arg(dishName);
-    QSqlQuery* query = getSqlManager()->ExecQuery(sql);
-    if(query!=NULL)
-    {
-        if(query->next())
-        {
-            dishesId = query->value(0).toInt();
-        }
-    }
-}

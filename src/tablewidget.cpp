@@ -232,13 +232,13 @@ void TableWidget::on_toolButton_add_clicked()
         QString tableId = ui->listView->currentIndex().data().toString();
 
         orderWidget()->setHandleType(orderId, tableId, 0);
-        functionWidget()->changePage(6);
+        functionWidget()->changePage(7);
     }
 }
 
 void TableWidget::on_toolButton_delete_clicked()
 {
-    functionWidget()->changePage(7);
+    functionWidget()->changePage(8);
     QString tableId = ui->listView->currentIndex().data().toString();
 
     backWidget()->showData(tableId);

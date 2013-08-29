@@ -38,8 +38,6 @@ private slots:
 
     void on_pushButton_2_clicked();
 
-    void on_but_backdish_clicked();
-
 private:
     void loadMember();
     void setTableHeader();

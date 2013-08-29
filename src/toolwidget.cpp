@@ -11,7 +11,7 @@ toolWidget::toolWidget(QWidget *parent) :
     m_buttonList.append(new toolButton(":/img/toolWidget/xiTong.png",tr("数据统计")));
     m_buttonList.append(new toolButton(":/img/toolWidget/menZhen.png",tr("会员卡记录")));
     m_buttonList.append(new toolButton(":/img/toolWidget/menZhen.png",tr("会员卡消费")));
-
+    m_buttonList.append(new toolButton(":/img/toolWidget/menZhen.png",tr("修改密码")));
 
     QLabel *logoLabel=new QLabel;
     QPixmap pixmap(":/img/logo.png");

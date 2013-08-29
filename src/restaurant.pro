@@ -56,7 +56,8 @@ SOURCES += main.cpp\
     fileoperate.cpp \
     carddetailwidget.cpp \
     membercustomwidget.cpp \
-    backwidget.cpp
+    backwidget.cpp \
+    userwidget.cpp
 
 
 HEADERS  += mainwidget.h \
@@ -105,7 +106,8 @@ HEADERS  += mainwidget.h \
     fileoperate.h \
     carddetailwidget.h \
     membercustomwidget.h \
-    backwidget.h
+    backwidget.h \
+    userwidget.h
 
 RESOURCES += \
     src.qrc
@@ -125,4 +127,8 @@ FORMS += \
     statiswidget.ui \
     carddetailwidget.ui \
     membercustomwidget.ui \
-    backwidget.ui
+    backwidget.ui \
+    userwidget.ui
+
+INCLUDEPATH += $$PWD/qwt/include
+LIBS += -L$$PWD/qwt/lib -lqwt

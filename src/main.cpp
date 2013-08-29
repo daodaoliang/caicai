@@ -13,6 +13,7 @@
 #include "configerfileprocesser.h"
 #include "logmsg.h"
 #include <QDir>
+#include "qwt_plot.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -50,5 +51,7 @@ int main(int argc, char *argv[])
 //    vip.show();
     //处理消息
     WindowsEventHandler handler;
+    QwtPlot plot;
+    plot.show();
     return a.exec();
 }

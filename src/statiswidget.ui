@@ -38,6 +38,69 @@
          <property name="bottomMargin">
           <number>5</number>
          </property>
+         <item row="0" column="11">
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="0" column="5">
+          <widget class="QComboBox" name="comboBox"/>
+         </item>
+         <item row="0" column="9">
+          <widget class="QPushButton" name="but_ToExcel">
+           <property name="text">
+            <string>导出</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QDateTimeEdit" name="dateTimeEdit_End"/>
+         </item>
+         <item row="0" column="6">
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>会员卡号:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>服务员号:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="7">
+          <widget class="QLineEdit" name="line_Vip"/>
+         </item>
+         <item row="0" column="8">
+          <widget class="QPushButton" name="but_Search">
+           <property name="text">
+            <string>查询</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="10">
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
          <item row="0" column="2">
           <widget class="QLabel" name="label_3">
            <property name="text">
@@ -82,69 +145,6 @@
          </item>
          <item row="0" column="1">
           <widget class="QDateTimeEdit" name="dateTimeEdit_Start"/>
-         </item>
-         <item row="0" column="9">
-          <widget class="QPushButton" name="but_ToExcel">
-           <property name="text">
-            <string>导出</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QComboBox" name="comboBox"/>
-         </item>
-         <item row="0" column="11">
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="3">
-          <widget class="QDateTimeEdit" name="dateTimeEdit_End"/>
-         </item>
-         <item row="0" column="6">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>会员卡号:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>服务员号:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="7">
-          <widget class="QLineEdit" name="line_Vip"/>
-         </item>
-         <item row="0" column="8">
-          <widget class="QPushButton" name="but_Search">
-           <property name="text">
-            <string>查询</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="10">
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
          </item>
         </layout>
        </widget>

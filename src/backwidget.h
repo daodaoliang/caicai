@@ -11,6 +11,14 @@ namespace Ui {
 class BackWidget;
 }
 
+class BackDishesData : public QSqlQueryModel
+{
+    Q_OBJECT
+public:
+protected:
+    QVariant data(const QModelIndex &item, int role) const;
+};
+
 class BackWidget : public QWidget
 {
     Q_OBJECT
@@ -26,7 +34,7 @@ private slots:
 
 private:
     Ui::BackWidget *ui;
-    QSqlQueryModel m_model;
+    BackDishesData m_model;
     DishesCountWidget m_countWidget;
     QString m_tableId;
 };

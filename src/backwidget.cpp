@@ -22,13 +22,14 @@ void BackWidget::showData(const QString &tableId)
 
 
     QString sql = tr("select orderinfo.orderid, dishes.dishesname, orderdetail.dishescount, dishes.price,"\
-                     "orderdetail.handletime, orderdetail.paytype, orderdetail.cardid,dishes.dishesid from orderdetail "\
+                     "orderdetail.handletime, orderdetail.paytype, orderdetail.cardid, userinfo.nickname ,dishes.dishesid from orderdetail "\
                      "LEFT JOIN dishes on dishes.dishesid = orderdetail.dishesid "\
                      "LEFT JOIN orderinfo on orderinfo.orderid = orderdetail.orderid "\
+                     "LEFT JOIN userinfo on orderdetail.operatorid = userinfo.userid "\
                      "where (handletime BETWEEN '%1' and '%2') and orderinfo.tableid = '%3'")
             .arg(QDate::currentDate().toString("yyyy-MM-dd")).arg(QDate::currentDate().addDays(1).toString("yyyy-MM-dd"))
             .arg(tableId);
-
+    qDebug() << sql;
     m_model.setQuery(sql,*getSqlManager()->getdb());
     m_model.setHeaderData(0, Qt::Horizontal, "订单号");
     m_model.setHeaderData(1, Qt::Horizontal, "菜品名称");
@@ -40,8 +41,9 @@ void BackWidget::showData(const QString &tableId)
     //    ui->tableView->hideColumn(6);
 
     m_model.setHeaderData(6, Qt::Horizontal, "会员卡号");
-    m_model.setHeaderData(7, Qt::Horizontal, "菜品ID");
-    ui->tableView->hideColumn(7);
+    m_model.setHeaderData(7, Qt::Horizontal, "点菜员");
+    m_model.setHeaderData(8, Qt::Horizontal, "菜品ID");
+    ui->tableView->hideColumn(8);
     qDebug()<<"退菜"<<sql;
 }
 
@@ -57,7 +59,17 @@ void BackWidget::on_pushButton_2_clicked()
         QMessageBox::information(this, "提示", "请选择要退的记录");
         return;
     }
-    int payType = m_model.index(ui->tableView->currentIndex().row(), 5).data().toInt();
+    QString payTypeString = m_model.index(ui->tableView->currentIndex().row(), 5).data().toString();
+    int payType = 0;
+    if(payTypeString.compare("现金支付") == 0)
+    {
+        payType = 0;
+        qDebug() << "get here";
+    }
+    else
+    {
+        payType = 1;
+    }
 
     //现金退菜，已完成
     LoginWidget w(this);
@@ -74,7 +86,7 @@ void BackWidget::on_pushButton_2_clicked()
         return;
     }
     //获取ID和数量
-    int id = m_model.index(ui->tableView->currentIndex().row(), 7).data().toInt();
+    int id = m_model.index(ui->tableView->currentIndex().row(), 8).data().toInt();
     int count = m_model.index(ui->tableView->currentIndex().row(), 2).data().toInt();
 
     if(m_countWidget.getDishesCount() == 0)
@@ -115,4 +127,25 @@ void BackWidget::on_pushButton_2_clicked()
         }
     }
 
+}
+
+
+QVariant BackDishesData::data(const QModelIndex &item, int role) const
+{
+    QVariant value = QSqlQueryModel::data(item, role);
+    if (value.isValid() && role == Qt::DisplayRole)
+    {
+        if (item.column() == 5)
+        {
+            if(value.toInt() == 0)
+            {
+                return "现金支付";
+            }
+            else
+            {
+                return "会员卡支付";
+            }
+        }
+    }
+    return value;
 }
