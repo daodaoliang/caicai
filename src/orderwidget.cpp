@@ -131,14 +131,23 @@ void OrderWidget::on_toolButton_clicked()
     }
     double price = 0;
     QList<DishesInfo> tmpList = m_dishesInfo.values();
-    bool result = orderHelperInstance()->createOrder(m_tableId,
-                                                     tmpList,
-                                                     "",
-                                                     qApp->property("userId").toInt(), price, m_orderId, "", 1);
+    //    bool result = orderHelperInstance()->createOrder(m_tableId,
+    //                                                     tmpList,
+    //                                                     "",
+    //                                                     qApp->property("userId").toInt(), price, m_orderId, "", 1);
+    //后台先打印
+    bool result = getBackPrinter()->print(m_tableId,
+                                          m_dishesInfo.values(), m_orderId,qApp->property("userId").toInt(), price);
     if(result)
     {
-        result = getBackPrinter()->print(m_tableId,
-                                         m_dishesInfo.values(), m_orderId,qApp->property("userId").toInt(), price);
+        //生成订单
+        result = orderHelperInstance()->createOrder(m_tableId,
+                                                    tmpList,
+                                                    "",
+                                                    qApp->property("userId").toInt(), price, m_orderId, "", 1);
+        //        result = getBackPrinter()->print(m_tableId,
+        //                                         m_dishesInfo.values(), m_orderId,qApp->property("userId").toInt(), price);
+        //前台打印
         getFrontPrinter()->print(m_tableId,
                                  m_dishesInfo.values(), m_orderId,qApp->property("userId").toInt(), price);
         qDebug() << "create order result" << result;
