@@ -33,7 +33,10 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
             mixian.append(dish);
         }
     }
-    printDishes(tableId, mixian, orderId,user, paid, "192.168.123.100");
+    if(!printDishes(tableId, mixian, orderId,user, paid, "192.168.123.100"))
+    {
+        return false;
+    }
     //获取非饮料
     qDebug()<<"yinliao---";
     foreach(DishesInfo dish, dishes)
@@ -43,7 +46,10 @@ bool BackPrinter::print(const QString &tableId, const QList<DishesInfo> &dishes,
             drink.append(dish);
         }
     }
-    printDishes(tableId, drink, orderId, user,paid, "192.168.123.101");
+    if(!printDishes(tableId, drink, orderId, user,paid, "192.168.123.101"))
+    {
+        return false;
+    }
     return true;
 }
 
