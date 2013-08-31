@@ -130,5 +130,5 @@ FORMS += \
     backwidget.ui \
     userwidget.ui
 
-INCLUDEPATH += $$PWD/qwt/include
-LIBS += -L$$PWD/qwt/lib -lqwt
+#INCLUDEPATH += $$PWD/qwt/include
+#LIBS += -L$$PWD/qwt/lib -lqwt

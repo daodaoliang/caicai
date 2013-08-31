@@ -290,12 +290,16 @@ void OrderHandler::handleCommand(const QStringList &cmdDetail, int index)
                                 QString orderId = dinnerTableDataInstance()->getOrderByTableId(tableId);
                                 double money = 0;
                                 qDebug()<<"get userid------------------------"<<userid;
-                                bool result = orderHelperInstance()->createOrder(tableId,dishesList, wasteId, userid ,money, orderId);
+                                //result = orderHelperInstance()->createOrder(tableId,dishesList, wasteId, userid ,money, orderId);
+                                //先打印后台
+                                bool result = getBackPrinter()->print(tableId, dishesList, orderId,userid, money);
                                 if(result)
                                 {
                                     //减少库存
-                                    //进行打印
-                                    result = getBackPrinter()->print(tableId, dishesList, orderId,userid, money);
+                                    //生成订单
+                                    result = orderHelperInstance()->createOrder(tableId,dishesList, wasteId, userid ,money, orderId);
+                                    //result = getBackPrinter()->print(tableId, dishesList, orderId,userid, money);
+                                    //前台打印
                                     getFrontPrinter()->print(tableId,dishesList,orderId,userid,money);
                                     if(result)
                                     {

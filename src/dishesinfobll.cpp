@@ -63,10 +63,10 @@ bool DishesInfoBll::backDish(const QString &orderId, int dishId, int count, int 
     bool ret = getBackPrinter()->print(tableId, dishesList,orderId,operatorId,0);
     if(ret)
     {
+        //生成订单
+        bool result = orderHelperInstance()->createOrder(tableId, dishesList, "", operatorId, price, orderId);
         //打印前台
         getFrontPrinter()->print(tableId,dishesList,orderId,operatorId,price);
-        //添加订单到数据库
-        bool result = orderHelperInstance()->createOrder(tableId, dishesList, "", operatorId, price, orderId);
         return result;
     }
     return false;
