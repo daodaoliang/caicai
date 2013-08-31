@@ -49,13 +49,25 @@ bool DishesInfoBll::backDish(const QString &orderId, int dishId, int count, int 
     dishesInfo.dishType = dishes.type;
     dishesList.append(dishesInfo);
     double price = 0;
-    bool result = orderHelperInstance()->createOrder(tableId, dishesList, "", operatorId, price, orderId);
-    qDebug()<<"creater ret"<<result;
-    if(result)
+    //    bool result = orderHelperInstance()->createOrder(tableId, dishesList, "", operatorId, price, orderId);
+    //    qDebug()<<"creater ret"<<result;
+    //    if(result)
+    //    {
+    //        qDebug()<<"打印退菜开始-----------------------";
+    //        getFrontPrinter()->print(tableId,dishesList,orderId,operatorId,price);
+    //        return getBackPrinter()->print(tableId, dishesList,orderId,operatorId,0);
+    //    }
+    //修改订单生成与打印顺序
+    qDebug()<<"打印退菜开始-----------------------";
+    //先打印后台
+    bool ret = getBackPrinter()->print(tableId, dishesList,orderId,operatorId,0);
+    if(ret)
     {
-        qDebug()<<"打印退菜开始-----------------------";
+        //打印前台
         getFrontPrinter()->print(tableId,dishesList,orderId,operatorId,price);
-        return getBackPrinter()->print(tableId, dishesList,orderId,operatorId,0);
+        //添加订单到数据库
+        bool result = orderHelperInstance()->createOrder(tableId, dishesList, "", operatorId, price, orderId);
+        return result;
     }
     return false;
 }
