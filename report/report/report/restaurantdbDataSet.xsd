@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="restaurantdbDataSet" targetNamespace="http://tempuri.org/restaurantdbDataSet.xsd" xmlns:mstns="http://tempuri.org/restaurantdbDataSet.xsd" xmlns="http://tempuri.org/restaurantdbDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="restaurantdbConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="restaurantdbConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.report.Properties.Settings.GlobalReference.Default.restaurantdbConnectionString" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="restaurantdbDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="restaurantdbDataSet" msprop:Generator_UserDSName="restaurantdbDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DataTable1" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_UserTableName="DataTable1" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_RowClassName="DataTable1Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dishestype" msprop:Generator_ColumnVarNameInTable="columndishestype" msprop:Generator_ColumnPropNameInRow="dishestype" msprop:Generator_ColumnPropNameInTable="dishestypeColumn" msprop:Generator_UserColumnName="dishestype" type="xs:string" minOccurs="0" />
+              <xs:element name="dishesid" msprop:Generator_ColumnVarNameInTable="columndishesid" msprop:Generator_ColumnPropNameInRow="dishesid" msprop:Generator_ColumnPropNameInTable="dishesidColumn" msprop:Generator_UserColumnName="dishesid" type="xs:string" minOccurs="0" />
+              <xs:element name="dishesname" msprop:Generator_ColumnVarNameInTable="columndishesname" msprop:Generator_ColumnPropNameInRow="dishesname" msprop:Generator_ColumnPropNameInTable="dishesnameColumn" msprop:Generator_UserColumnName="dishesname" type="xs:string" minOccurs="0" />
+              <xs:element name="totalcount" msprop:Generator_ColumnVarNameInTable="columntotalcount" msprop:Generator_ColumnPropNameInRow="totalcount" msprop:Generator_ColumnPropNameInTable="totalcountColumn" msprop:Generator_UserColumnName="totalcount" type="xs:string" minOccurs="0" />
+              <xs:element name="precount" msprop:Generator_ColumnVarNameInTable="columnprecount" msprop:Generator_ColumnPropNameInRow="precount" msprop:Generator_ColumnPropNameInTable="precountColumn" msprop:Generator_UserColumnName="precount" type="xs:string" minOccurs="0" />
+              <xs:element name="totalmoney" msprop:Generator_ColumnVarNameInTable="columntotalmoney" msprop:Generator_ColumnPropNameInRow="totalmoney" msprop:Generator_ColumnPropNameInTable="totalmoneyColumn" msprop:Generator_UserColumnName="totalmoney" type="xs:string" minOccurs="0" />
+              <xs:element name="premoney" msprop:Generator_ColumnVarNameInTable="columnpremoney" msprop:Generator_ColumnPropNameInRow="premoney" msprop:Generator_ColumnPropNameInTable="premoneyColumn" msprop:Generator_UserColumnName="premoney" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
