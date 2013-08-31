@@ -80,6 +80,22 @@ namespace report
         {
             return new DataTable();
         }
+        private DataTable KaiKaData(string beginTime,string endTime,string[] quertString)
+        {
+            string sql = "select memcardid,member.`name`,member.membertypeid,userinfo.nickname,handletime from memcarddetail " +
+                 "left join userinfo on memcarddetail.operatorid = userinfo.userid left join member on memcarddetail.memcardid = member.cardid " +
+                 "where memcarddetail.handletype = 6";
+            if (beginTime != null && endTime != null)
+            {
+                sql += "where (handletime between '" + beginTime + "' and '" + endTime + "') ";
+            }
+            DataSet ds = SqlHelper_MySql.ExecuteDataset(m_connectString, CommandType.Text, sql);
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+            }
+            return new DataTable();
+        }
 
     }
 }

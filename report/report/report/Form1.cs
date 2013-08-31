@@ -15,7 +15,9 @@ namespace report
         {
             PaiMing,
             TuiCai,
-            YingYe
+            YingYe,
+            KaiKa,
+            XiaoFei
         }
         public Form1()
         {
