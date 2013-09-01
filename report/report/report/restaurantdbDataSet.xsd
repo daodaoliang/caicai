@@ -14,7 +14,7 @@
   <xs:element name="restaurantdbDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="restaurantdbDataSet" msprop:Generator_UserDSName="restaurantdbDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="DataTable1" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_UserTableName="DataTable1" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_RowClassName="DataTable1Row">
+        <xs:element name="PaiMing" msprop:Generator_TableClassName="PaiMingDataTable" msprop:Generator_TableVarName="tablePaiMing" msprop:Generator_TablePropName="PaiMing" msprop:Generator_RowDeletingName="PaiMingRowDeleting" msprop:Generator_UserTableName="PaiMing" msprop:Generator_RowChangingName="PaiMingRowChanging" msprop:Generator_RowEvHandlerName="PaiMingRowChangeEventHandler" msprop:Generator_RowDeletedName="PaiMingRowDeleted" msprop:Generator_RowEvArgName="PaiMingRowChangeEvent" msprop:Generator_RowChangedName="PaiMingRowChanged" msprop:Generator_RowClassName="PaiMingRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="dishestype" msprop:Generator_ColumnVarNameInTable="columndishestype" msprop:Generator_ColumnPropNameInRow="dishestype" msprop:Generator_ColumnPropNameInTable="dishestypeColumn" msprop:Generator_UserColumnName="dishestype" type="xs:string" minOccurs="0" />
@@ -24,6 +24,19 @@
               <xs:element name="precount" msprop:Generator_ColumnVarNameInTable="columnprecount" msprop:Generator_ColumnPropNameInRow="precount" msprop:Generator_ColumnPropNameInTable="precountColumn" msprop:Generator_UserColumnName="precount" type="xs:string" minOccurs="0" />
               <xs:element name="totalmoney" msprop:Generator_ColumnVarNameInTable="columntotalmoney" msprop:Generator_ColumnPropNameInRow="totalmoney" msprop:Generator_ColumnPropNameInTable="totalmoneyColumn" msprop:Generator_UserColumnName="totalmoney" type="xs:string" minOccurs="0" />
               <xs:element name="premoney" msprop:Generator_ColumnVarNameInTable="columnpremoney" msprop:Generator_ColumnPropNameInRow="premoney" msprop:Generator_ColumnPropNameInTable="premoneyColumn" msprop:Generator_UserColumnName="premoney" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="TuiCai" msprop:Generator_TableClassName="TuiCaiDataTable" msprop:Generator_TableVarName="tableTuiCai" msprop:Generator_TablePropName="TuiCai" msprop:Generator_RowDeletingName="TuiCaiRowDeleting" msprop:Generator_UserTableName="TuiCai" msprop:Generator_RowChangingName="TuiCaiRowChanging" msprop:Generator_RowEvHandlerName="TuiCaiRowChangeEventHandler" msprop:Generator_RowDeletedName="TuiCaiRowDeleted" msprop:Generator_RowEvArgName="TuiCaiRowChangeEvent" msprop:Generator_RowChangedName="TuiCaiRowChanged" msprop:Generator_RowClassName="TuiCaiRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dishesid" msprop:Generator_ColumnVarNameInTable="columndishesid" msprop:Generator_ColumnPropNameInRow="dishesid" msprop:Generator_ColumnPropNameInTable="dishesidColumn" msprop:Generator_UserColumnName="dishesid" type="xs:string" minOccurs="0" />
+              <xs:element name="dishesname" msprop:Generator_ColumnVarNameInTable="columndishesname" msprop:Generator_ColumnPropNameInRow="dishesname" msprop:Generator_ColumnPropNameInTable="dishesnameColumn" msprop:Generator_UserColumnName="dishesname" type="xs:string" minOccurs="0" />
+              <xs:element name="dishesprice" msprop:Generator_ColumnVarNameInTable="columndishesprice" msprop:Generator_ColumnPropNameInRow="dishesprice" msprop:Generator_ColumnPropNameInTable="dishespriceColumn" msprop:Generator_UserColumnName="dishesprice" type="xs:string" minOccurs="0" />
+              <xs:element name="dishescount" msprop:Generator_ColumnVarNameInTable="columndishescount" msprop:Generator_ColumnPropNameInRow="dishescount" msprop:Generator_ColumnPropNameInTable="dishescountColumn" msprop:Generator_UserColumnName="dishescount" type="xs:string" minOccurs="0" />
+              <xs:element name="nickname" msprop:Generator_ColumnVarNameInTable="columnnickname" msprop:Generator_ColumnPropNameInRow="nickname" msprop:Generator_ColumnPropNameInTable="nicknameColumn" msprop:Generator_UserColumnName="nickname" type="xs:string" minOccurs="0" />
+              <xs:element name="handletime" msprop:Generator_ColumnVarNameInTable="columnhandletime" msprop:Generator_ColumnPropNameInRow="handletime" msprop:Generator_ColumnPropNameInTable="handletimeColumn" msprop:Generator_UserColumnName="handletime" type="xs:string" minOccurs="0" />
+              <xs:element name="orderid" msprop:Generator_ColumnVarNameInTable="columnorderid" msprop:Generator_ColumnPropNameInRow="orderid" msprop:Generator_ColumnPropNameInTable="orderidColumn" msprop:Generator_UserColumnName="orderid" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
