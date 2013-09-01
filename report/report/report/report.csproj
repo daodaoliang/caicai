@@ -100,7 +100,9 @@
     <EmbeddedResource Include="TuiCai.rdlc">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Yingye.rdlc" />
+    <EmbeddedResource Include="Yingye.rdlc">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
