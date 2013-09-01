@@ -5,10 +5,22 @@ using System.Text;
 using System.Data;
 using DataBase;
 using System.Configuration;
+using Microsoft.Reporting.WinForms;
 namespace report
 {
     class DataProvider
     {
+        public DataProvider()
+        {
+            m_dishesNameMap.Add("米线", "mixian0");
+            m_dishesNameMap.Add("小吃", "xiaocai0");
+            m_dishesNameMap.Add("饮料", "yinliao0");
+            m_dishesNameMap.Add("临时菜", "linshicai0");
+            m_dishesNameMap1.Add("米线", "mixian1");
+            m_dishesNameMap1.Add("小吃", "xiaocai1");
+            m_dishesNameMap1.Add("饮料", "yinliao1");
+            m_dishesNameMap1.Add("临时菜", "linshicai1");
+        }
         private string m_connectString = ConfigurationManager.ConnectionStrings["report.Properties.Settings.restaurantdbConnectionString"].ToString();
         public DataTable getData(Form1.QueryType queryType, string beginTime, string endTime, string[] queryString)
         {
@@ -24,6 +36,68 @@ namespace report
                     break;
             }
             return new DataTable();
+        }
+
+        public void getReportParameter(Form1.QueryType queryType, string beginTime, string endTime, string[] queryString, List<ReportParameter> paramList)
+        {
+            switch (queryType)
+            {
+                case Form1.QueryType.PaiMing:
+                    break;
+                case Form1.QueryType.TuiCai:
+                    break;
+                case Form1.QueryType.YingYe:
+                    YingYeParameter(beginTime, endTime, queryString, paramList);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        private Dictionary<string, string> m_dishesNameMap = new Dictionary<string,string>();
+        private Dictionary<string, string> m_dishesNameMap1 = new Dictionary<string, string>();
+        private void YingYeParameter(string beginTime, string endTime, string[] queryString, List<ReportParameter> paramList)
+        {
+
+            string sql = "select dishestype, SUM(if(handletype=0,dishescount,-1*dishescount) * dishesprice) as totalcount " +
+                            " from orderdetailview " +
+                            " where paytype = 0 ";
+            if (beginTime != null && endTime != null)
+            {
+                sql += " and (handletime between '" + beginTime + "' and '" + endTime + "') ";
+            }
+            sql += " GROUP BY dishestype ";
+            DataSet ds = SqlHelper_MySql.ExecuteDataset(m_connectString, CommandType.Text, sql);
+
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    paramList.Add(new ReportParameter(m_dishesNameMap[dt.Rows[i].ItemArray[0].ToString()],
+                            dt.Rows[i].ItemArray[1].ToString()));  
+                }
+            }
+
+            sql = "select dishestype, SUM(if(handletype=0,dishescount,-1*dishescount) * dishesprice) as totalcount " +
+                            " from orderdetailview " +
+                            " where paytype = 1 ";
+            if (beginTime != null && endTime != null)
+            {
+                sql += " and (handletime between '" + beginTime + "' and '" + endTime + "') ";
+            }
+            sql += " GROUP BY dishestype ";
+            ds = SqlHelper_MySql.ExecuteDataset(m_connectString, CommandType.Text, sql);
+
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    paramList.Add(new ReportParameter(m_dishesNameMap[dt.Rows[i].ItemArray[0].ToString()],
+                            dt.Rows[i].ItemArray[1].ToString()));
+                }
+            }
         }
 
         private DataTable PaiMingData(string beginTime, string endTime, string[] queryString)
@@ -73,6 +147,16 @@ namespace report
 
         private DataTable TuiCaiData(string beginTime, string endTime, string[] queryString)
         {
+            string sql = "select dishestype, dishesid, dishescount, dishesname, dishesprice, nickname, handletime, orderid from orderdetailview where handletype = 1";
+            if (beginTime != null && endTime != null)
+            {
+                sql += " and (handletime between '" + beginTime + "' and '" + endTime + "') ";
+            }
+            DataSet ds = SqlHelper_MySql.ExecuteDataset(m_connectString, CommandType.Text, sql);
+            if (ds.Tables.Count > 0)
+            {
+                return ds.Tables[0];
+            }
             return new DataTable();
         }
 

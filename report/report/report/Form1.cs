@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Microsoft.Reporting.WinForms;
 namespace report
 {
     public partial class Form1 : Form
@@ -56,6 +57,7 @@ namespace report
             flowLayoutPanel1.Controls.Clear();
             flowLayoutPanel1.Controls.Add(m_from);
             flowLayoutPanel1.Controls.Add(m_fromPicker);
+            m_toPicker.Value = DateTime.Now.AddDays(1);
             flowLayoutPanel1.Controls.Add(m_to);
             flowLayoutPanel1.Controls.Add(m_toPicker);            
         }
@@ -77,13 +79,17 @@ namespace report
         //显示退菜信息
         private void showTuiCai()
         {
+            showQueryTime();
             m_queryType = QueryType.TuiCai;
+            flowLayoutPanel1.Controls.Add(m_queryButton);
         }
 
         //显示营业报表
         private void showYingYe()
         {
+            showQueryTime();
             m_queryType = QueryType.YingYe;
+            flowLayoutPanel1.Controls.Add(m_queryButton);
         }
 
 
@@ -147,7 +153,15 @@ namespace report
             reportViewer1.LocalReport.ReportEmbeddedResource = m_reportNames[(int)m_queryType];
             reportViewer1.LocalReport.DataSources.Add(new Microsoft.Reporting.WinForms.ReportDataSource(
                 "DataSet2", dt));
+            List<ReportParameter> paramList = new List<ReportParameter>();
+            paramList.Add(new ReportParameter("rptParaA", beginTime));
+            paramList.Add(new ReportParameter("rptParaB", endTime));
+            //有些报表有一些个性化的数据在此添加
+            m_dataProvider.getReportParameter(m_queryType, beginTime, endTime, queryList, paramList);
+
+            reportViewer1.LocalReport.SetParameters(paramList);
             reportViewer1.RefreshReport();
+
         }
     }
 }

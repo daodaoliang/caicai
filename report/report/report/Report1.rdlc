@@ -57,38 +57,38 @@
   </DataSets>
   <Body>
     <ReportItems>
-      <Tablix Name="Tablix7">
+      <Tablix Name="Tablix1">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.64262in</Width>
+              <Width>0.69755in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.65786in</Width>
+              <Width>0.69182in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.55369in</Width>
+              <Width>1.28235in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.68242in</Width>
+              <Width>0.85315in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.68217in</Width>
+              <Width>0.75457in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.75508in</Width>
+              <Width>0.71266in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.98425in</Width>
+              <Width>1.09807in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.25706in</Height>
+              <Height>0.24143in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox49">
+                    <Textbox Name="Textbox1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -97,18 +97,21 @@
                             <TextRun>
                               <Value>菜例类别</Value>
                               <Style>
+                                <FontStyle>Normal</FontStyle>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox49</rd:DefaultName>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -120,7 +123,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox51">
+                    <Textbox Name="Textbox3">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -129,18 +132,21 @@
                             <TextRun>
                               <Value>菜例编号</Value>
                               <Style>
+                                <FontStyle>Normal</FontStyle>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox51</rd:DefaultName>
+                      <rd:DefaultName>Textbox3</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -152,7 +158,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox53">
+                    <Textbox Name="Textbox5">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -161,18 +167,21 @@
                             <TextRun>
                               <Value>菜例名称</Value>
                               <Style>
+                                <FontStyle>Normal</FontStyle>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox53</rd:DefaultName>
+                      <rd:DefaultName>Textbox5</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -184,7 +193,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox55">
+                    <Textbox Name="Textbox7">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -193,18 +202,21 @@
                             <TextRun>
                               <Value>销售数量</Value>
                               <Style>
+                                <FontStyle>Normal</FontStyle>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox55</rd:DefaultName>
+                      <rd:DefaultName>Textbox7</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -216,7 +228,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox57">
+                    <Textbox Name="Textbox9">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -225,18 +237,21 @@
                             <TextRun>
                               <Value>销售比例</Value>
                               <Style>
+                                <FontStyle>Normal</FontStyle>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox57</rd:DefaultName>
+                      <rd:DefaultName>Textbox9</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -248,7 +263,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox59">
+                    <Textbox Name="Textbox11">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -257,18 +272,21 @@
                             <TextRun>
                               <Value>金额</Value>
                               <Style>
+                                <FontStyle>Normal</FontStyle>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox59</rd:DefaultName>
+                      <rd:DefaultName>Textbox11</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -280,7 +298,7 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox61">
+                    <Textbox Name="Textbox13">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -289,18 +307,21 @@
                             <TextRun>
                               <Value>金额比例</Value>
                               <Style>
+                                <FontStyle>Normal</FontStyle>
                                 <FontWeight>Bold</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox61</rd:DefaultName>
+                      <rd:DefaultName>Textbox13</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -313,7 +334,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.34039in</Height>
+              <Height>0.24143in</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -325,9 +346,7 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!dishestype.Value</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -336,8 +355,8 @@
                       <rd:DefaultName>dishestype</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -357,9 +376,7 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!dishesid.Value</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -368,8 +385,8 @@
                       <rd:DefaultName>dishesid</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -389,9 +406,7 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!dishesname.Value</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -400,8 +415,8 @@
                       <rd:DefaultName>dishesname</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -421,9 +436,7 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!totalcount.Value</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -432,8 +445,8 @@
                       <rd:DefaultName>totalcount</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -453,9 +466,7 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=FormatPercent(Fields!precount.Value, 2)</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -464,8 +475,8 @@
                       <rd:DefaultName>precount</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -485,9 +496,7 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!totalmoney.Value</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -496,8 +505,8 @@
                       <rd:DefaultName>totalmoney</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -516,10 +525,8 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=FormatPercent(Fields!premoney.Value,2)</Value>
-                              <Style>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
+                              <Value>=FormatPercent(Fields!premoney.Value, 2)</Value>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -528,8 +535,8 @@
                       <rd:DefaultName>premoney</rd:DefaultName>
                       <Style>
                         <Border>
+                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
-                          <Width>2pt</Width>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
@@ -560,18 +567,18 @@
               <KeepWithGroup>After</KeepWithGroup>
             </TablixMember>
             <TablixMember>
-              <Group Name="详细信息" />
+              <Group Name="详细信息1" />
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet2</DataSetName>
-        <Top>0.28258cm</Top>
-        <Left>0.91757cm</Left>
-        <Height>1.51751cm</Height>
-        <Width>15.13355cm</Width>
+        <Top>0.14111cm</Top>
+        <Left>0.26458cm</Left>
+        <Height>1.22646cm</Height>
+        <Width>15.46904cm</Width>
         <Style>
           <Border>
-            <Style>None</Style>
+            <Style>Solid</Style>
           </Border>
         </Style>
       </Tablix>
@@ -579,12 +586,21 @@
     <Height>2.033in</Height>
     <Style>
       <Border>
-        <Style>Solid</Style>
-        <Width>2pt</Width>
+        <Style>None</Style>
       </Border>
     </Style>
   </Body>
-  <Width>10.1156in</Width>
+  <ReportParameters>
+    <ReportParameter Name="rptParaA">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="rptParaB">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <Width>6.31934in</Width>
   <Page>
     <PageHeader>
       <Height>2.56646cm</Height>
@@ -610,9 +626,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox17</rd:DefaultName>
           <Top>0.89111cm</Top>
-          <Left>6.57966cm</Left>
+          <Left>5.6278cm</Left>
           <Height>0.89104cm</Height>
-          <Width>4.66959cm</Width>
+          <Width>4.88126cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -642,11 +658,67 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
-          <Top>1.85271cm</Top>
-          <Left>10.3232cm</Left>
+          <Top>1.88798cm</Top>
+          <Left>10.00571cm</Left>
           <Height>0.6cm</Height>
           <Width>5.72791cm</Width>
           <ZIndex>1</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox2">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>=Parameters!rptParaA.Value</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Times New Roman</FontFamily>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value> —</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Times New Roman</FontFamily>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+                <TextRun>
+                  <Value>=Parameters!rptParaB.Value</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Times New Roman</FontFamily>
+                    <FontWeight>Normal</FontWeight>
+                    <TextDecoration>None</TextDecoration>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox2</rd:DefaultName>
+          <Top>1.88798cm</Top>
+          <Left>0.26458cm</Left>
+          <Height>0.6cm</Height>
+          <Width>5.55714cm</Width>
+          <ZIndex>2</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>
