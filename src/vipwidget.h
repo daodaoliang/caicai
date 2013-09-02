@@ -8,7 +8,7 @@
 namespace Ui {
 class VipWidget;
 }
-const int m_Interval = 15;
+const int m_Interval = 2;
 class VipWidget : public QWidget
 {
     Q_OBJECT
