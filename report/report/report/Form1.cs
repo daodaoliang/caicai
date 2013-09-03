@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using Microsoft.Reporting.WinForms;
+using System.Configuration;
+using DataBase;
 namespace report
 {
     public partial class Form1 : Form
@@ -34,7 +36,8 @@ namespace report
 
         private string[] m_reportNames = { "report.Report1.rdlc" ,
                                        "report.TuiCai.rdlc",
-                                       "report.Yingye.rdlc"};
+                                       "report.Yingye.rdlc",
+                                         "report.Member.rdlc"};
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -57,10 +60,44 @@ namespace report
             }
         }
 
+        //显示会员卡信息
         private void showMemberCusterm()
         {
             showQueryTime();
             m_queryType = QueryType.Member;
+            //增加类别
+            m_comboBox.Items.Clear();
+            string sql = "select handletype, handlename from memhandletype";
+            string connString = ConfigurationManager.ConnectionStrings["report.Properties.Settings.restaurantdbConnectionString"].ToString();
+            DataSet ds = SqlHelper_MySql.ExecuteDataset(connString,
+                CommandType.Text,
+                sql);
+            if (ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                DataRow row = dt.NewRow();
+                row.SetField("handletype", 0);
+                row.SetField("handlename", "全部");
+                dt.Rows.InsertAt(row, 0);
+                m_comboBox.DataSource = dt;
+                m_comboBox.DisplayMember = "handlename";
+                m_comboBox.ValueMember = "handletype";
+                m_comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            }
+            //个性化查询条件控件
+            m_label1.Text = "类别";
+            m_label2.Text = "会员名称";
+            m_label3.Text = "会员卡号";
+
+            m_query2.Text = "";
+            m_query3.Text = "";
+
+            flowLayoutPanel1.Controls.Add(m_label1);
+            flowLayoutPanel1.Controls.Add(m_comboBox);
+            flowLayoutPanel1.Controls.Add(m_label2);
+            flowLayoutPanel1.Controls.Add(m_query2);
+            flowLayoutPanel1.Controls.Add(m_label3);
+            flowLayoutPanel1.Controls.Add(m_query3);
             flowLayoutPanel1.Controls.Add(m_queryButton);
         }
 
@@ -121,6 +158,7 @@ namespace report
         private DateTimePicker m_fromPicker = new DateTimePicker();
         private DateTimePicker m_toPicker = new DateTimePicker();
         private Button m_queryButton = new Button();
+        private ComboBox m_comboBox = new ComboBox();
         private void initUi()
         {
             m_label2.Size = new Size(55, 23);
@@ -137,6 +175,7 @@ namespace report
             m_query3.Size = new System.Drawing.Size(105, 30);
             m_query4.Size = new System.Drawing.Size(105, 30);
             m_query5.Size = new System.Drawing.Size(105, 30);
+            m_comboBox.Size = new System.Drawing.Size(105, 30);
             m_to.Text = "到";
             m_from.Text = "从";
             m_label1.TextAlign = ContentAlignment.MiddleRight;
@@ -153,7 +192,7 @@ namespace report
         void m_queryButton_Click(object sender, EventArgs e)
         {
             string[] queryList = new string[5];
-            queryList[0] = m_query1.Text;
+            queryList[0] = m_comboBox.SelectedText == ""? m_query1.Text : m_comboBox.SelectedText;
             queryList[1] = m_query2.Text;
             queryList[2] = m_query3.Text;
             queryList[3] = m_query4.Text;

@@ -32,9 +32,17 @@ namespace report
                     return TuiCaiData(beginTime, endTime, queryString);
                 case Form1.QueryType.YingYe:
                     return YingYeData(beginTime, endTime, queryString);
+                case Form1.QueryType.Member:
+                    return MemberData(beginTime, endTime, queryString);
                 default:
                     break;
             }
+            return new DataTable();
+        }
+
+        public DataTable MemberData(string beginTime, string endTime, string[] queryString)
+        {
+
             return new DataTable();
         }
 

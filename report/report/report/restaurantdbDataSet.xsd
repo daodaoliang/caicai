@@ -40,6 +40,20 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="Member" msprop:Generator_TableClassName="MemberDataTable" msprop:Generator_TableVarName="tableMember" msprop:Generator_TablePropName="Member" msprop:Generator_RowDeletingName="MemberRowDeleting" msprop:Generator_UserTableName="Member" msprop:Generator_RowChangingName="MemberRowChanging" msprop:Generator_RowEvHandlerName="MemberRowChangeEventHandler" msprop:Generator_RowDeletedName="MemberRowDeleted" msprop:Generator_RowEvArgName="MemberRowChangeEvent" msprop:Generator_RowChangedName="MemberRowChanged" msprop:Generator_RowClassName="MemberRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="cardno" msprop:Generator_ColumnVarNameInTable="columncardno" msprop:Generator_ColumnPropNameInRow="cardno" msprop:Generator_ColumnPropNameInTable="cardnoColumn" msprop:Generator_UserColumnName="cardno" type="xs:string" minOccurs="0" />
+              <xs:element name="membername" msprop:Generator_ColumnVarNameInTable="columnmembername" msprop:Generator_ColumnPropNameInRow="membername" msprop:Generator_ColumnPropNameInTable="membernameColumn" msprop:Generator_UserColumnName="membername" type="xs:string" minOccurs="0" />
+              <xs:element name="handletime" msprop:Generator_ColumnVarNameInTable="columnhandletime" msprop:Generator_ColumnPropNameInRow="handletime" msprop:Generator_ColumnPropNameInTable="handletimeColumn" msprop:Generator_UserColumnName="handletime" type="xs:string" minOccurs="0" />
+              <xs:element name="payvalue" msprop:Generator_ColumnVarNameInTable="columnpayvalue" msprop:Generator_ColumnPropNameInRow="payvalue" msprop:Generator_ColumnPropNameInTable="payvalueColumn" msprop:Generator_UserColumnName="payvalue" type="xs:string" minOccurs="0" />
+              <xs:element name="handletype" msprop:Generator_ColumnVarNameInTable="columnhandletype" msprop:Generator_ColumnPropNameInRow="handletype" msprop:Generator_ColumnPropNameInTable="handletypeColumn" msprop:Generator_UserColumnName="handletype" type="xs:string" minOccurs="0" />
+              <xs:element name="money" msprop:Generator_ColumnVarNameInTable="columnmoney" msprop:Generator_ColumnPropNameInRow="money" msprop:Generator_ColumnPropNameInTable="moneyColumn" msprop:Generator_UserColumnName="money" type="xs:string" minOccurs="0" />
+              <xs:element name="discount" msprop:Generator_ColumnVarNameInTable="columndiscount" msprop:Generator_ColumnPropNameInRow="discount" msprop:Generator_ColumnPropNameInTable="discountColumn" msprop:Generator_UserColumnName="discount" type="xs:string" minOccurs="0" />
+              <xs:element name="operator" msprop:Generator_ColumnVarNameInTable="columnoperator" msprop:Generator_ColumnPropNameInRow="_operator" msprop:Generator_ColumnPropNameInTable="operatorColumn" msprop:Generator_UserColumnName="operator" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
   </xs:element>
