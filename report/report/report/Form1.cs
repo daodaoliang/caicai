@@ -192,13 +192,13 @@ namespace report
         void m_queryButton_Click(object sender, EventArgs e)
         {
             string[] queryList = new string[5];
-            queryList[0] = m_comboBox.SelectedText == ""? m_query1.Text : m_comboBox.SelectedText;
+            queryList[0] = m_comboBox.SelectedValue.ToString() == "" ? m_query1.Text : m_comboBox.SelectedValue.ToString();
             queryList[1] = m_query2.Text;
             queryList[2] = m_query3.Text;
             queryList[3] = m_query4.Text;
             queryList[4] = m_query5.Text;
-            string beginTime = m_fromPicker.Text;
-            string endTime = m_toPicker.Text;
+            string beginTime = m_fromPicker.Value.Date.ToString("yyyy-MM-dd");
+            string endTime = m_toPicker.Value.Date.ToString("yyyy-MM-dd");
             DataTable dt = m_dataProvider.getData(m_queryType, beginTime, endTime, queryList);
             reportViewer1.Reset();
             reportViewer1.LocalReport.ReportEmbeddedResource = m_reportNames[(int)m_queryType];
