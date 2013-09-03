@@ -42,7 +42,16 @@ namespace report
 
         public DataTable MemberData(string beginTime, string endTime, string[] queryString)
         {
-
+            string sql = "select memcardid,member.`name`,member.membertypeid,if(memhandletype.`value` >= 0,handlemoney,-1*handlemoney),"
+            +"moremoney,memhandletype.handlename,userinfo.nickname,handletime from memcarddetail "
+            +"left join member on memcarddetail.memcardid = member.cardid "                 
+            +"left join userinfo on memcarddetail.operatorid = userinfo.userid " 
+            +"left join memhandletype on memcarddetail.handletype = memhandletype.handletype";
+            if (beginTime != null && endTime != null)
+            {
+                sql += " and (handletime between '" + beginTime + "' and '" + endTime + "') ";
+            }
+            //if()
             return new DataTable();
         }
 
