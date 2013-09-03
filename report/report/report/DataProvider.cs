@@ -42,8 +42,36 @@ namespace report
 
         public DataTable MemberData(string beginTime, string endTime, string[] queryString)
         {
-
-            return new DataTable();
+            string sql = "select memcardid,member.`name`,member.membertypeid,if(memhandletype.`value` >= 0,handlemoney,-1*handlemoney),"
+            +"moremoney,memhandletype.handlename,userinfo.nickname,handletime from memcarddetail "
+            +"left join member on memcarddetail.memcardid = member.cardid "                 
+            +"left join userinfo on memcarddetail.operatorid = userinfo.userid " 
+            +"left join memhandletype on memcarddetail.handletype = memhandletype.handletype where 1=1";
+            if (beginTime != null && endTime != null)
+            {
+                sql += " and (memcarddetail.handletime between '" + beginTime + "' and '" + endTime + "') ";
+            }
+            if (queryString[0] != "")
+            {
+                
+            }
+            if (queryString[1] != "")
+            {
+                sql += " and member.`name` = " + "'" + queryString[1] + "' ";
+            }
+            if (queryString[2] != "")
+            {
+                sql += " and memcarddetail.memcardid = '" + queryString[2] + "' ";
+            }
+             DataSet ds = SqlHelper_MySql.ExecuteDataset(m_connectString, CommandType.Text, sql);
+             if (ds.Tables.Count > 0)
+             {
+                 return ds.Tables[0];
+             }
+             else
+             {
+                 return new DataTable();
+             }  
         }
 
         public void getReportParameter(Form1.QueryType queryType, string beginTime, string endTime, string[] queryString, List<ReportParameter> paramList)
