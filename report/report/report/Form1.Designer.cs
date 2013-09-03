@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("菜例销售排名");
-            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("退菜查询");
-            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("营业报表");
-            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("结算报表", new System.Windows.Forms.TreeNode[] {
-            treeNode37,
-            treeNode38,
-            treeNode39});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("菜例销售排名");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("退菜查询");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("营业报表");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("结算报表", new System.Windows.Forms.TreeNode[] {
+            treeNode5,
+            treeNode6,
+            treeNode7});
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.结算报表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.会员卡报表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -62,12 +62,14 @@
             this.结算报表ToolStripMenuItem.Name = "结算报表ToolStripMenuItem";
             this.结算报表ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.结算报表ToolStripMenuItem.Text = "结算报表";
+            this.结算报表ToolStripMenuItem.Click += new System.EventHandler(this.结算报表ToolStripMenuItem_Click);
             // 
             // 会员卡报表ToolStripMenuItem
             // 
             this.会员卡报表ToolStripMenuItem.Name = "会员卡报表ToolStripMenuItem";
             this.会员卡报表ToolStripMenuItem.Size = new System.Drawing.Size(80, 21);
             this.会员卡报表ToolStripMenuItem.Text = "会员卡报表";
+            this.会员卡报表ToolStripMenuItem.Click += new System.EventHandler(this.会员卡报表ToolStripMenuItem_Click);
             // 
             // treeView1
             // 
@@ -75,16 +77,16 @@
                         | System.Windows.Forms.AnchorStyles.Left)));
             this.treeView1.Location = new System.Drawing.Point(12, 28);
             this.treeView1.Name = "treeView1";
-            treeNode37.Name = "节点1";
-            treeNode37.Text = "菜例销售排名";
-            treeNode38.Name = "节点4";
-            treeNode38.Text = "退菜查询";
-            treeNode39.Name = "节点5";
-            treeNode39.Text = "营业报表";
-            treeNode40.Name = "节点0";
-            treeNode40.Text = "结算报表";
+            treeNode5.Name = "节点1";
+            treeNode5.Text = "菜例销售排名";
+            treeNode6.Name = "节点4";
+            treeNode6.Text = "退菜查询";
+            treeNode7.Name = "节点5";
+            treeNode7.Text = "营业报表";
+            treeNode8.Name = "节点0";
+            treeNode8.Text = "结算报表";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode40});
+            treeNode8});
             this.treeView1.Size = new System.Drawing.Size(165, 329);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -101,6 +103,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "查询条件";
             // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 17);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(176, 308);
+            this.flowLayoutPanel1.TabIndex = 0;
+            // 
             // reportViewer1
             // 
             this.reportViewer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -110,14 +120,6 @@
             this.reportViewer1.Name = "reportViewer1";
             this.reportViewer1.Size = new System.Drawing.Size(417, 328);
             this.reportViewer1.TabIndex = 4;
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 17);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(176, 308);
-            this.flowLayoutPanel1.TabIndex = 0;
             // 
             // Form1
             // 

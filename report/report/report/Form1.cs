@@ -16,7 +16,8 @@ namespace report
         {
             PaiMing,
             TuiCai,
-            YingYe
+            YingYe,
+            Member
         }
         public Form1()
         {
@@ -48,10 +49,21 @@ namespace report
                 case "营业报表":
                     showYingYe();
                     break;
+                case "会员卡消费充值流水":
+                    showMemberCusterm();
+                    break;
                 default:
                     break;
             }
         }
+
+        private void showMemberCusterm()
+        {
+            showQueryTime();
+            m_queryType = QueryType.Member;
+            flowLayoutPanel1.Controls.Add(m_queryButton);
+        }
+
         private void showQueryTime()
         {
             flowLayoutPanel1.Controls.Clear();
@@ -162,6 +174,26 @@ namespace report
             reportViewer1.LocalReport.SetParameters(paramList);
             reportViewer1.RefreshReport();
 
+        }
+
+        private void 结算报表ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //显示结算报表树形菜单
+            treeView1.Nodes.Clear();
+            TreeNode node1 = new TreeNode("菜例销售排名");
+            TreeNode node2 = new TreeNode("退菜查询");
+            TreeNode node3 = new TreeNode("营业报表");
+            treeView1.Nodes.Add(new TreeNode("结算报表", new TreeNode[]{
+                node1, node2, node3
+            }));
+        }
+
+        private void 会员卡报表ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //显示会员相关树形菜单
+            treeView1.Nodes.Clear();
+            TreeNode node1 = new TreeNode("会员卡消费充值流水");
+            treeView1.Nodes.Add(new TreeNode("会员卡报表", new TreeNode[]{ node1}));
         }
     }
 }
