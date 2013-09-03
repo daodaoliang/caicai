@@ -55,8 +55,8 @@ void CardDetailWidget::on_but_Search_clicked()
     m_TableModel->clear();
     if(ui->box_Kind->currentText() == tr("开卡记录"))
     {
-        sql = tr("select memcardid,userinfo.nickname,handletime from memcarddetail "\
-                 "left join userinfo on memcarddetail.operatorid = userinfo.userid "\
+        sql = tr("select memcardid,member.`name`,member.membertypeid,userinfo.nickname,handletime from memcarddetail "\
+                 "left join userinfo on memcarddetail.operatorid = userinfo.userid left join member on memcarddetail.memcardid = member.cardid "\
                  "where memcarddetail.handletype = 6 and handletime between ('%1') and ('%2')")
                 .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
                 .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
@@ -71,13 +71,15 @@ void CardDetailWidget::on_but_Search_clicked()
         qDebug()<<"card detail:"<<sql;
         ((QSqlQueryModel*)m_TableModel)->setQuery(sql,*getSqlManager()->getdb());
         m_TableModel->setHeaderData(0,Qt::Horizontal,tr("开卡卡号"));
-        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("开卡服务员"));
-        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("开卡时间"));
+        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("用户名"));
+        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("用户类型"));
+        m_TableModel->setHeaderData(3,Qt::Horizontal,tr("开卡服务员"));
+        m_TableModel->setHeaderData(4,Qt::Horizontal,tr("开卡时间"));
     }
     if(ui->box_Kind->currentText() == tr("充值记录"))
     {
-        sql = tr("select memcardid,handlemoney,moremoney,userinfo.nickname,handletime from memcarddetail "\
-                 "left join userinfo on memcarddetail.operatorid = userinfo.userid "\
+        sql = tr("select memcardid,member.`name`,member.membertypeid,handlemoney,moremoney,userinfo.nickname,handletime from memcarddetail "\
+                 "left join userinfo on memcarddetail.operatorid = userinfo.userid left join member on memcarddetail.memcardid = member.cardid "\
                  "where memcarddetail.handletype = 1 and handletime between ('%1') and ('%2')")
                 .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
                 .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
@@ -100,10 +102,12 @@ void CardDetailWidget::on_but_Search_clicked()
         qDebug()<<"total money:"<<sql2;
         ((QSqlQueryModel*)m_TableModel)->setQuery(sql,*getSqlManager()->getdb());
         m_TableModel->setHeaderData(0,Qt::Horizontal,tr("充值卡号"));
-        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("充值金额"));
-        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("优惠金额"));
-        m_TableModel->setHeaderData(3,Qt::Horizontal,tr("充值服务员"));
-        m_TableModel->setHeaderData(4,Qt::Horizontal,tr("充值时间"));
+        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("用户名"));
+        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("用户类型"));
+        m_TableModel->setHeaderData(3,Qt::Horizontal,tr("充值金额"));
+        m_TableModel->setHeaderData(4,Qt::Horizontal,tr("优惠金额"));
+        m_TableModel->setHeaderData(5,Qt::Horizontal,tr("充值服务员"));
+        m_TableModel->setHeaderData(6,Qt::Horizontal,tr("充值时间"));
         m_QueryModel->setQuery(sql2,*getSqlManager()->getdb());
         QString total = "0";
         if(m_QueryModel->query().next())
@@ -119,8 +123,8 @@ void CardDetailWidget::on_but_Search_clicked()
     }
     if(ui->box_Kind->currentText() == tr("消费记录"))
     {
-        sql = tr("select memcardid,handlemoney,orderid,userinfo.nickname,handletime from memcarddetail "\
-                 "left join userinfo on memcarddetail.operatorid = userinfo.userid "\
+        sql = tr("select memcardid,member.`name`,member.membertypeid,handlemoney,orderid,userinfo.nickname,handletime from memcarddetail "\
+                 "left join userinfo on memcarddetail.operatorid = userinfo.userid left join member on memcarddetail.memcardid = member.cardid "\
                  "where memcarddetail.handletype = 2 and handletime between ('%1') and ('%2')")
                 .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
                 .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
@@ -143,10 +147,12 @@ void CardDetailWidget::on_but_Search_clicked()
         qDebug()<<"total money:"<<sql2;
         ((QSqlQueryModel*)m_TableModel)->setQuery(sql,*getSqlManager()->getdb());
         m_TableModel->setHeaderData(0,Qt::Horizontal,tr("消费卡号"));
-        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("消费金额"));
-        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("订单号"));
-        m_TableModel->setHeaderData(3,Qt::Horizontal,tr("扣款服务员"));
-        m_TableModel->setHeaderData(4,Qt::Horizontal,tr("消费时间"));
+        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("用户名"));
+        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("用户类型"));
+        m_TableModel->setHeaderData(3,Qt::Horizontal,tr("消费金额"));
+        m_TableModel->setHeaderData(4,Qt::Horizontal,tr("订单号"));
+        m_TableModel->setHeaderData(5,Qt::Horizontal,tr("扣款服务员"));
+        m_TableModel->setHeaderData(6,Qt::Horizontal,tr("消费时间"));
         m_QueryModel->setQuery(sql2,*getSqlManager()->getdb());
         QString total = "0";
         if(m_QueryModel->query().next())
@@ -162,8 +168,8 @@ void CardDetailWidget::on_but_Search_clicked()
     }
     if(ui->box_Kind->currentText() == tr("退款记录"))
     {
-        sql = tr("select memcardid,handlemoney,orderid,userinfo.nickname,handletime from memcarddetail "\
-                 "left join userinfo on memcarddetail.operatorid = userinfo.userid "\
+        sql = tr("select memcardid,member.`name`,member.membertypeid,handlemoney,orderid,userinfo.nickname,handletime from memcarddetail "\
+                 "left join userinfo on memcarddetail.operatorid = userinfo.userid left join member on memcarddetail.memcardid = member.cardid "\
                  "where memcarddetail.handletype = 8 and handletime between ('%1') and ('%2')")
                 .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
                 .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
@@ -186,10 +192,12 @@ void CardDetailWidget::on_but_Search_clicked()
         qDebug()<<"total money:"<<sql2;
         ((QSqlQueryModel*)m_TableModel)->setQuery(sql,*getSqlManager()->getdb());
         m_TableModel->setHeaderData(0,Qt::Horizontal,tr("退款卡号"));
-        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("退款金额"));
-        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("退款订单号"));
-        m_TableModel->setHeaderData(3,Qt::Horizontal,tr("退款服务员"));
-        m_TableModel->setHeaderData(4,Qt::Horizontal,tr("退款时间"));
+        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("用户名"));
+        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("用户类型"));
+        m_TableModel->setHeaderData(3,Qt::Horizontal,tr("退款金额"));
+        m_TableModel->setHeaderData(4,Qt::Horizontal,tr("退款订单号"));
+        m_TableModel->setHeaderData(5,Qt::Horizontal,tr("退款服务员"));
+        m_TableModel->setHeaderData(6,Qt::Horizontal,tr("退款时间"));
         m_QueryModel->setQuery(sql2,*getSqlManager()->getdb());
         QString total = "0";
         if(m_QueryModel->query().next())
@@ -205,8 +213,8 @@ void CardDetailWidget::on_but_Search_clicked()
     }
     if(ui->box_Kind->currentText() == tr("额度调整"))
     {
-        sql = tr("select memcardid,handlemoney,userinfo.nickname,handletime from memcarddetail "\
-                 "left join userinfo on memcarddetail.operatorid = userinfo.userid "\
+        sql = tr("select memcardid,member.`name`,member.membertypeid,handlemoney,userinfo.nickname,handletime from memcarddetail "\
+                 "left join userinfo on memcarddetail.operatorid = userinfo.userid left join member on memcarddetail.memcardid = member.cardid "\
                  "where memcarddetail.handletype = 3 and handletime between ('%1') and ('%2')")
                 .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
                 .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
@@ -221,14 +229,16 @@ void CardDetailWidget::on_but_Search_clicked()
         qDebug()<<"card detail:"<<sql;
         ((QSqlQueryModel*)m_TableModel)->setQuery(sql,*getSqlManager()->getdb());
         m_TableModel->setHeaderData(0,Qt::Horizontal,tr("调整卡卡号"));
-        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("调整后金额"));
-        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("调整服务员"));
-        m_TableModel->setHeaderData(3,Qt::Horizontal,tr("整服时间"));
+        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("用户名"));
+        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("用户类型"));
+        m_TableModel->setHeaderData(3,Qt::Horizontal,tr("调整后金额"));
+        m_TableModel->setHeaderData(4,Qt::Horizontal,tr("调整服务员"));
+        m_TableModel->setHeaderData(5,Qt::Horizontal,tr("整服时间"));
     }
     if(ui->box_Kind->currentText() == tr("注销记录"))
     {
-        sql = tr("select memcardid,userinfo.nickname,handletime from memcarddetail "\
-                 "left join userinfo on memcarddetail.operatorid = userinfo.userid "\
+        sql = tr("select memcardid,member.`name`,member.membertypeid,userinfo.nickname,handletime from memcarddetail "\
+                 "left join userinfo on memcarddetail.operatorid = userinfo.userid left join member on memcarddetail.memcardid = member.cardid "\
                  "where memcarddetail.handletype = 7 and handletime between ('%1') and ('%2')")
                 .arg(ui->dateTimeEdit_Start->dateTime().toString("yyyy-MM-dd hh:mm:ss"))
                 .arg(ui->dateTimeEdit_End->dateTime().toString("yyyy-MM-dd hh:mm:ss"));
@@ -243,8 +253,10 @@ void CardDetailWidget::on_but_Search_clicked()
         qDebug()<<"card detail:"<<sql;
         ((QSqlQueryModel*)m_TableModel)->setQuery(sql,*getSqlManager()->getdb());
         m_TableModel->setHeaderData(0,Qt::Horizontal,tr("注销卡号"));
-        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("注销服务员"));
-        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("注销时间"));
+        m_TableModel->setHeaderData(1,Qt::Horizontal,tr("用户名"));
+        m_TableModel->setHeaderData(2,Qt::Horizontal,tr("用户类型"));
+        m_TableModel->setHeaderData(3,Qt::Horizontal,tr("注销服务员"));
+        m_TableModel->setHeaderData(4,Qt::Horizontal,tr("注销时间"));
     }
 }
 

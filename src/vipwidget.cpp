@@ -350,11 +350,29 @@ void VipWidget::updateRecord(int startPage)
     if(m_CurPage == 1)
     {
         ui->but_PreviousPage->setEnabled(false);
+        if(m_PageCount > m_CurPage)
+        {
+            ui->but_NextPage->setEnabled(true);
+        }
+        else
+        {
+            ui->but_NextPage->setEnabled(false);
+        }
     }
-    if(m_CurPage == m_PageCount)
+    else
     {
-        ui->but_NextPage->setEnabled(false);
+        if(m_CurPage == m_PageCount)
+        {
+            ui->but_NextPage->setEnabled(false);
+            ui->but_PreviousPage->setEnabled(true);
+        }
+        else
+        {
+            ui->but_NextPage->setEnabled(true);
+            ui->but_PreviousPage->setEnabled(true);
+        }
     }
+
 }
 
 void VipWidget::loadComBox()
