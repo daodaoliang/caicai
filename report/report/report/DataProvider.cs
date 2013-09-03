@@ -51,9 +51,9 @@ namespace report
             {
                 sql += " and (memcarddetail.handletime between '" + beginTime + "' and '" + endTime + "') ";
             }
-            if (queryString[0] != "")
+            if (queryString[0] != "" && queryString[0] != "0")
             {
-                
+                sql += " and memcarddetail.handletype = '"+queryString[0]+"' ";
             }
             if (queryString[1] != "")
             {
