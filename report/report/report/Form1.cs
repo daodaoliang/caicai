@@ -192,7 +192,14 @@ namespace report
         void m_queryButton_Click(object sender, EventArgs e)
         {
             string[] queryList = new string[5];
-            queryList[0] = m_comboBox.SelectedValue.ToString() == "" ? m_query1.Text : m_comboBox.SelectedValue.ToString();
+            if (m_comboBox.SelectedValue != null)
+            {
+                queryList[0] = m_comboBox.SelectedValue.ToString() == "" ? m_query1.Text : m_comboBox.SelectedValue.ToString();
+            }
+            else
+            {
+                queryList[0] = "";
+            }
             queryList[1] = m_query2.Text;
             queryList[2] = m_query3.Text;
             queryList[3] = m_query4.Text;
