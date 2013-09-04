@@ -110,7 +110,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>会员卡号</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -140,7 +142,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>客户名称</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -170,7 +174,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>客户类型</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -209,7 +215,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>发生时间</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -239,7 +247,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>变动值</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -269,7 +279,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>关联业务</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -299,7 +311,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>实收</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -329,7 +343,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>优惠</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -359,7 +375,9 @@
                           <TextRuns>
                             <TextRun>
                               <Value>操作员</Value>
-                              <Style />
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -513,7 +531,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!payvalue.Value</Value>
+                              <Value>=FormatCurrency(Fields!payvalue.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -603,7 +621,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!discount.Value</Value>
+                              <Value>=FormatCurrency(Fields!discount.Value)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -622,6 +640,7 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -685,7 +704,7 @@
         <Top>0.49424cm</Top>
         <Left>0.42841cm</Left>
         <Height>1.2cm</Height>
-        <Width>22.55292cm</Width>
+        <Width>22.55291cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -721,7 +740,10 @@
               <TextRuns>
                 <TextRun>
                   <Value>会员卡储值消费查询</Value>
-                  <Style />
+                  <Style>
+                    <FontSize>20pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style />
@@ -730,8 +752,8 @@
           <rd:DefaultName>Textbox1</rd:DefaultName>
           <Top>0.67945cm</Top>
           <Left>5.68007cm</Left>
-          <Height>0.6cm</Height>
-          <Width>3.37313cm</Width>
+          <Height>0.97833cm</Height>
+          <Width>7.55355cm</Width>
           <Style>
             <Border>
               <Style>None</Style>

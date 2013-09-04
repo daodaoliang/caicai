@@ -42,8 +42,8 @@ namespace report
 
         public DataTable MemberData(string beginTime, string endTime, string[] queryString)
         {
-            string sql = "select memcardid,member.`name`,member.membertypeid,if(memhandletype.`value` >= 0,handlemoney,-1*handlemoney),"
-            +"moremoney,memhandletype.handlename,userinfo.nickname,handletime from memcarddetail "
+            string sql = "select memcardid as cardno,member.`name` as membername,member.membertypeid as membertype,if(memhandletype.`value` >= 0,handlemoney+moremoney,-1*handlemoney) as payvalue,"
+            + "moremoney as discount,handlemoney as money,memhandletype.handlename as handletype,userinfo.nickname as operator,handletime from memcarddetail "
             +"left join member on memcarddetail.memcardid = member.cardid "                 
             +"left join userinfo on memcarddetail.operatorid = userinfo.userid " 
             +"left join memhandletype on memcarddetail.handletype = memhandletype.handletype where 1=1";
